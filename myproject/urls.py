@@ -40,9 +40,7 @@ urlpatterns = [
     # ================= GOOGLE SEARCH CONSOLE VERIFY =================
     path(
         "googlea564d4978a897b47.html",
-        TemplateView.as_view(
-            template_name="googlea564d4978a897b47.html",
-            content_type="text/html",
-        ),
+        TemplateView.as_view(template_name="googlea564d4978a897b47.html"),
+        name="google_verify"
     ),
 ]
