@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Confirm Order – COD</title>
+<style>
+body{
+  background:#020617;
+  color:#e5e7eb;
+  font-family:Inter,Arial;
+}
+.box{
+  max-width:700px;
+  margin:80px auto;
+  background:#0f172a;
+  padding:30px;
+  border-radius:16px;
+}
+h2{text-align:center;margin-bottom:20px}
+.row{
+  display:flex;
+  justify-content:space-between;
+  margin:8px 0;
+}
+.label{color:#94a3b8}
+.total{
+  font-size:22px;
+  font-weight:700;
+  margin-top:20px;
+}
+button{
+  width:100%;
+  margin-top:25px;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background:#22c55e;
+  font-size:16px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>🚚 Cash on Delivery – Order Summary</h2>
+
+  <div class="row"><span class="label">Name</span><span>{{ data.name }}</span></div>
+  <div class="row"><span class="label">Mobile</span><span>{{ data.mobile }}</span></div>
+  <div class="row"><span class="label">Address</span>
+    <span>{{ data.address }}, {{ data.city }} - {{ data.pincode }}</span>
+  </div>
+
+  <hr>
+
+  <div class="row total">
+    <span>Total Amount</span>
+    <span>₹{{ data.total }}</span>
+  </div>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">Confirm Order (COD)</button>
+  </form>
+</div>
+
+</body>
+</html>

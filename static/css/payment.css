@@ -1,0 +1,200 @@
+body {
+    background: linear-gradient(135deg, #010814, #071c43);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* PREMIUM HEADER WITH BREADCRUMB */
+  .header {
+    padding: 18px 25px;
+    background: rgba(255,255,255,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(0,255,255,0.25);
+    box-shadow: 0 0 18px rgba(0,200,255,0.4);
+  }
+
+  /* LEFT BREADCRUMB */
+  .breadcrumb {
+    font-size: 16px;
+    opacity: 0.9;
+    color: #bffaff;
+    text-shadow: 0 0 6px rgba(0,255,255,0.5);
+  }
+
+  .active-step {
+    color: #00eaff;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(0,255,255,1);
+  }
+
+  /* CENTER RCShop */
+  .header-title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(0,255,255,0.9);
+  }
+
+  /* RIGHT SECURE */
+  .secure-right {
+    font-size: 16px;
+    color: #00eaff;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0,255,255,0.8);
+  }
+
+  /* FIXED BOTTOM RIGHT BACK BUTTON */
+  .back-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    padding: 12px 28px;
+    background: rgba(0,255,255,0.15);
+    border-radius: 40px;
+    border: 1px solid rgba(0,255,255,0.5);
+    color: #00eaff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+    box-shadow: 0 0 18px rgba(0,255,255,0.6);
+  }
+
+  .back-btn:hover {
+    transform: scale(1.07);
+    background: rgba(0,255,255,0.3);
+    box-shadow: 0 0 25px rgba(0,255,255,1);
+  }
+
+  /* Payment Option Cards */
+  h2 {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(0,196,255,0.8);
+  }
+
+  .options {
+    max-width: 420px;
+    margin: 35px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding-bottom: 60px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.08);
+    padding: 18px;
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 0 18px rgba(0,170,255,0.35);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .card:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 28px rgba(0,225,255,0.8);
+  }
+
+  .icon {
+    font-size: 45px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(0,225,255,0.7);
+  }
+
+  .card h3 {
+    font-size: 22px;
+    margin: 10px 0 4px 0;
+  }
+
+  .card p {
+    font-size: 14px;
+    opacity: 0.85;
+    margin: 0;
+  }
+  /* CENTER BRAND AREA */
+.center-brand {
+  text-align: center;
+}
+
+/* MAIN TITLE – RCShop */
+.header-title {
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  /* Double Glow */
+  text-shadow:
+    0 0 9px #00eaff,
+    0 0 18px #00eaff,
+    0 0 25px rgba(0,255,255,0.9),
+    0 0 40px rgba(0,180,255,0.6);
+  
+  color: #bffaff;
+}
+
+/* SUBTITLE TAGLINE */
+.tagline {
+  margin-top: -3px;
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  opacity: 0.85;
+  color: #c9ffff;
+  text-shadow: 0 0 8px rgba(0,255,255,0.4);
+}
+
+/* RIGHT SECURE TEXT */
+.secure-right {
+  font-size: 16px;
+  color: #00eaff;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(0,255,255,0.8);
+}
+/* Global safety */
+* { box-sizing: border-box; }
+
+/* Ensure body fills and doesn't push strange scroll */
+body {
+  min-height: 100vh; /* keep full but allow natural height */
+}
+
+/* Wrap everything so header/footer positioning safe */
+.page-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* keep main content centered and not full width */
+.options {
+  max-width: 920px; /* slightly larger if you want wider cards on desktop */
+  margin: 35px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 0 20px 60px 20px; /* horizontal padding so it doesn't touch edges */
+}
+
+/* Make cards look consistent and not stretch weirdly */
+.card {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 0 18px rgba(0,170,255,0.35);
+}
+
+/* mobile-friendly tweaks */
+@media (max-width: 520px) {
+  h2 { font-size: 22px; margin-top: 22px; }
+  .icon { font-size: 40px; }
+  .back-btn { padding: 10px 18px; bottom: 18px; right: 12px; }
+}

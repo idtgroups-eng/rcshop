@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RCShop - About Us</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- ABOUT CSS (FULL DESIGN HERE) -->
+  <link rel="stylesheet" href="{% static 'css/about.css' %}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="premium-nav py-3">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+      <!-- LOGO -->
+      <div class="logo-area">
+        <a class="navbar-brand brand-blue fw-bold fs-3" href="{% url 'home' %}">RCShop</a>
+      </div>
+
+      <!-- WELCOME BAR -->
+      <div class="welcome-area mx-auto text-center">
+        <div class="top-glass-bar px-3 py-1 d-inline-block">
+          <p class="m-0"><i class="bi bi-stars"></i> Welcome to RCShop – Your Trusted Tech Store</p>
+        </div>
+      </div>
+
+      <!-- MENU -->
+      <div class="menu-area">
+        <ul class="navbar-nav flex-row gap-4">
+          <li class="nav-item"><a class="nav-link nav-ani" href="{% url 'home' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link nav-ani active" href="{% url 'about' %}">About</a></li>
+          <li class="nav-item"><a class="nav-link nav-ani" href="{% url 'products' %}">Products</a></li>
+          <li class="nav-item"><a class="nav-link nav-ani" href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- ================= ABOUT HEADER ================= -->
+<section class="about-header text-center">
+  <h1 class="neon-title">About RCShop</h1>
+  <p class="mt-3">
+    RCShop is your trusted destination for high-quality computer accessories,
+    electronics, and tech essentials. We aim to deliver premium products at
+    affordable prices with unbeatable customer support.
+  </p>
+</section>
+
+<!-- ================= MISSION & VISION ================= -->
+<div class="container mt-5">
+  <div class="row justify-content-center g-4">
+
+    <div class="col-md-5">
+      <div class="mv-card text-center">
+        <div class="mv-icon">🎯</div>
+        <h3>Our Mission</h3>
+        <p>
+          To provide top-notch tech products with quality assurance,
+          best pricing, and excellent customer service.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="mv-card text-center">
+        <div class="mv-icon">🚀</div>
+        <h3>Our Vision</h3>
+        <p>
+          To become a leading and most trusted computer accessories
+          brand through innovation and customer satisfaction.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= WHY CHOOSE ================= -->
+<div class="container text-center mt-5">
+  <h2 class="neon-title mb-4">Why Choose RCShop?</h2>
+
+  <div class="row justify-content-center g-4">
+
+    <div class="col-md-4">
+      <div class="why-pro-card">
+        <div class="why-pro-icon">🛡️</div>
+        <h4>Trusted Quality</h4>
+        <p>We deliver only tested and verified products.</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="why-pro-card">
+        <div class="why-pro-icon">🚚</div>
+        <h4>Fast Delivery</h4>
+        <p>Quick & safe delivery to your doorstep.</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="why-pro-card">
+        <div class="why-pro-icon">💰</div>
+        <h4>Best Price Deals</h4>
+        <p>Premium quality at the lowest possible price.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= TEAM ================= -->
+<div class="container mt-5 text-center">
+  <h2 class="neon-title mb-4">Our Team</h2>
+
+  <div class="row g-4 justify-content-center">
+
+    <div class="col-md-4">
+      <div class="team-card">
+        <img src="{% static 'images/person1.jpg' %}" class="team-photo">
+        <h4 class="team-name">Pramod Kumar</h4>
+        <p class="team-role">Founder & Technician</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="team-card">
+        <img src="{% static 'images/person2.jpg' %}" class="team-photo">
+        <h4 class="team-name">Amit Roy</h4>
+        <p class="team-role">Web Designer</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="team-card">
+        <img src="{% static 'images/person3.jpg' %}" class="team-photo">
+        <h4 class="team-name">Sourv & Dikshant</h4>
+        <p class="team-role">Hardware & Software</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer-section mt-5">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-4">
+        <h5 class="fw-bold">RCShop</h5>
+        <p>Your trusted destination for computer accessories.</p>
+      </div>
+
+      <div class="col-md-4 footer-links">
+        <h5 class="fw-bold">Quick Links</h5>
+        <a href="{% url 'home' %}">Home</a><br>
+        <a href="{% url 'about' %}">About</a><br>
+        <a href="{% url 'products' %}">Products</a><br>
+        <a href="{% url 'contact' %}">Contact</a>
+      </div>
+
+      <div class="col-md-4">
+        <h5 class="fw-bold">Contact</h5>
+        <p><i class="bi bi-telephone"></i> +91 718677970</p>
+        <p><i class="bi bi-geo-alt"></i> Rajgarh Sirmour Himachal Pradesh</p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

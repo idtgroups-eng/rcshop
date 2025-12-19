@@ -1,0 +1,261 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>RCStore - Product Details</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/product_details.css' %}">
+</head>
+
+<body>
+
+<!-- ======================= ULTRA PREMIUM HEADER ======================= -->
+<header class="rc-header-glass">
+
+    <!-- LEFT SECTION (LOGO + TEXT) -->
+    <div class="rc-left">
+        <img src="{% static 'images/logo.png' %}" class="rc-logo">
+        <span>RCStore</span>
+    </div>
+
+    <!-- CENTER NAVIGATION -->
+    <nav class="rc-nav">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'products' %}">Products</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}">Contact</a>
+    </nav>
+
+    <!-- RIGHT SECTION -->
+    <div class="rc-right">
+        <i class="bi bi-search search-icon" onclick="toggleSearch()"></i>
+
+        <input type="text" placeholder="Search..." id="searchBox">
+
+        <div class="rc-cart" onclick="window.location.href='{% url 'cart' %}'">
+            <i class="bi bi-cart3"></i>
+            <span id="cartCount">0</span>
+        </div>
+    </div>
+
+</header>
+
+<!-- ===================== Inject Django URLs For JS ===================== -->
+<script>
+  window.CART_URL = "{% url 'cart' %}";
+  window.CHECKOUT_URL = "{% url 'checkout' %}";
+  window.PRODUCT_DETAILS_URL = "{% url 'product_details' %}";
+  window.STATIC_PREFIX = "{% static '' %}";
+</script>
+
+<!---------------------- PRODUCT DETAILS BODY ------------------------>
+<div class="container">
+
+    <!-- LEFT -->
+    <div class="gallery">
+        <img id="mainImage" class="main-img">
+        <div class="thumbs" id="thumbBox"></div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="details">
+        <h1 id="pName"></h1>
+        <div class="stars">⭐ ⭐ ⭐ ⭐ ⭐ <span style="color:#444;font-size:14px">| 128 Reviews</span></div>
+        <div class="price" id="pPrice"></div>
+
+        <button class="buy">Buy Now</button>
+        <button class="cart">Add to Cart</button>
+
+        <div class="box">
+            <h3>Highlights</h3>
+            <ul id="highlightsList"></ul>
+        </div>
+
+        <div class="box" style="margin-top:15px;">
+            <h3>Specifications</h3>
+            <ul id="specsList"></ul>
+        </div>
+    </div>
+</div>
+
+<!---------------- Related Products ---------------->
+<h2>Related Products</h2>
+<div class="related-container" id="relatedContainer">
+
+    <!-- ASUS ROG -->
+    <div class="related-card">
+        <div class="img-box">
+            <img src="{% static 'images/rog.jpg' %}" alt="Asus ROG Laptop">
+            <button class="view-btn"
+onclick="openProductDetails(
+    'Asus ROG Laptop',
+    59999,
+    ['{% static "images/rog.jpg" %}','{% static "images/rog1.jpg" %}','{% static "images/rog2.webp" %}','{% static "images/rog3.jpg" %}'],
+    {
+        highlights: [
+            'High-end Gaming Performance',
+            'RGB Backlit Keyboard',
+            'Cooling Boost Technology',
+            '144Hz High Refresh Display'
+        ],
+        specs: [
+            'Intel Core i7 Processor',
+            '8GB RTX Graphics',
+            '16GB DDR4 RAM',
+            '1TB NVMe SSD'
+        ]
+    }
+)">View</button>
+        </div>
+        <h3>Asus ROG Laptop</h3>
+    </div>
+
+   <div class="related-card">
+    <div class="img-box">
+        <img src="{% static 'images/all in one i5.jpg' %}" alt="All-in-One PC">
+
+        <button class="view-btn"
+onclick="openProductDetails(
+    'All in One PC',
+    32999,
+    [
+        '{% static "images/all in one i5.jpg" %}',
+        '{% static "images/ALL IN ONE i3.jpg" %}'
+    ],
+    {
+        highlights: [
+            'Space Saving Premium Design',
+            'Full HD Display',
+            'Ideal for Office & Home Use',
+            'Wireless Keyboard & Mouse Included'
+        ],
+        specs: [
+            'Intel Core i5 Processor',
+            '8GB DDR4 RAM',
+            '512GB SSD',
+            'WiFi + Bluetooth'
+        ]
+    }
+)">View</button>
+    </div>
+
+    <h3>All in One PC</h3>
+</div>
+<div class="related-card">
+    <div class="img-box">
+        <img src="{% static 'images/456.webp' %}" alt="Gaming Keyboard">
+
+        <button class="view-btn"
+onclick="openProductDetails(
+    'Gaming Keyboard',
+    1999,
+    [
+        '{% static "images/456.webp" %}'
+    ],
+    {
+        highlights: [
+            'Mechanical RGB Keys',
+            '6-Mode LED Lighting',
+            'Ergonomic Wrist Support',
+            'Anti-Ghosting 104 Keys'
+        ],
+        specs: [
+            'USB Wired RGB Keyboard',
+            'Blue Switch Mechanical Keys',
+            '50M Keystroke Life',
+            'Braided Cable'
+        ]
+    }
+)">View</button>
+    </div>
+
+    <h3>Gaming Keyboard</h3>
+</div>
+
+<!-- ============================= FOOTER ============================= -->
+<footer>
+    © 2025 RCStore® — Best Tech Store in India 🔥
+</footer>
+
+
+<!-- ===================== JS FILE ===================== -->
+<script src="{% static 'js/product_details.js' %}"></script>
+
+<script>
+let p = JSON.parse(localStorage.getItem("selectedProduct"));
+
+// Apply product data
+document.getElementById("pName").innerText = p.name;
+document.getElementById("pPrice").innerText = "₹ " + p.price + "/-";
+
+let main = document.getElementById("mainImage");
+main.src = p.images[0];
+
+// Create thumbnails
+let thumbBox = document.getElementById("thumbBox");
+thumbBox.innerHTML = "";
+p.images.slice(0,4).forEach((img,i)=>{
+    thumbBox.innerHTML += `
+        <img src="${img}" width="70" height="70" class="thumbImg" data-index="${i}">
+    `;
+});
+
+// Active image switching
+let thumbs = document.querySelectorAll(".thumbImg");
+function setActive(index){
+    main.src = p.images[index];
+}
+setActive(0);
+thumbs.forEach((t,i)=>t.onclick=()=>setActive(i));
+
+
+// Highlights
+let hBox = document.getElementById("highlightsList");
+p.highlights.forEach(h => {
+    hBox.innerHTML += `<li>${h}</li>`;
+});
+
+// Specs
+let sBox = document.getElementById("specsList");
+p.specs.forEach(s => {
+    sBox.innerHTML += `<li>${s}</li>`;
+});
+
+
+// Related products container is filled from product_details.js
+
+
+// Add to Cart
+document.querySelector(".cart").onclick = () => {
+    let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    let exist = cart.find(c => c.name === p.name);
+    if (exist) exist.qty++;
+    else cart.push({ name: p.name, price: p.price, img: p.images[0], qty: 1 });
+
+    localStorage.setItem("cartItems", JSON.stringify(cart));
+
+    window.location.href = window.CART_URL;
+};
+
+// Buy Now
+document.querySelector(".buy").onclick = () => {
+    let cart = [{
+        name: p.name,
+        price: p.price,
+        img: p.images[0],
+        qty: 1
+    }];
+    localStorage.setItem("cartItems", JSON.stringify(cart));
+    window.location.href = window.CHECKOUT_URL;
+};
+
+</script>
+
+<script>
+let c = JSON.parse(localStorage.getItem("cartItems")) || [];
+document.getElementById("cartCount").innerText = c.length;
+</script>
+
+</body>
+</html>

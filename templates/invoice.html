@@ -1,0 +1,139 @@
+{% load static %}
+{% load tz %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RCStore Invoice</title>
+    <link rel="stylesheet" href="{% static 'css/invoice.css' %}">
+</head>
+<body>
+
+<div class="page" id="invoice">
+
+<!-- ================= HEADER ================= -->
+<div class="header">
+    <img src="{% static 'images/logo.png' %}">
+    <h2>RCStore Invoice</h2>
+
+    <div class="right">
+        <b style="color:#00a8ff">RCStore®</b><br>
+        Gurukul Building<br>
+        Near Old Busstand Rajgarh<br>
+        Sirmour HP - 173101<br>
+        +91 9625252254
+    </div>
+</div>
+
+<!-- ================= ORDER DETAILS ================= -->
+<h3>Order Details</h3>
+Order ID: <b>{{ order.id }}</b><br>
+Payment Mode: <b>{{ order.payment_method }}</b><br>
+Date: <b>{{ order.created_at|localtime|date:"d M Y, h:i A" }}</b>
+
+<!-- ================= CUSTOMER ================= -->
+<h3>Customer</h3>
+Name: <b>{{ order.name }}</b><br>
+Mobile: <b>{{ order.mobile }}</b><br>
+Address: <b>{{ order.address }}</b>
+
+<!-- ================= ITEMS ================= -->
+<h3>Items</h3>
+
+<table style="width:100%; border-collapse:collapse;">
+    <tr style="background:#0a84ff; color:#fff;">
+        <th style="padding:10px; text-align:left;">Product</th>
+        <th style="padding:10px; text-align:center;">Qty</th>
+        <th style="padding:10px; text-align:right;">Price</th>
+        <th style="padding:10px; text-align:right;">Total</th>
+    </tr>
+
+    {% for item in order.items %}
+    {% with qty=item.quantity|default:1 %}
+    <tr style="border-bottom:1px solid #ddd;">
+        <td style="padding:10px;">
+            {{ item.name }}
+        </td>
+
+        <td style="padding:10px; text-align:center;">
+            {{ qty }}
+        </td>
+
+        <td style="padding:10px; text-align:right;">
+            ₹{{ item.price }}
+        </td>
+
+        <td style="padding:10px; text-align:right;">
+            ₹{{ item.price|floatformat:2 }}
+        </td>
+    </tr>
+    {% endwith %}
+    {% empty %}
+    <tr>
+        <td colspan="4" style="text-align:center; padding:10px;">
+            No items found
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<!-- ================= BILL SUMMARY ================= -->
+<h3>Bill Summary</h3>
+
+Subtotal: <b>₹{{ subtotal }}</b><br>
+GST (18%): <b>₹{{ gst }}</b><br>
+Shipping: <b>FREE</b><br>
+
+<span style="color:#ff5722">
+    Flat Discount: -₹{{ flat_discount }}
+</span><br>
+
+<span style="color:#e91e63">
+    Extra 10% OFF: -₹{{ extra_discount }}
+</span><br>
+
+<p class="total">
+    TOTAL: <span>₹{{ total }}</span>
+</p>
+
+<!-- ================= QR PAYMENT ================= -->
+<div class="qr">
+    <h3 style="border:none">Scan & Pay</h3>
+
+    {% if qr_code %}
+     <img src="data:image/png;base64,{{ qr_code }}" width="180">
+    {% else %}
+        <p>QR not available</p>
+    {% endif %}
+
+    <p><b>UPI:</b> {{ upi_id }}</p>
+</div>
+
+<!-- ================= POLICY ================= -->
+<p style="text-align:center; margin-top:10px;">
+    <a href="{% url 'return_policy' %}"
+       style="font-size:12px; font-weight:400; text-decoration:none; color:#0040ff;">
+        “Return policy available within 7 days. See full policy →”
+    </a>
+</p>
+
+<!-- ================= FOOTER ================= -->
+<p style="text-align:center">
+    <b>RCShop — Trusted Tech • Fast Delivery</b><br>
+    Thank you for shopping with us 🙏
+</p>
+
+<div class="footer">
+    <b>RCShop — Trusted Tech • Fast Delivery</b><br>
+    Thank you for shopping with us.
+</div>
+
+</div>
+
+<!-- ================= ACTION BUTTONS ================= -->
+<div class="btns">
+    <button onclick="window.print()" class="print">Print</button>
+    <button onclick="location.href='/'" class="home">Home</button>
+</div>
+
+</body>
+</html>

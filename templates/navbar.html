@@ -1,0 +1,48 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg premium-nav fixed-top">
+  <div class="container">
+
+    <!-- LEFT SIDE : LOGO -->
+    <div class="d-flex flex-column me-4">
+      <a class="navbar-brand fw-bold fs-3 brand-blue" href="{% url 'home' %}">RCStore</a>
+      <div class="nav-subtext">
+        <i class="bi bi-shield-check"></i>
+        <span>The Trusted Tech Store</span>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <li class="nav-line-glow"></li>
+    <li class="nav-line-glow"></li>
+
+    <!-- CENTER SEARCH -->
+    <div class="center-search d-none d-lg-flex flex-column align-items-center mx-auto">
+      <input class="form-control search-glass" type="search" placeholder="Search products...">
+      <div class="nav-subtext mt-1 d-flex align-items-center">
+        <i class="bi bi-truck"></i>
+        <span class="ms-1">Free Delivery above ₹999</span>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <li class="nav-line-glow"></li>
+    <li class="nav-line-glow"></li>
+
+    <!-- RIGHT SIDE MENU -->
+    <ul class="navbar-nav align-items-center">
+      <li class="nav-item"><a class="nav-link nav-ani" <a href="{% url 'home' %}">Home</a>
+      <li class="nav-item"><a class="nav-link nav-ani" href="{% url 'products' %}">Products</a></li>
+      <li class="nav-item"><a class="nav-link nav-ani" href="{% url 'about' %}">About</a></li>
+      <li class="nav-item"><a class="nav-link nav-ani" href="{% url 'contact' %}">Contact</a></li>
+    </ul>
+
+    <!-- CART ICON -->
+<a href="{% url 'cart' %}" class="cart-icon">
+            <img src="{% static 'images/cart.png' %}" class="cart-img">
+            <span id="cartCount">0</span>
+        </a>
+
+
+  </div>
+</nav>

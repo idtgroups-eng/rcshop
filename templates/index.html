@@ -1,0 +1,827 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<body>
+
+<!-- ---------------- NAVBAR --------------- -->
+<nav class="navbar navbar-expand-lg premium-nav fixed-top">
+  <div class="container">
+
+    <!-- LEFT SIDE : LOGO -->
+    <div class="d-flex flex-column me-4">
+      <a class="navbar-brand fw-bold fs-3 brand-blue" href="{% url 'home' %}">RCStore</a>
+      <div class="nav-subtext">
+        <i class="bi bi-shield-check"></i>
+        <span>The Trusted Tech Store</span>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <li class="nav-line-glow"></li>
+    <li class="nav-line-glow"></li>
+
+    <!-- CENTER SEARCH -->
+    <div class="center-search d-none d-lg-flex flex-column align-items-center mx-auto">
+      <input class="form-control search-glass" type="search" placeholder="Search products...">
+      <div class="nav-subtext mt-1 d-flex align-items-center">
+        <i class="bi bi-truck"></i>
+        <span class="ms-1">Free Delivery above ₹999</span>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <li class="nav-line-glow"></li>
+    <li class="nav-line-glow"></li>
+
+    <!-- RIGHT SIDE MENU -->
+    <ul class="navbar-nav align-items-center">
+
+      <!-- NAV LINKS WITH IDs -->
+      <li class="nav-item">
+        <a class="nav-link nav-ani" id="nav-home" href="{% url 'home' %}">Home</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link nav-ani" id="nav-products" href="{% url 'products' %}">Products</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link nav-ani" id="nav-about" href="{% url 'about' %}">About</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link nav-ani" id="nav-contact" href="{% url 'contact' %}">Contact</a>
+      </li>
+
+    </ul>
+
+    <!-- CART ICON -->
+    <a href="{% url 'cart' %}" style="text-decoration:none; color:white;">
+      <div class="cart-premium">
+        🛒 <span class="cart-count" id="cartCount">0</span>
+      </div>
+    </a>
+
+  </div>
+</nav>
+
+
+<!-- ACTIVE LINK SCRIPT -->
+<script>
+  const path = window.location.pathname;
+
+  if (path === "/" || path.includes("home"))
+      document.getElementById("nav-home").classList.add("active");
+
+  if (path.includes("products"))
+      document.getElementById("nav-products").classList.add("active");
+
+  if (path.includes("about"))
+      document.getElementById("nav-about").classList.add("active");
+
+  if (path.includes("contact"))
+      document.getElementById("nav-contact").classList.add("active");
+</script>
+
+</body>
+
+<!-- ---------------- HERO SECTION ---------------- -->
+<section class="hero-slider">
+
+    <!-- ⭐ Slide 1 -->
+    <div class="slide active"
+         style="background-image: url('{% static 'images/dell gen 10.png' %}');">
+        <div class="hero-content">
+            <h1>🔥 Mega Tech Sale</h1>
+            <p>Up to 40% OFF on Laptops & Accessories</p>
+            <a href="{% url 'products' %}" class="hero-btn">Shop Now</a>
+        </div>
+    </div>
+
+    <!-- ⭐ Slide 2 -->
+    <div class="slide"
+         style="
+            background-image: url('{% static 'images/picture-image.jpg' %}');
+            background-size: cover;
+            background-position: center;
+         ">
+        <div class="hero-content">
+            <h1>⚡ Today's Exclusive Deals</h1>
+            <p>Limited time offers on premium gadgets.</p>
+            <a href="{% url 'products' %}" class="hero-btn">Explore Deals</a>
+        </div>
+    </div>
+
+    <!-- ⭐ Slide 3 -->
+    <div class="slide"
+         style="background-image: url('{% static 'images/899.jpg' %}');">
+        <div class="hero-content">
+            <h1>📦 Combo Sale Keyboard + Mouse</h1>
+            <p>Top products trusted by thousands<br>40% OFF Combo Set</p>
+            <a href="{% url 'products' %}" class="hero-btn">Buy Now</a>
+        </div>
+    </div>
+
+    <!-- Slider Arrows -->
+    <span class="arrow prev" onclick="prevSlide()">❮</span>
+    <span class="arrow next" onclick="nextSlide()">❯</span>
+
+    <!-- Slider Dots -->
+    <div class="dots"></div>
+
+</section>
+
+
+</section>
+<!-- 🔵 SERVICES SECTION START -->
+<section id="services" class="py-5" style="background: #f4faff;">
+  <div class="container">
+    <h2 class="text-center mb-4 fw-bold" style="color:#0d6efd;">Our Services</h2>
+    <p class="text-center mb-5 text-secondary">
+      We provide complete computer and online service solutions.
+    </p>
+
+    <div class="row g-4">
+
+      <!-- Service 1 -->
+      <div class="col-md-4">
+        <div class="service-box p-4 shadow rounded-3 h-100">
+          <div class="icon mb-3"><i class="bi bi-laptop fs-1 text-primary"></i></div>
+          <h5 class="fw-bold">Computer & Laptop Sales</h5>
+          <p>Deals for sale and purchase of computers & laptops.</p>
+        </div>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="col-md-4">
+        <div class="service-box p-4 shadow rounded-3 h-100">
+          <div class="icon mb-3"><i class="bi bi-tools fs-1 text-primary"></i></div>
+          <h5 class="fw-bold">Repair & Maintenance</h5>
+          <p>Service & repair of computers, laptops and printers.</p>
+        </div>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="col-md-4">
+        <div class="service-box p-4 shadow rounded-3 h-100">
+          <div class="icon mb-3"><i class="bi bi-printer fs-1 text-primary"></i></div>
+          <h5 class="fw-bold">Printer Toner Refilling</h5>
+          <p>Fast & affordable laser printer toner refilling.</p>
+        </div>
+      </div>
+
+      <!-- Service 4 -->
+      <div class="col-md-4">
+        <div class="service-box p-4 shadow rounded-3 h-100">
+          <div class="icon mb-3"><i class="bi bi-camera-video fs-1 text-primary"></i></div>
+          <h5 class="fw-bold">CCTV Camera Fitting</h5>
+          <p>CCTV installation and complete security setup.</p>
+        </div>
+      </div>
+
+      <!-- Service 5 -->
+      <div class="col-md-4">
+        <div class="service-box p-4 shadow rounded-3 h-100">
+          <div class="icon mb-3"><i class="bi bi-file-earmark-text fs-1 text-primary"></i></div>
+          <h5 class="fw-bold">Aadhaar & PAN Card Services</h5>
+          <p>All Aadhaar, PAN card, Lokmitra & online services available.</p>
+        </div>
+      </div>
+
+      <!-- Service 6 -->
+      <div class="col-md-4">
+        <div class="service-box p-4 shadow rounded-3 h-100">
+          <div class="icon mb-3"><i class="bi bi-badge-hd fs-1 text-primary"></i></div>
+          <h5 class="fw-bold">HP Authorised Retailer</h5>
+          <p>Original HP products with authorised support.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- 🔵 SERVICES SECTION END -->
+<!-- ⭐ RCShop INTRO SECTION WITH ANIMATION -->
+<div class="rc-intro text-center mt-5 mb-4">
+  <h4 class="intro-title fw-bold">Your One-Stop Tech Store</h4>
+  <p class="intro-text">
+    Explore top-quality computer products, accessories, and gadgets carefully selected 
+    for performance, durability, and budget-friendly pricing.
+  </p>
+</div>
+<!-- 🔹 SHOP BY CATEGORY STRIP -->
+<section class="py-5 rc-section-dark">
+  <div class="container">
+    <div class="text-center mb-4">
+      <div class="section-title">Shop by category</div>
+      <h2 class="section-heading mb-2">Find the right tech for you</h2>
+      <p class="section-desc rc-tagline-soft">
+        Laptops for work, printers for business, accessories for everyday use – everything organised neatly by category.
+      </p>
+    </div>
+
+    <div class="category-strip">
+
+      <a href="{% url 'products' %}?category=laptops" class="category-pill">
+        <i class="bi bi-laptop"></i>
+        <span>Laptops & Notebooks</span>
+      </a>
+
+      <a href="{% url 'products' %}?category=monitors" class="category-pill">
+        <i class="bi bi-display"></i>
+        <span>Monitors & Displays</span>
+      </a>
+
+      <a href="{% url 'products' %}?category=keyboards" class="category-pill">
+        <i class="bi bi-keyboard"></i>
+        <span>Keyboards & Mice</span>
+      </a>
+
+      <a href="{% url 'products' %}?category=printers" class="category-pill">
+        <i class="bi bi-printer"></i>
+        <span>Printers & Scanners</span>
+      </a>
+
+      <a href="{% url 'products' %}?category=storage" class="category-pill">
+        <i class="bi bi-hdd-network"></i>
+        <span>Storage & Pendrives</span>
+      </a>
+
+      <a href="{% url 'products' %}?category=cctv" class="category-pill">
+        <i class="bi bi-camera-video"></i>
+        <span>CCTV & Security</span>
+      </a>
+
+      <a href="{% url 'products' %}?category=cables" class="category-pill">
+        <i class="bi bi-plug"></i>
+        <span>Cables & Power</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+<!-- 🔹 DEALS OF THE DAY -->
+<section class="py-5 rc-section-soft">
+  <div class="container">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-3">
+      <div>
+        <div class="section-title">Deals of the day</div>
+        <h2 class="section-heading mb-1">Upgrade your setup &amp; save more</h2>
+        <p class="rc-tagline-soft mb-0">
+          Limited-time offers on the most popular laptops, printers and accessories.
+        </p>
+      </div>
+      <div class="d-flex flex-column align-items-md-end align-items-start gap-2">
+        <span class="deal-timer"><span id="deal-timer">06:12:45</span> hrs left</span>
+        <small class="text-light opacity-75">Refreshes every day at 12:00 AM</small>
+      </div>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- ========================= 1️⃣ LAPTOP ========================= -->
+      <div class="col-md-4">
+        <div class="deal-card h-100">
+          <img src="{% static 'images/laptop-image.jpg' %}" class="w-100" style="height:210px; object-fit:cover;"
+          onclick="openProductDetails(
+            'Core i5 Pro Notebook', 
+            54999, 
+            ['{% static "images/laptop-image.jpg" %}'],
+            {
+              highlights: [
+                'Perfect for Office Work, Online Meetings',
+                '11th Gen Intel Core i5 Processor',
+                '8GB RAM + 512GB SSD',
+                'Slim & Lightweight Metal Body'
+              ],
+              specs: [
+                '15.6” Full HD IPS Display',
+                'Intel UHD Graphics',
+                '512GB NVMe SSD',
+                'Backlit Keyboard + Type-C Support'
+              ]
+            }
+          )">
+
+          <div class="p-3 p-lg-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="deal-badge"><i class="bi bi-lightning-charge"></i> Today only</span>
+              <small class="text-uppercase text-light-50">Business Laptop</small>
+            </div>
+
+            <h5 class="mb-1">Core i5 Pro Notebook</h5>
+            <p class="mb-2 small text-secondary">Perfect for office work, online classes and multitasking.</p>
+
+            <div class="d-flex align-items-baseline gap-2 mb-3">
+              <span class="price-main">₹54,999</span>
+              <span class="price-old">₹62,999</span>
+              <small class="text-success fw-semibold">Save ₹8,000</small>
+            </div>
+
+            <button class="add-btn"
+            onclick="openProductDetails(
+              'Core i5 Pro Notebook', 
+              54999, 
+              ['{% static 'images/laptop-image.jpg' %}'],
+              {
+                highlights: [
+                  'Perfect for Office Work, Online Meetings',
+                  '11th Gen Intel Core i5 Processor',
+                  '8GB RAM + 512GB SSD',
+                  'Slim & Lightweight Metal Body'
+                ],
+                specs: [
+                  '15.6” Full HD IPS Display',
+                  'Intel UHD Graphics',
+                  '512GB NVMe SSD',
+                  'Backlit Keyboard + Type-C Support'
+                ]
+              }
+            )">View Details</button>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================= 2️⃣ PRINTER ========================= -->
+ <div class="col-md-4">
+  <div class="deal-card h-100">
+
+    <!-- MAIN IMAGE -->
+    <img 
+      src="{% static 'images/Printer8.jpg' %}" 
+      class="w-100" 
+      style="height:210px; object-fit:cover; cursor:pointer;"
+      onclick="openProductDetails(
+        'Epson L18050 A3+ Single Function Printer', 
+        48499, 
+        [
+          '/static/images/Printer8.jpg',
+          '/static/images/Printer3.png',
+          '/static/images/Printer2.png',
+          '/static/images/Printer4.png'
+        ],
+        {
+          highlights: [
+            'Epson Micro Piezo™ technology with 6 dye-based ink colors',
+            'Ultra high photo resolution up to 5760 × 1440 dpi',
+            'Low cost per photo with cartridge-free EcoTank system',
+            'Supports A3+ borderless, CD/DVD & ID card printing',
+            'Wi-Fi, Wi-Fi Direct & USB connectivity',
+            'Mobile printing via Epson iPrint & Smart Panel App'
+          ],
+          specs: [
+            'Print Technology: Epson Micro Piezo™ (6 Dye-Based Colors)',
+            'Resolution: Up to 5760 × 1440 dpi',
+            'Print Speed: Up to 22 ppm (mono & color)',
+            'Photo Print Speed: Approx. 13 sec (10 × 15 cm)',
+            'Media Handling: A3+, A4, A5, Letter, CD/DVD, PVC/ID Card',
+            'Ink System: Integrated EcoTank with key-lock ink bottles',
+            'Functions: Print (Single Function)',
+            'Connectivity: Wi-Fi, Wi-Fi Direct, USB',
+            'Dimensions: 52.3 × 36.9 × 15 cm | Weight: ~11 kg'
+          ]
+        }
+      )"
+    >
+
+    <div class="p-3 p-lg-4">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="deal-badge">
+          <i class="bi bi-arrow-down-circle"></i> Price drop
+        </span>
+        <small class="text-uppercase text-light-50">Ink Tank Printer</small>
+      </div>
+
+      <h5 class="mb-1">Epson L18050 A3+ Single Function Printer</h5>
+      <p class="mb-2 small text-secondary">
+        High-quality A3+ photo printing with ultra-low running cost.
+      </p>
+
+      <div class="d-flex align-items-baseline gap-2 mb-3">
+        <span class="price-main">₹48,499</span>
+        <span class="price-old">₹52,999</span>
+        <small class="text-success fw-semibold">Save ₹4,500</small>
+      </div>
+
+      <!-- VIEW DETAILS BUTTON -->
+      <button class="add-btn"
+        onclick="openProductDetails(
+          'Epson L18050 A3+ Single Function Printer', 
+          48499, 
+          [
+            '/static/images/Printer8.jpg',
+            '/static/images/Printer3.png',
+            '/static/images/Printer2.png',
+            '/static/images/Printer4.png'
+          ],
+          {
+            highlights: [
+              'Epson Micro Piezo™ technology with 6 dye-based ink colors',
+              'Ultra high photo resolution up to 5760 × 1440 dpi',
+              'Low cost per photo with cartridge-free EcoTank system',
+              'Supports A3+ borderless, CD/DVD & ID card printing',
+              'Wi-Fi, Wi-Fi Direct & USB connectivity',
+              'Mobile printing via Epson iPrint & Smart Panel App'
+            ],
+            specs: [
+              'Print Technology: Epson Micro Piezo™ (6 Dye-Based Colors)',
+              'Resolution: Up to 5760 × 1440 dpi',
+              'Print Speed: Up to 22 ppm (mono & color)',
+              'Photo Print Speed: Approx. 13 sec (10 × 15 cm)',
+              'Media Handling: A3+, A4, A5, Letter, CD/DVD, PVC/ID Card',
+              'Ink System: Integrated EcoTank with key-lock ink bottles',
+              'Functions: Print (Single Function)',
+              'Connectivity: Wi-Fi, Wi-Fi Direct, USB',
+              'Dimensions: 52.3 × 36.9 × 15 cm | Weight: ~11 kg'
+            ]
+          }
+        )">
+        View Details
+      </button>
+
+    </div>
+  </div>
+</div>
+
+      <!-- ========================= 3️⃣ All in Smart Color Printer ========================= -->
+     <div class="col-md-4">
+  <div class="deal-card h-100">
+
+    <!-- MAIN IMAGE -->
+    <img 
+      src="{% static 'images/HP.jpg' %}" 
+      class="w-100" 
+      style="height:210px; object-fit:cover; cursor:pointer;"
+      onclick="openProductDetails(
+        'HP All-in-One Inkjet Printer', 
+        15500, 
+        [
+          '/static/images/HP.jpg',
+          '/static/images/HP1.avif',
+          '/static/images/HP12.avif',
+          '/static/images/HP10.avif'
+        ],
+        {
+          highlights: [
+            'All-in-One printer: Print, Copy & Scan',
+            'High quality printing up to 4800 × 1200 optimized dpi',
+            'Compact design with 1.0-inch iCON LCD display',
+            'Manual duplex printing supported',
+            'Borderless photo printing up to A4 size',
+            'USB 2.0 connectivity for reliable performance'
+          ],
+          specs: [
+            'Functions: Print, Copy, Scan',
+            'Print Technology: HP Thermal Inkjet',
+            'Print Speed (Black ISO): Up to 12 ppm',
+            'Print Quality: Black up to 1200 × 1200 dpi, Color up to 4800 × 1200 dpi',
+            'Display: 27 Segments + 1.0-inch iCON LCD',
+            'Processor Speed: 980 MHz',
+            'Ink Bottles: 4 (Black + 3 Color)',
+            'Connectivity: Hi-Speed USB 2.0',
+            'Duplex Printing: Manual (Driver Supported)',
+            'Input Tray: 100 sheets | Output Tray: 30 sheets',
+            'Borderless Printing: Yes (Up to A4)',
+            'Scanner Type: Flatbed | Optical Resolution: Up to 1200 dpi',
+            'Copy Resolution: Up to 600 × 600 dpi | Max Copies: 99',
+            'Maximum Memory: 64 MB',
+            'Compatible OS: Windows 11, Windows 10',
+            'Power Consumption: 0.11W (Off), 2.588W (Ready), 0.984W (Sleep)',
+            'Sustainable Design: 45% post-consumer recycled plastic'
+          ]
+        }
+      )"
+    >
+
+    <div class="p-3 p-lg-4">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="deal-badge">
+          <i class="bi bi-printer"></i> Inkjet Printer
+        </span>
+        <small class="text-uppercase text-light-50">All-in-One</small>
+      </div>
+
+      <h5 class="mb-1">HP All-in-One Inkjet Printer</h5>
+      <p class="mb-2 small text-secondary">
+        Reliable print, scan & copy solution for home and office use.
+      </p>
+
+      <div class="d-flex align-items-baseline gap-2 mb-3">
+        <span class="price-main">₹15,500</span>
+        <span class="price-old">₹16,999</span>
+        <small class="text-success fw-semibold">Save ₹1,499</small>
+      </div>
+
+      <!-- VIEW DETAILS BUTTON -->
+      <button class="add-btn"
+        onclick="openProductDetails(
+          'HP All-in-One Inkjet Printer', 
+          15500, 
+          [
+          '/static/images/HP.jpg',
+          '/static/images/HP1.avif',
+          '/static/images/HP12.avif',
+          '/static/images/HP10.avif'
+          ],
+          {
+            highlights: [
+              'All-in-One printer: Print, Copy & Scan',
+              'High quality printing up to 4800 × 1200 optimized dpi',
+              'Compact design with 1.0-inch iCON LCD display',
+              'Manual duplex printing supported',
+              'Borderless photo printing up to A4 size',
+              'USB 2.0 connectivity for reliable performance'
+            ],
+            specs: [
+              'Functions: Print, Copy, Scan',
+              'Print Technology: HP Thermal Inkjet',
+              'Print Speed (Black ISO): Up to 12 ppm',
+              'Print Quality: Black up to 1200 × 1200 dpi, Color up to 4800 × 1200 dpi',
+              'Display: 27 Segments + 1.0-inch iCON LCD',
+              'Processor Speed: 980 MHz',
+              'Ink Bottles: 4 (Black + 3 Color)',
+              'Connectivity: Hi-Speed USB 2.0',
+              'Duplex Printing: Manual (Driver Supported)',
+              'Input Tray: 100 sheets | Output Tray: 30 sheets',
+              'Borderless Printing: Yes (Up to A4)',
+              'Scanner Type: Flatbed | Optical Resolution: Up to 1200 dpi',
+              'Copy Resolution: Up to 600 × 600 dpi | Max Copies: 99',
+              'Maximum Memory: 64 MB',
+              'Compatible OS: Windows 11, Windows 10',
+              'Power Consumption: 0.11W (Off), 2.588W (Ready), 0.984W (Sleep)',
+              'Sustainable Design: 45% post-consumer recycled plastic'
+            ]
+          }
+        )">
+        View Details
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<!-- 🔹 NEW ARRIVALS -->
+<section class="py-5" style="background: radial-gradient(circle at top, rgba(57,126,255,0.4), rgba(3,9,26,1) 55%);">
+  <div class="container">
+    <div class="text-center mb-4">
+      <div class="section-title">New arrivals</div>
+      <h2 class="section-heading mb-2">Fresh tech just landed</h2>
+      <p class="section-desc">
+        Latest models and popular accessories now available at RCShop.
+      </p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- =================== 1️⃣ SLIM LAPTOP =================== -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="arrival-card h-100">
+          <img src="{% static 'images/ultra slim.avif' %}" class="w-100" style="height:190px; object-fit:cover;" alt="Slim laptop">
+          <div class="p-3">
+            <h6 class="mb-1">Ultra-slim Business Laptop</h6>
+            <small class="text-secondary d-block mb-1">16GB RAM • 512GB SSD</small>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-semibold text-primary">₹64,999</span>
+
+              <button class="view-btn"
+onclick="openProductDetails(
+  'Ultra-slim Business Laptop',
+  64999,
+  ['{% static 'images/ultra slim.avif' %}'],
+  {
+    highlights: [
+      'Ultra-lightweight Premium Build',
+      '16GB High-Speed DDR4 RAM',
+      '512GB NVMe SSD for Fast Boot',
+      '12 Hours Battery Backup'
+    ],
+    specs: [
+      '14-inch Full HD IPS Display',
+      'Intel Core i7 10th Gen Processor',
+      'Backlit Keyboard',
+      'Fingerprint Power Button'
+    ]
+  }
+)">View</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================== 2️⃣ MONITOR =================== -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="arrival-card h-100">
+          <img src="{% static 'images/monitor 24.avif' %}" class="w-100" style="height:190px; object-fit:cover;" alt="Monitor">
+          <div class="p-3">
+            <h6 class="mb-1">24&quot; Full HD Monitor</h6>
+            <small class="text-secondary d-block mb-1">IPS Panel • Thin bezel</small>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-semibold text-primary">₹9,499</span>
+
+              <button class="view-btn"
+onclick="openProductDetails(
+  '24-inch Full HD Monitor',
+  9499,
+  ['{% static 'images/monitor 24.avif' %}'],
+  {
+    highlights: [
+      'IPS Technology for True Colors',
+      'Ultra Thin Bezels',
+      'Eye Care Mode – Low Blue Light',
+      '75Hz Smooth Refresh Rate'
+    ],
+    specs: [
+      '24-inch Full HD (1920x1080)',
+      'HDMI + VGA Support',
+      'Anti-Glare Panel',
+      'Adjustable Tilt Stand'
+    ]
+  }
+)">View</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================== 3️⃣ WI-FI ROUTER =================== -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="arrival-card h-100">
+          <img src="{% static 'images/WIFI ROUTER.jpg' %}" class="w-100" style="height:190px; object-fit:cover;" alt="Router">
+          <div class="p-3">
+            <h6 class="mb-1">Dual-band Wi-Fi Router</h6>
+            <small class="text-secondary d-block mb-1">Faster home &amp; office internet</small>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-semibold text-primary">₹2,899</span>
+
+              <button class="view-btn"
+onclick="openProductDetails(
+  'Dual-band Wi-Fi Router',
+  2899,
+  ['{% static 'images/WIFI ROUTER.jpg' %}'],
+  {
+    highlights: [
+      '2.4GHz + 5GHz Dual-band Support',
+      'High Range 4 External Antennas',
+      'Fast Wireless Speed (1200 Mbps)',
+      'Suitable for Work-from-Home'
+    ],
+    specs: [
+      '1200 Mbps Maximum Speed',
+      '4 High-Gain Antennas',
+      'WPA2 Advanced Security',
+      'Supports up to 25 Devices'
+    ]
+  }
+)">View</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =================== 4️⃣ 1TB HARD DISK =================== -->
+      <div class="col-sm-6 col-lg-3">
+        <div class="arrival-card h-100">
+          <img src="{% static 'images/1TB_Internal_hard_disk.webp' %}" class="w-100" style="height:190px; object-fit:cover;" alt="External drive">
+          <div class="p-3">
+            <h6 class="mb-1">1TB External Hard Drive</h6>
+            <small class="text-secondary d-block mb-1">Portable backup on the go</small>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-semibold text-primary">₹4,199</span>
+
+              <button class="view-btn"
+onclick="openProductDetails(
+  '1TB External Hard Disk',
+  4199,
+  ['{% static 'images/1TB_Internal_hard_disk.webp' %}'],
+  {
+    highlights: [
+      'Shock-Proof & Durable Body',
+      'Ultra-Fast Data Transfer USB 3.0',
+      'Portable Slim Design',
+      'Compatible with Laptop / PC / TV'
+    ],
+    specs: [
+      '1TB Storage Capacity',
+      'USB 3.0 SuperSpeed',
+      'Plug & Play (No software needed)',
+      'Internal 7200 RPM Mechanism'
+    ]
+  }
+)">View</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- 🔹 BRANDS STRIP -->
+<section class="py-4 rc-section-soft">
+  <div class="container text-center">
+    <div class="section-title mb-2">Top brands we deal in</div>
+
+    <div class="brand-strip">
+      <div class="brand-pill"><i class="bi bi-laptop"></i>HP</div>
+      <div class="brand-pill"><i class="bi bi-laptop"></i>Dell</div>
+      <div class="brand-pill"><i class="bi bi-laptop"></i>Lenovo</div>
+      <div class="brand-pill"><i class="bi bi-laptop"></i>Asus</div>
+      <div class="brand-pill"><i class="bi bi-display"></i>Acer</div>
+    </div>
+
+  </div>
+</section>
+<footer class="rc-footer" style="background:linear-gradient(135deg,#001429,#003d7a,#001429); padding-top:50px; padding-bottom:25px;">
+  <div class="container">
+
+    <div class="row">
+
+      <!-- BRAND + ADDRESS -->
+      <div class="col-md-4 mb-4">
+        <h3 style="color:#00eaff; font-weight:700; text-shadow:0 0 12px #00eaff;">
+          RCShop
+        </h3>
+        <p style="color:#cfe9ff; line-height:1.6; margin-top:10px;">
+          Your trusted destination for premium computers, accessories & repair services.
+        </p>
+
+        <h6 class="mt-3" style="color:#00eaff; font-weight:600;">
+          📍 Address
+        </h6>
+        <p style="color:#cfe9ff; margin:0;">
+          Gurukul Building,<br>
+          Near Old Bus Stand Rajgarh<br>
+          Sirmour Himachal Pradesh – 173101
+        </p>
+      </div>
+
+      <!-- QUICK LINKS -->
+      <div class="col-md-3 mb-4">
+        <h5 style="color:#ffc107; font-weight:700; margin-bottom:15px;">
+          🔗 Quick Links
+        </h5>
+
+        <a href="{% url 'home' %}" class="footer-link" style="color:#d6e7ff; display:block; margin-bottom:6px;">🏠 Home</a>
+        <a href="{% url 'products' %}" class="footer-link" style="color:#d6e7ff; display:block; margin-bottom:6px;">🛒 Products</a>
+        <a href="{% url 'about' %}" class="footer-link" style="color:#d6e7ff; display:block; margin-bottom:6px;">ℹ️ About</a>
+        <a href="{% url 'contact' %}" class="footer-link" style="color:#d6e7ff; display:block; margin-bottom:6px;">✉️ Contact</a>
+        <a href="{% url 'return_policy' %}" class="footer-link" style="color:#d6e7ff; display:block;">📄 Return Policy</a>
+      </div>
+
+      <!-- SUPPORT -->
+      <div class="col-md-3 mb-4">
+        <h5 style="color:#ff5252; font-weight:700; margin-bottom:15px;">
+          🎧 Customer Support
+        </h5>
+
+        <p style="color:#d6e7ff; margin:5px 0;">📞 +91 9625225254</p>
+        <p style="color:#d6e7ff; margin:5px 0;">📧 rightcomputers89@gmail.com</p>
+        <p style="color:#d6e7ff; margin:5px 0;">⏱ 10AM – 8PM (Mon–Sat)</p>
+      </div>
+
+      <!-- SOCIAL LINKS -->
+      <div class="col-md-2 mb-4">
+        <h5 style="color:#00d1ff; font-weight:700; margin-bottom:15px;">
+          👥 Follow Us
+        </h5>
+
+        <div style="display:flex; gap:15px; align-items:center;">
+          <a href="#" title="Facebook"><i class="bi bi-facebook" style="font-size:32px; color:#1877F2;"></i></a>
+          <a href="#" title="Instagram"><i class="bi bi-instagram" style="font-size:32px; color:#E1306C;"></i></a>
+          <a href="#" title="YouTube"><i class="bi bi-youtube" style="font-size:32px; color:#FF0000;"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <hr style="border-color:rgba(255,255,255,0.18); margin-top:25px;">
+
+    <p class="text-center mt-3" style="color:#9fc7ff;">
+      © 2025 RCStore® | Designed with ❤️ by Amit Kumar
+    </p>
+
+  </div>
+</footer>
+
+
+<!-- ⭐ WhatsApp Floating Button -->
+<a href="https://wa.me/919625252254" class="whatsapp-float" target="_blank" 
+   style="position: fixed; width: 55px; height: 55px; background: #25d366; bottom: 25px; right: 25px;
+          color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+          font-size: 28px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 999; transition: 0.3s;">
+  <i class="bi bi-whatsapp"></i>
+</a>
+
+<script src="{% static 'js/index.js' %}"></script>
+
+{% endblock %}

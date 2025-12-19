@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/return_policy.css' %}">
+
+<div class="box">
+    <h1>RCShop Return & Refund Policy</h1>
+
+    <p>We want you to be fully satisfied with every purchase you make from RCShop.  
+    If an item does not meet your expectations, you may request a return within the allowed period.</p>
+
+    <h2>🕒 Return Window</h2>
+    <ul>
+        <li>Return available within <b>7 days</b> from delivery.</li>
+        <li>Product must be in original condition.</li>
+        <li>Invoice must be available.</li>
+    </ul>
+
+    <h2>📦 Items Eligible for Return</h2>
+    <ul>
+        <li>Laptops, Keyboards, Mouse, Monitors</li>
+        <li>Printers, Cables, CCTV Cameras</li>
+        <li>Accessories (Webcams, Cleaning kits)</li>
+    </ul>
+
+    <h2>❌ Items NOT eligible for return</h2>
+    <ul>
+        <li>Physical damage / burnt parts</li>
+        <li>Used or missing accessories</li>
+        <li>Pendrive / Storage devices (if opened)</li>
+    </ul>
+
+    <h2>💰 Refund Process</h2>
+    <p>Refund is initiated within <b>3–5 business days</b> after receiving the returned product.</p>
+
+    <h2>🚀 How to Request a Return?</h2>
+    <p>Just click the button below to request a return.</p>
+
+    <a class="btn" href="{% url 'return_request' %}">Request a Return</a>
+</div>
+<script src="{% static 'js/return_policy.js' %}"></script>
+
+{% endblock %}

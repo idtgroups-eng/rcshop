@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Payment Method</title>
+  <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+</head>
+<body>
+
+  <div class="page-wrap">
+    <!-- PREMIUM HEADER WITH BREADCRUMB -->
+    <div class="header">
+      <div class="breadcrumb">
+        🛒 Cart › Address › <span class="active-step">Payment</span>
+      </div>
+
+      <div class="center-brand">
+        <div class="header-title">RCStore</div>
+        <div class="tagline">The Trusted Tech Store</div>
+      </div>
+
+      <div class="secure-right">Secure 🔒</div>
+    </div>
+
+    <h2>Select Payment Method</h2>
+
+<div class="options">
+
+  <!-- 📱 UPI PAYMENT -->
+  <div class="card" onclick="window.location.href='{% url 'payment_upi' %}'">
+    <div class="icon">📱</div>
+    <h3>UPI Payment</h3>
+    <p>Pay using PhonePe, Google Pay, Paytm, BHIM</p>
+  </div>
+
+  <!-- 🚚 CASH ON DELIVERY (UPDATED FLOW) -->
+  <div class="card" onclick="window.location.href='{% url 'cod_details' %}'">
+    <div class="icon">🚚</div>
+    <h3>Cash on Delivery</h3>
+    <p>Pay when product is delivered</p>
+  </div>
+
+  <!-- 💳 ONLINE PAYMENT -->
+  <div class="card" onclick="window.location.href='{% url 'payment_online' %}'">
+    <div class="icon">💳</div>
+    <h3>Online Payment</h3>
+    <p>Debit Card, Credit Card, NetBanking</p>
+  </div>
+
+</div>
+
+    <div class="back-btn" onclick="history.back()">← Back</div>
+  </div>
+
+  <script src="{% static 'js/payment.js' %}"></script>
+</body>
+</html>

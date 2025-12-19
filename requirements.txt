@@ -1,0 +1,8 @@
+Django>=4.2
+gunicorn
+whitenoise
+qrcode
+Pillow
+reportlab
+requests
+xhtml2pdf

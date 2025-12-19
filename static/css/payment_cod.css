@@ -1,0 +1,44 @@
+body{
+    margin:0;
+    background:#eef4ff;
+    font-family:Arial;
+}
+
+.cod-box{
+    max-width:420px;
+    background:#fff;
+    margin:80px auto;
+    padding:30px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 10px 40px rgba(0,0,0,.15);
+}
+
+h1{
+    color:#008cff;
+}
+
+.info{
+    margin:20px 0;
+    font-size:17px;
+}
+
+.confirm{
+    background:#22c55e;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.cancel{
+    margin-left:10px;
+    background:#f87171;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}

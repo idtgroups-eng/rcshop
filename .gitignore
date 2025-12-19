@@ -1,0 +1,23 @@
+__pycache__/
+*.pyc
+db.sqlite3
+.env
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Django
+db.sqlite3
+*.sqlite3
+
+# Environment
+.env
+
+# Static collected
+staticfiles/
+
+# OS
+.DS_Store
+Thumbs.db

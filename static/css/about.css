@@ -1,0 +1,276 @@
+/* ================= GLOBAL ================= */
+body {
+    background: linear-gradient(135deg, #050b1e, #0b122d);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* ================= NAVBAR ================= */
+.premium-nav {
+    background: rgba(0, 0, 0, 0.40);
+    backdrop-filter: blur(18px);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+/* ================= WELCOME BAR ================= */
+.top-glass-bar {
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    display: inline-block;
+    animation: slideFade 1s ease forwards;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.top-glass-bar p {
+    margin: 0;
+    font-weight: 600;
+    color: white;
+    font-size: 16px;
+}
+
+.top-glass-bar i {
+    color: #00eaff;
+    text-shadow: 0 0 8px #00eaff;
+}
+
+@keyframes slideFade {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= NAV LINKS ================= */
+.nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+.nav-ani {
+    position: relative;
+}
+
+.nav-ani::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #00eaff;
+    transition: 0.3s;
+}
+
+.nav-ani:hover::after,
+.nav-ani.active::after {
+    width: 100%;
+}
+
+.navbar-nav {
+    list-style: none;
+    padding-left: 0;
+    flex-wrap: nowrap !important;
+}
+
+.navbar-nav.flex-row > li {
+    padding: 0 10px;
+}
+
+.logo-area a,
+.welcome-area,
+.menu-area ul {
+    white-space: nowrap;
+}
+
+.welcome-area {
+    margin-left: -40px;
+}
+
+/* ================= LOGO ================= */
+.brand-blue {
+    color: #00b3ff !important;
+    text-shadow: 0 0 10px rgba(0,179,255,0.4);
+}
+
+/* ================= ABOUT HEADER ================= */
+.about-header {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.about-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.about-header p {
+    font-size: 1.1rem;
+    color: white;
+    max-width: 700px;
+    margin: auto;
+}
+
+/* ================= NEON TITLES ================= */
+.neon-title {
+    color: #4dc3ff;
+    text-shadow:
+        0 0 10px #4dc3ff,
+        0 0 20px #00aaff,
+        0 0 35px #00aaff;
+    font-weight: 700;
+}
+
+/* ================= MISSION / VISION ================= */
+.mv-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 25px;
+}
+
+.mv-card {
+    width: 100%;
+    padding: 25px;
+    border-radius: 22px;
+    background: rgba(0, 255, 255, 0.10);
+    border: 2px solid rgba(0, 255, 255, 0.55);
+    box-shadow:
+        0 0 20px rgba(0, 255, 255, 0.4),
+        inset 0 0 18px rgba(0, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.mv-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 0 45px rgba(0, 255, 255, 0.9),
+        inset 0 0 28px rgba(0, 255, 255, 0.35);
+}
+
+.mv-icon {
+    font-size: 45px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 15px #00eaff;
+}
+
+.mv-card h3 {
+    color: white;
+    font-weight: 700;
+    text-shadow: 0 0 18px #00eaff;
+}
+
+.mv-card p {
+    color: #e6faff;
+}
+
+/* ================= WHY CHOOSE ================= */
+.why-title {
+    margin-bottom: 25px;
+}
+
+.why-pro-card {
+    width: 100%;
+    padding: 25px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(0, 255, 255, 0.45);
+    box-shadow:
+        0 0 20px rgba(0, 255, 255, 0.35),
+        inset 0 0 18px rgba(0, 255, 255, 0.20);
+    backdrop-filter: blur(12px);
+    transition: 0.3s ease;
+    color: white;
+    text-align: center;
+}
+
+.why-pro-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 0 40px rgba(0, 255, 255, 0.75),
+        inset 0 0 25px rgba(0, 255, 255, 0.30);
+}
+
+.why-pro-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 15px #00eaff;
+}
+
+.why-pro-card h4 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #eaffff;
+    text-shadow: 0 0 12px #00d5ff;
+}
+
+.why-pro-card p {
+    color: #d8f8ff;
+}
+
+/* ================= TEAM ================= */
+.team-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 22px;
+    padding: 25px;
+    border: 2px solid rgba(0, 255, 255, 0.4);
+    box-shadow:
+        0 0 25px rgba(0, 255, 255, 0.3),
+        inset 0 0 20px rgba(0, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    transition: 0.3s ease;
+    color: white;
+}
+
+.team-card:hover {
+    transform: translateY(-8px);
+    box-shadow:
+        0 0 45px rgba(0, 255, 255, 0.8),
+        inset 0 0 25px rgba(0, 255, 255, 0.2);
+}
+
+.team-photo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid #00eaff;
+    box-shadow: 0 0 20px #00eaff;
+}
+
+.team-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #eaffff;
+    text-shadow: 0 0 10px #00d5ff;
+}
+
+.team-role {
+    color: #d8faff;
+    margin: 0;
+    font-size: 15px;
+}
+
+/* ================= FOOTER ================= */
+.footer-section {
+    background: linear-gradient(135deg, #0d6efd, #0047b3);
+    color: white;
+    padding: 40px 0;
+    margin-top: 60px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #dbe9ff;
+}
+
+.footer-links a:hover {
+    color: white;
+    padding-left: 6px;
+}

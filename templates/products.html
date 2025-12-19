@@ -1,0 +1,1353 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body_class %}products-page{% endblock %}
+
+{% block title %}Products - RCShop{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= HEADER ================= -->
+<header class="rc-header">
+<div class="rc-container">
+  <h2 class="rc-logo">RCShop</h2>
+
+  <nav class="rc-nav">
+    <a href="{% url 'home' %}">Home</a>
+    <a class="active" href="{% url 'products' %}">Products</a>
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'contact' %}">Contact</a>
+  </nav>
+
+  <!-- SEARCH -->
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search products...">
+    <button id="micBtn" class="mic-btn"><i class="bi bi-mic-fill"></i></button>
+  </div>
+
+  <!-- CART -->
+  <div class="rc-cart" onclick="window.location.href='{% url 'cart' %}'">
+    <i class="bi bi-cart4"></i>
+    <span class="rc-cart-count" id="cartCount">0</span>
+  </div>
+</div>
+</header>
+
+<!-- FILTER BUTTONS -->
+<div class="text-center mt-4">
+  <button class="filter-btn active" data-category="all">All</button>
+  <button class="filter-btn" data-category="laptop">Laptops</button>
+  <button class="filter-btn" data-category="monitor">Monitors</button>
+  <button class="filter-btn" data-category="keyboard">Keyboard</button>
+  <button class="filter-btn" data-category="mouse">Mouse</button>
+  <button class="filter-btn" data-category="pendrive">Pen Drive</button>
+  <button class="filter-btn" data-category="cable">Cables</button>
+  <button class="filter-btn" data-category="cctv">CCTV</button>
+  <button class="filter-btn" data-category="SSD">SSD</button>
+  <button class="filter-btn" data-category="USB PORT">USB PORT</button>
+  <button class="filter-btn" data-category="Antivirus">Antivirus</button>
+</div>
+
+<h2 class="section-title">Our Products</h2>
+
+<div id="productContainer">
+<!-- ====================== LAPTOPS ====================== -->
+
+<!-- ⭐ HP Pavilion 15 -->
+<div class="product-card" data-category="laptop">
+  <span class="sale-tag">10% OFF</span>
+
+  <img src="{% static 'images/HP Pavilion.jpg' %}">
+  <h5 class="mt-2">HP Pavilion 15</h5>
+  <p class="price">₹59,999</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex justify-content-between mt-2">
+
+<button class="add-btn"
+        onclick="addToCart('HP Pavilion 15', 59999, `{% static 'images/HP Pavilion.jpg' %}`)">
+    Add
+</button>
+
+<button class="buy-btn"
+        onclick="buyNow('HP Pavilion 15', 59999, '{% static "images/HP Pavilion.jpg" %}')">
+    Buy
+</button>
+<button class="view-btn"
+onclick="openProductDetails(
+    'HP Pavilion 15',
+    59999,
+    [
+        '{% static "images/HP Pavilion.jpg" %}',
+        '{% static "images/hp1.jpg" %}',
+        '{% static "images/hp2.jpg" %}',
+        '{% static "images/hp3.jpg" %}'
+    ],
+    {
+        highlights: [
+            '11th Gen Intel Core i5 Processor',
+            'Fast 8GB DDR4 RAM',
+            '512GB NVMe SSD Storage',
+            'Backlit Keyboard + Fingerprint Sensor',
+            'Lightweight Premium Metal Finish'
+        ],
+        specs: [
+            '15.6” Full HD Anti-Glare Display',
+            'Intel Iris Xe Graphics',
+            'WiFi 6 + Bluetooth 5.2',
+            'HP Fast Charge: 50% in 45 minutes',
+            'Windows 11 Home + MS Office'
+        ]
+    }
+)">
+    View
+</button>
+
+
+
+
+  </div>
+</div>
+
+
+
+<!-- ⭐ Dell Inspiron 3511 -->
+<div class="product-card" data-category="laptop">
+  <span class="sale-tag">10% OFF</span>
+
+  <img src="{% static 'images/Dell Inspiron.jpg' %}">
+  <h5 class="mt-2">Dell Inspiron 3511</h5>
+  <p class="price">₹54,499</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex justify-content-between mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Dell Inspiron 3511', 54499, '{% static 'images/Dell Inspiron.jpg' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Dell Inspiron 3511', 54499, '{% static 'images/Dell Inspiron.jpg' %}')">
+      Buy
+    </button>
+
+    <button class="view-btn"
+onclick="openProductDetails(
+    'Dell Inspiron 3511',
+    54499,
+    [
+        '{% static "images/Dell Inspiron.jpg" %}',
+        '{% static "images/dell1.jpg" %}',
+        '{% static "images/dell2.jpg" %}',
+        '{% static "images/dell3.jpg" %}'
+    ],
+    {
+        highlights: [
+            '11th Gen Intel Core i5 Laptop',
+            'Narrow Bezel Full HD Display',
+            'Powerful 8GB DDR4 RAM',
+            'Long Battery Backup for Work & Study',
+            'Silent Cooling & Smooth Performance'
+        ],
+        specs: [
+            '15.6” FHD LED Backlit Display',
+            '256GB + 256GB Dual SSD Combo',
+            'Intel UHD Graphics',
+            'Waves MaxxAudio Speakers',
+            'Numeric Keypad + HD Webcam'
+        ]
+    }
+)">
+    View
+</button>
+
+
+  </div>
+</div>
+
+
+
+<!-- ⭐ Lenovo Ideapad Slim -->
+<div class="product-card" data-category="laptop">
+  <span class="sale-tag">10% OFF</span>
+
+  <img src="{% static 'images/Lenovo.avif' %}">
+  <h5 class="mt-2">Lenovo IdeaPad Slim</h5>
+  <p class="price">₹47,999</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex justify-content-between mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Lenovo IdeaPad Slim', 47999, '{% static 'images/Lenovo.avif' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Lenovo IdeaPad Slim', 47999, '{% static 'images/Lenovo.avif' %}')">
+      Buy
+    </button>
+
+    <button class="view-btn"
+onclick="openProductDetails(
+    'Lenovo IdeaPad Slim',
+    47999,
+    [
+        '{% static "images/Lenovo.avif" %}',
+        '{% static "images/len1.jfif" %}',
+        '{% static "images/len2.jfif" %}',
+        '{% static "images/len3.jfif" %}'
+    ],
+    {
+        highlights: [
+            'Ultra Slim & Lightweight Design',
+            '11th Gen Intel i3/i5 Processor Option',
+            'Premium Dolby Audio Speakers',
+            'Rapid Charge Boost – 15 Mins = 2 Hours',
+            'Perfect for Students & Office Work'
+        ],
+        specs: [
+            '15.6” Full HD TN/IPS Display',
+            '8GB DDR4 RAM | 512GB SSD',
+            'Integrated Intel UHD Graphics',
+            'WiFi 5 + Bluetooth 5.0',
+            '2-sided Narrow Bezels'
+        ]
+    }
+)">
+    View
+</button>
+
+
+  </div>
+</div>
+
+
+
+<!-- ⭐ Acer Aspire 7 -->
+<div class="product-card" data-category="laptop">
+  <span class="sale-tag">10% OFF</span>
+
+  <img src="{% static 'images/Acer Aspire 7.jpg' %}">
+  <h5 class="mt-2">Acer Aspire 7</h5>
+  <p class="price">₹52,999</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex justify-content-between mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Acer Aspire 7', 52999, '{% static 'images/Acer Aspire 7.jpg' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Acer Aspire 7', 52999, '{% static 'images/Acer Aspire 7.jpg' %}')">
+      Buy
+    </button>
+<button class="view-btn"
+onclick="openProductDetails(
+    'Acer Aspire 7',
+    52999,
+    [
+        '{% static "images/Acer Aspire 7.jpg" %}',
+        '{% static "images/acer1.jfif" %}',
+        '{% static "images/acer2.jfif" %}',
+        '{% static "images/acer3.jfif" %}'
+    ],
+    {
+        highlights: [
+            'NVIDIA GTX Graphics for Gaming',
+            'Powerful AMD Ryzen / Intel i5 Processor',
+            'Backlit Keyboard for Night Use',
+            'Ultra-Fast 512GB SSD Storage',
+            'Dual-Fan Cooling System'
+        ],
+        specs: [
+            '15.6” FHD ComfyView IPS Display',
+            '8GB DDR4 RAM (Expandable to 32GB)',
+            'GTX 1650 4GB Graphics',
+            'WiFi 6 + Gigabit LAN',
+            '180° Hinged Premium Build'
+        ]
+    }
+)">
+    View
+</button>
+
+    
+  </div>
+</div>
+<!-- ====================== MONITORS SECTION ====================== -->
+
+<!-- ⭐ MSI Curved Gaming Monitor -->
+<div class="product-card" data-category="monitor">
+  <span class="sale-tag">10% OFF</span>
+
+  <img src="{% static 'images/MSI Curved.jpg' %}">
+  <h5 class="mt-2">MSI Curved Gaming Monitor</h5>
+  <p class="price">₹18,499</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('MSI Curved Gaming Monitor',18499,'{% static 'images/MSI Curved.jpg' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('MSI Curved Gaming Monitor',18499,'{% static 'images/MSI Curved.jpg' %}')">
+      Buy
+    </button>
+<button class="view-btn"
+onclick="openProductDetails(
+    'MSI Curved Gaming Monitor',
+    18499,
+    [
+        '{% static "images/MSI Curved.jpg" %}',
+        '{% static "images/MSI Curved (1).jfif" %}',
+        '{% static "images/MSI Curved (2).jfif" %}'
+    ],
+    {
+        highlights: [
+            '1500R Immersive Curved Screen',
+            'Smooth 165Hz Refresh Rate',
+            '1ms Response Time for Pro Gaming',
+            'Anti-Flicker + Low Blue Light Protection',
+            'Frameless Bezel for Ultra-Wide View'
+        ],
+        specs: [
+            '27-inch Curved VA Gaming Panel',
+            'Full HD 1920×1080 Resolution',
+            'AMD FreeSync Premium Support',
+            'HDMI + DisplayPort Connectivity',
+            '178° Wide Viewing Angle'
+        ]
+    }
+)">
+    View
+</button>
+
+    
+  </div>
+</div>
+
+
+<!-- ⭐ Acer 24 Full HD Monitor -->
+<div class="product-card" data-category="monitor">
+
+  <img src="{% static 'images/Acer Full HD Monitor.jpg' %}">
+  <h5 class="mt-2">Acer 24&quot; Full HD Monitor</h5>
+  <p class="price">₹10,499</p>
+  <div class="rating">⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Acer 24 Full HD Monitor',10499,'{% static 'images/Acer Full HD Monitor.jpg' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Acer 24 Full HD Monitor',10499,'{% static 'images/Acer Full HD Monitor.jpg' %}')">
+      Buy
+    </button>
+<button class="view-btn"
+onclick="openProductDetails(
+    'Acer 24 Full HD Monitor',
+    10499,
+    [
+        '{% static "images/Acer Full HD Monitor.jpg" %}',
+        '{% static "images/acer11.jpg" %}',
+        '{% static "images/acer12.jpg" %}'
+    ],
+    {
+        highlights: [
+            'IPS Panel with True Color Accuracy',
+            'ZeroFrame Ultra-Slim Bezel Design',
+            'Blue Light Shield Technology',
+            'Perfect for Office & Entertainment',
+            'Energy Efficient Eco Display'
+        ],
+        specs: [
+            '24-inch Full HD 1080p Display',
+            '75Hz Refresh Rate',
+            'HDMI + VGA Ports',
+            '5ms Response Time',
+            'Adaptive Sync Support'
+        ]
+    }
+)">
+    View
+</button>
+
+    
+
+  </div>
+</div>
+
+
+
+<!-- ====================== KEYBOARDS SECTION ====================== -->
+
+<!-- ⭐ Gaming Mechanical Keyboard -->
+<div class="product-card" data-category="keyboard">
+  <span class="sale-tag">10% OFF</span>
+
+  <img src="{% static 'images/Gaming Keyboard.jpg' %}">
+  <h5 class="mt-2">Gaming Mechanical Keyboard</h5>
+  <p class="price">₹1,499</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Gaming Mechanical Keyboard',1499,'{% static 'images/Gaming Keyboard.jpg' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Gaming Mechanical Keyboard',1499,'{% static 'images/Gaming Keyboard.jpg' %}')">
+      Buy
+    </button>
+<button class="view-btn"
+onclick="openProductDetails(
+    'Gaming Mechanical Keyboard',
+    1499,
+    [
+        '{% static "images/Gaming Keyboard.jpg" %}',
+        '{% static "images/gk1.jpeg" %}',
+        '{% static "images/gk2.jpg" %}'
+    ],
+    {
+        highlights: [
+            'Clicky Mechanical Blue Switches',
+            'Rainbow RGB Backlight with Effects',
+            'Metal Top Body for Durability',
+            'Perfect for Gaming & Fast Typing',
+            'Anti-Ghosting 26-Key Rollover'
+        ],
+        specs: [
+            'Mechanical Blue Switch Keyboard',
+            'RGB 7-Lighting Modes',
+            'USB Plug & Play',
+            '100% Full-Sized Layout',
+            '2-meter Braided Cable'
+        ]
+    }
+)">
+    View
+</button>
+
+  </div>
+</div>
+
+
+
+<!-- ⭐ Logitech K120 Keyboard -->
+<div class="product-card" data-category="keyboard">
+
+  <img src="{% static 'images/Logitech Keyboard.jpg' %}">
+  <h5 class="mt-2">Logitech K120</h5>
+  <p class="price">₹699</p>
+  <div class="rating">⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Logitech K120',699,'{% static 'images/Logitech Keyboard.jpg' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Logitech K120',699,'{% static 'images/Logitech Keyboard.jpg' %}')">
+      Buy
+    </button>
+<button class="view-btn"
+onclick="openProductDetails(
+    'Logitech K120',
+    699,
+    [
+        '{% static "images/Logitech Keyboard.jpg" %}',
+        '{% static "images/lk1.jpeg" %}'
+    ],
+    {
+        highlights: [
+            'Spill-Resistant Classic Design',
+            'Silent Comfortable Keys',
+            'Long-Lasting Build Quality',
+            'Perfect for Office & Home Use',
+            'Full-Size Keyboard with Number Pad'
+        ],
+        specs: [
+            'Full-Size Layout Keyboard',
+            'Silent Low-Profile Keys',
+            'USB Wired Connectivity',
+            'Durable Tilt-Legs Design',
+            'Plug & Play – No Drivers Needed'
+        ]
+    }
+)">
+    View
+</button>
+
+    
+  </div>
+</div>
+
+
+
+<!-- ====================== MOUSE SECTION ====================== -->
+
+<!-- ⭐ Logitech G102 RGB -->
+<div class="product-card" data-category="mouse">
+  <span class="sale-tag">10% OFF</span>
+
+  <img src="{% static 'images/Logitech Mouse.jpg' %}">
+  <h5 class="mt-2">Logitech G102 RGB</h5>
+  <p class="price">₹1,799</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Logitech G102 RGB',1799,'{% static 'images/Logitech Mouse.jpg' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Logitech G102 RGB',1799,'{% static 'images/Logitech Mouse.jpg' %}')">
+      Buy
+    </button>
+
+    <button class="view-btn"
+onclick="openProductDetails(
+    'Logitech G102 RGB',
+    1799,
+    [
+        '{% static "images/Logitech Mouse.jpg" %}',
+        '{% static "images/lm1.jfif" %}'
+    ],
+    {
+        highlights: [
+            'Advanced 8000 DPI Gaming Sensor',
+            'Lightsync RGB with 16.8M Colors',
+            '6 Programmable Gaming Buttons',
+            'Ultra-Lightweight & Comfortable',
+            'Perfect for FPS, MOBA & eSports'
+        ],
+        specs: [
+            'DPI Range: 200 – 8000',
+            'Mechanical Button Tensioning',
+            'USB Wired Connection',
+            'Polling Rate: 1000 Hz',
+            'Micro-precise Scroll Wheel'
+        ]
+    }
+)">
+    View
+</button>
+
+  </div>
+</div>
+
+
+
+<!-- ⭐ HP Wireless Mouse -->
+<div class="product-card" data-category="mouse">
+
+  <img src="{% static 'images/HP Wireless Mouse.webp' %}">
+  <h5 class="mt-2">HP Wireless Mouse</h5>
+  <p class="price">₹649</p>
+  <div class="rating">⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('HP Wireless Mouse',649,'{% static 'images/HP Wireless Mouse.webp' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('HP Wireless Mouse',649,'{% static 'images/HP Wireless Mouse.webp' %}')">
+      Buy
+    </button>
+<button class="view-btn"
+onclick="openProductDetails(
+    'HP Wireless Mouse',
+    649,
+    [
+        '{% static "images/HP Wireless Mouse.webp" %}',
+        '{% static "images/hpm1.jfif" %}'
+    ],
+    {
+        highlights: [
+            '2.4GHz Stable Wireless Connectivity',
+            'Silent Click Technology',
+            'Ergonomic Design for Long Use',
+            'High Precision Optical Sensor',
+            'Perfect for Office & Home Work'
+        ],
+        specs: [
+            '1600 DPI Optical Tracking',
+            'USB Nano Receiver Included',
+            'Battery Life: Up to 12 Months',
+            'Ambidextrous Design',
+            'Plug & Play – No Drivers Needed'
+        ]
+    }
+)">
+    View
+</button>
+
+
+  </div>
+</div>
+<!-- ====================== PENDRIVE SECTION ====================== -->
+
+<!-- ⭐ Sandisk 64GB Pen Drive -->
+<div class="product-card" data-category="pendrive">
+
+  <img src="{% static 'images/Sandisk 64GB Pen Drive.webp' %}">
+  <h5 class="mt-2">Sandisk 64GB Pen Drive</h5>
+  <p class="price">₹749</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+    <button class="add-btn"
+      onclick="addToCart('Sandisk 64GB Pen Drive',749,'{% static 'images/Sandisk 64GB Pen Drive.webp' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Sandisk 64GB Pen Drive',749,'{% static 'images/Sandisk 64GB Pen Drive.webp' %}')">
+      Buy
+    </button>
+
+   <button class="view-btn"
+onclick="openProductDetails(
+    'Sandisk 64GB Pen Drive',
+    749,
+    [
+        '{% static "images/Sandisk 64GB Pen Drive.webp" %}',
+        '{% static "images/sandisk1.jfif" %}'
+    ],
+    {
+        highlights: [
+            'Secure & Compact Design',
+            'High-Speed USB 3.0 Performance',
+            'Perfect for Movies, Photos & Backup',
+            'Durable Build for Daily Use',
+            'Password Protection Software Included'
+        ],
+        specs: [
+            'Storage Capacity: 64GB',
+            'USB 3.0 with up to 100MB/s Read',
+            'Backward Compatible with USB 2.0',
+            'Shockproof & Temperature Resistant',
+            'Supports Windows, Mac & Linux'
+        ]
+    }
+)">
+    View
+</button>
+  </div>
+
+</div>
+
+
+
+<!-- ⭐ HP 32GB Pen Drive -->
+<div class="product-card" data-category="pendrive">
+
+  <img src="{% static 'images/HP 32GB Pen Drive.jpg' %}">
+  <h5 class="mt-2">HP 32GB Pen Drive</h5>
+  <p class="price">₹499</p>
+  <div class="rating">⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+    <button class="add-btn"
+      onclick="addToCart('HP 32GB Pen Drive',499,'{% static 'images/HP 32GB Pen Drive.jpg' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('HP 32GB Pen Drive',499,'{% static 'images/HP 32GB Pen Drive.jpg' %}')">
+      Buy
+    </button>
+
+    <button class="view-btn"
+onclick="openProductDetails(
+    'HP 32GB Pen Drive',
+    499,
+    [
+        '{% static "images/HP 32GB Pen Drive.jpg" %}'
+    ],
+    {
+        highlights: [
+            'Compact Portable Metal Body',
+            'Fast USB 2.0 Data Transfer',
+            'Strong & Durable Build',
+            'Water & Shock Resistant',
+            'Perfect for School, Office & Backup'
+        ],
+        specs: [
+            'Storage Capacity: 32GB',
+            'USB 2.0 Standard Interface',
+            'Speed: Up to 25MB/s Read',
+            'Plug & Play Support',
+            'Compatible with PC, Laptop, TV, Car Audio'
+        ]
+    }
+)">
+    View
+</button>
+</div>
+</div>
+<!-- ====================== CABLES SECTION ====================== -->
+
+<!-- ⭐ HDMI Cable 4K -->
+<div class="product-card" data-category="cable">
+
+  <img src="{% static 'images/HDMI.webp' %}">
+  <h5 class="mt-2">HDMI Cable 4K</h5>
+  <p class="price">₹399</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+    <button class="add-btn"
+      onclick="addToCart('HDMI Cable 4K',399,'{% static 'images/HDMI.webp' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('HDMI Cable 4K',399,'{% static 'images/HDMI.webp' %}')">
+      Buy
+    </button>
+
+   <button class="view-btn"
+onclick="openProductDetails(
+    'HDMI Cable 4K',
+    399,
+    [
+        '{% static "images/HDMI.webp" %}'
+    ],
+    {
+        highlights: [
+            '4K Ultra HD High-Speed HDMI Support',
+            'Gold-Plated Connectors for Better Signal',
+            'Perfect for TV, Monitor, Laptop & Gaming',
+            'High Durability Braided Cable Design',
+            'Supports ARC, HDR & 60Hz Refresh Rate'
+        ],
+        specs: [
+            'Resolution Support: 4K @ 60Hz',
+            'HDMI 2.0 High-Speed Certified',
+            'Length: 1.5 Meter Standard',
+            'Gold-Plated Corrosion-Free Connectors',
+            'Supports Dolby Atmos & DTS Surround Sound'
+        ]
+    }
+)">
+    View
+</button>
+
+  </div>
+
+</div>
+<!-- ⭐ Type-C Fast Cable -->
+<div class="product-card" data-category="cable">
+
+  <img src="{% static 'images/Type C Fast Cable.webp' %}">
+  <h5 class="mt-2">Type-C Fast Cable</h5>
+  <p class="price">₹299</p>
+  <div class="rating">⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+    <button class="add-btn"
+      onclick="addToCart('Type C Fast Cable',299,'{% static 'images/Type C Fast Cable.webp' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Type C Fast Cable',299,'{% static 'images/Type C Fast Cable.webp' %}')">
+      Buy
+    </button>
+
+   <button class="view-btn"
+onclick="openProductDetails(
+    'Type C Fast Cable',
+    299,
+    [
+        '{% static "images/Type C Fast Cable.webp" %}'
+    ],
+    {
+        highlights: [
+            'Super Fast Charging Support (3A/18W)',
+            'Strong Nylon Braided Cable',
+            'Fast Data Transfer up to 480 Mbps',
+            'Universal Compatibility with All Type-C Devices',
+            'Tangle-Free & Long-Lasting Build'
+        ],
+        specs: [
+            'Connector: Type-C',
+            'Charging Output: 3A Fast Charging',
+            'Cable Length: 1 Meter',
+            'Data Transfer: 480 Mbps',
+            'Over-Voltage & Heat Protection'
+        ]
+    }
+)">
+    View
+</button>
+
+  </div>
+
+</div>
+
+
+
+<!-- ====================== CCTV SECTION ====================== -->
+
+<!-- ⭐ HikVision CCTV -->
+<div class="product-card" data-category="cctv">
+
+  <span class="sale-tag">10% OFF</span>
+
+  <img src="{% static 'images/CCTV17_01.jpg' %}">
+  <h5 class="mt-2">HikVision CCTV Camera</h5>
+  <p class="price">₹1,999</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+    <button class="add-btn"
+      onclick="addToCart('HikVision CCTV Camera',1999,'{% static 'images/CCTV17_01.jpg' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('HikVision CCTV Camera',1999,'{% static 'images/CCTV17_01.jpg' %}')">
+      Buy
+    </button>
+
+    <button class="view-btn"
+onclick="openProductDetails(
+    'HikVision CCTV Camera',
+    1999,
+    [
+        '{% static "images/CCTV17_01.jpg" %}'
+    ],
+    {
+        highlights: [
+            'High Clarity 1080p Video Recording',
+            'Night Vision IR LEDs (Up to 20m)',
+            'Weatherproof & Durable Outdoor Body',
+            'Motion Detection Alerts',
+            'Best for Home, Shop & Office Security'
+        ],
+        specs: [
+            'Resolution: 2MP Full HD 1080p',
+            'Lens: 3.6mm Fixed Lens',
+            'IR Range: 20 Meters Night Vision',
+            'Supports AHD/TVI/CVI/Analog',
+            'Waterproof Rating: IP66'
+        ]
+    }
+)">
+    View
+</button>
+
+  </div>
+
+</div>
+
+<!-- ⭐ CP Plus CCTV Camera -->
+<div class="product-card" data-category="cctv">
+
+  <span class="sale-tag">10% OFF</span>
+
+  <img src="{% static 'images/CP Plus CCTV Camera.webp' %}">
+  <h5 class="mt-2">CP Plus CCTV Camera</h5>
+  <p class="price">₹2,099</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+    <button class="add-btn"
+      onclick="addToCart('CP Plus CCTV Camera',2099,'{% static 'images/CP Plus CCTV Camera.webp' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('CP Plus CCTV Camera',2099,'{% static 'images/CP Plus CCTV Camera.webp' %}')">
+      Buy
+    </button>
+
+   <button class="view-btn"
+onclick="openProductDetails(
+    'CP Plus CCTV Camera',
+    2099,
+    [
+        '{% static "images/CP Plus CCTV Camera.webp" %}'
+    ],
+    {
+        highlights: [
+            'Full HD 1080p Crystal Clear Recording',
+            'Powerful IR Night Vision up to 20m',
+            'Durable Metal Body for Outdoor Use',
+            'Wide Dynamic Range for Better Clarity',
+            'Perfect for Home & Business Surveillance'
+        ],
+        specs: [
+            'Resolution: 2MP Full HD 1080p',
+            'Lens: 3.6mm High-Precision Lens',
+            'IR LEDs: 20m Coverage',
+            'Weatherproof: IP66 Rated',
+            'Supports AHD/TVI/CVI Analog Formats'
+        ]
+    }
+)">
+    View
+</button>
+
+  </div>
+
+</div>
+<!-- ⭐ SSD 128 GB -->
+<div class="product-card" data-category="SSD">
+
+  <img src="{% static 'images/SSD10..png' %}">
+  <h5 class="mt-2">SSD 128 GB</h5>
+  <p class="price">₹1,999</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('SSD 128 GB',1999,'{% static 'images/SSD10..png' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('SSD 128 GB',1999,'{% static 'images/SSD10..png' %}')">
+      Buy
+    </button>
+
+    <button class="view-btn"
+onclick="openProductDetails(
+    'SSD 128 GB',
+    1999,
+    [
+        '{% static "images/SSD10..png" %}',
+        '{% static "images/SSD1.jpg" %}'
+    ],
+    {
+        highlights: [
+            'High-Speed SSD for Faster Boot Time',
+            'Perfect for Laptop & Desktop Upgrade',
+            'Shock Resistant & Durable Build',
+            'Ultra-Fast App Loading Speed'
+        ],
+        specs: [
+            'Storage: 128GB',
+            'Read Speed: Up to 520 MB/s',
+            'Write Speed: Up to 450 MB/s',
+            'Interface: SATA 3 (6Gb/s)'
+        ]
+    }
+)">
+    View
+</button>
+
+  </div>
+</div>
+<!-- ⭐ 1080p Full HD Webcam -->
+<div class="product-card" data-category="accessory">
+
+  <img src="{% static 'images/1080p Full HD Webcam.jpg' %}">
+  <h5 class="mt-2">1080p Full HD Webcam</h5>
+  <p class="price">₹1,299</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('1080p Full HD Webcam',1299,'{% static 'images/1080p Full HD Webcam.jpg' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('1080p Full HD Webcam',1299,'{% static 'images/1080p Full HD Webcam.jpg' %}')">
+      Buy
+    </button>
+
+   <button class="view-btn"
+onclick="openProductDetails(
+    '1080p Full HD Webcam',
+    1299,
+    [
+        '{% static "images/1080p Full HD Webcam.jpg" %}'
+    ],
+    {
+        highlights: [
+            'Full HD 1080p Crystal-Clear Video',
+            'Built-in Noise Reduction Microphone',
+            'Perfect for Online Classes & Zoom Meetings',
+            'Wide Angle Lens for Better Coverage'
+        ],
+        specs: [
+            'Resolution: 1920×1080p',
+            'Frame Rate: 30 FPS',
+            'Plug & Play USB Support',
+            'Auto Light Correction'
+        ]
+    }
+)">
+    View
+</button>
+
+
+  </div>
+</div>
+<!-- ⭐ RAM DDR3 / DDR4 -->
+<div class="product-card" data-category="RAM">
+
+  <img src="{% static 'images/ram.jpg' %}">
+  <h5 class="mt-2">RAM DDR3 / DDR4</h5>
+  <p class="price">₹1,199</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('RAM DDR3 / DDR4',1199,'{% static 'images/ram.jpg' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('RAM DDR3 / DDR4',1199,'{% static 'images/ram.jpg' %}')">
+      Buy
+    </button>
+
+   <button class="view-btn"
+onclick="openProductDetails(
+    'RAM DDR3 / DDR4',
+    1199,
+    [
+        '{% static "images/ram.jpg" %}'
+    ],
+    {
+        highlights: [
+            'High-Speed RAM for Smooth Multitasking',
+            'Improves System Performance',
+            'Energy Efficient Low-Voltage Design',
+            'Stable & Consistent Performance'
+        ],
+        specs: [
+            'Technology: DDR3 / DDR4',
+            'Capacity: 4GB / 8GB (Depending on Model)',
+            'Speed: Up to 2666 MHz',
+            'Compatibility: Laptop / Desktop'
+        ]
+    }
+)">
+    View
+</button>
+
+
+  </div>
+</div>
+<!-- ⭐ USB HUB PORT -->
+<div class="product-card" data-category="USB PORT">
+
+  <img src="{% static 'images/usb port.webp' %}">
+  <h5 class="mt-2">USB HUB PORT</h5>
+  <p class="price">₹449</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('USB HUB PORT',449,'{% static 'images/usb port.webp' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('USB HUB PORT',449,'{% static 'images/usb port.webp' %}')">
+      Buy
+    </button>
+
+    <button class="view-btn"
+onclick="openProductDetails(
+    'USB HUB PORT',
+    449,
+    [
+        '{% static "images/usb port.webp" %}'
+    ],
+    {
+        highlights: [
+            'Expand 1 USB Port into 4 Ports',
+            'Supports Pen Drive, Keyboard, Mouse & More',
+            'Compact Travel-Friendly Design',
+            'High-Speed Data Transfer'
+        ],
+        specs: [
+            'Input: USB 2.0 / USB 3.0',
+            'Output: 4 USB Ports',
+            'Cable Length: 30cm',
+            'Plug & Play – No Drivers Needed'
+        ]
+    }
+)">
+    View
+</button>
+
+
+  </div>
+</div>
+<!-- ⭐ Quick Heal Antivirus -->
+<div class="product-card" data-category="Antivirus">
+
+  <img src="{% static 'images/Antivirus.webp' %}">
+  <h5 class="mt-2">Quick Heal Antivirus</h5>
+  <p class="price">₹5,799</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Quick Heal Antivirus',5799,'{% static 'images/Antivirus.webp' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Quick Heal Antivirus',5799,'{% static 'images/Antivirus.webp' %}')">
+      Buy
+    </button>
+
+   <button class="view-btn"
+onclick="openProductDetails(
+    'Quick Heal Antivirus',
+    5799,
+    [
+        '{% static "images/Antivirus.webp" %}'
+    ],
+    {
+        highlights: [
+            'Real-Time Virus & Malware Protection',
+            'Anti-Ransomware Shield for Security',
+            'Fast Scanning Engine',
+            'Safe Browsing & Online Banking Protection'
+        ],
+        specs: [
+            'Validity: 1 Year / 5 Users',
+            'Platform: Windows & Mac',
+            'Type: Digital Key Activation',
+            'Includes Email & Phone Support'
+        ]
+    }
+)">
+    View
+</button>
+
+  </div>
+</div>
+<!-- ⭐ Quick Heal Antivirus -->
+<div class="product-card" data-category="Antivirus">
+
+  <img src="{% static 'images/Antivirus.webp' %}">
+  <h5 class="mt-2">Quick Heal Antivirus</h5>
+  <p class="price">₹5,799</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Quick Heal Antivirus',5799,'{% static 'images/Antivirus.webp' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Quick Heal Antivirus',5799,'{% static 'images/Antivirus.webp' %}')">
+      Buy
+    </button>
+
+   <button class="view-btn"
+onclick="openProductDetails(
+    'Quick Heal Antivirus',
+    5799,
+    [
+        '{% static "images/Antivirus.webp" %}'
+    ],
+    {
+        highlights: [
+            'Real-Time Virus & Malware Protection',
+            'Anti-Ransomware Shield for Security',
+            'Fast Scanning Engine',
+            'Safe Browsing & Online Banking Protection'
+        ],
+        specs: [
+            'Validity: 1 Year / 5 Users',
+            'Platform: Windows & Mac',
+            'Type: Digital Key Activation',
+            'Includes Email & Phone Support'
+        ]
+    }
+)">
+    View
+</button>
+
+  </div>
+</div>
+<!-- ⭐ Quick Heal Antivirus -->
+<div class="product-card" data-category="Antivirus">
+
+  <img src="{% static 'images/Antivirus.webp' %}">
+  <h5 class="mt-2">Quick Heal Antivirus</h5>
+  <p class="price">₹5,799</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Quick Heal Antivirus',5799,'{% static 'images/Antivirus.webp' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Quick Heal Antivirus',5799,'{% static 'images/Antivirus.webp' %}')">
+      Buy
+    </button>
+
+   <button class="view-btn"
+onclick="openProductDetails(
+    'Quick Heal Antivirus',
+    5799,
+    [
+        '{% static "images/Antivirus.webp" %}'
+    ],
+    {
+        highlights: [
+            'Real-Time Virus & Malware Protection',
+            'Anti-Ransomware Shield for Security',
+            'Fast Scanning Engine',
+            'Safe Browsing & Online Banking Protection'
+        ],
+        specs: [
+            'Validity: 1 Year / 5 Users',
+            'Platform: Windows & Mac',
+            'Type: Digital Key Activation',
+            'Includes Email & Phone Support'
+        ]
+    }
+)">
+    View
+</button>
+
+  </div>
+</div>
+<!-- ⭐ Quick Heal Antivirus -->
+<div class="product-card" data-category="Antivirus">
+
+  <img src="{% static 'images/Antivirus.webp' %}">
+  <h5 class="mt-2">Quick Heal Antivirus</h5>
+  <p class="price">₹5,799</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex gap-2 mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Quick Heal Antivirus',5799,'{% static 'images/Antivirus.webp' %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Quick Heal Antivirus',5799,'{% static 'images/Antivirus.webp' %}')">
+      Buy
+    </button>
+
+   <button class="view-btn"
+onclick="openProductDetails(
+    'Quick Heal Antivirus',
+    5799,
+    [
+        '{% static "images/Antivirus.webp" %}'
+    ],
+    {
+        highlights: [
+            'Real-Time Virus & Malware Protection',
+            'Anti-Ransomware Shield for Security',
+            'Fast Scanning Engine',
+            'Safe Browsing & Online Banking Protection'
+        ],
+        specs: [
+            'Validity: 1 Year / 5 Users',
+            'Platform: Windows & Mac',
+            'Type: Digital Key Activation',
+            'Includes Email & Phone Support'
+        ]
+    }
+)">
+    View
+</button>
+
+  </div>
+</div>
+<!-- ===================== RC SHOP FOOTER ===================== -->
+</div> <!-- productContainer close hona zaruri hai -->
+<br><br><br><br>  <!-- Footer ke liye space -->
+
+<footer class="rc-footer">
+  <div class="footer-container">
+
+    <!-- Logo & About -->
+    <div class="footer-col">
+      <h3 class="footer-logo">RCShop</h3>
+      <p>Your trusted store for laptops, computer accessories, CCTV, gaming peripherals & more.</p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4><i class="bi bi-link-45deg"></i> Quick Links</h4>
+      <ul>
+        <li><a href="index.html"><i class="bi bi-house-door-fill"></i> Home</a></li>
+        <li><a href="products.html"><i class="bi bi-grid-3x3-gap-fill"></i> Products</a></li>
+        <li><a href="about.html"><i class="bi bi-info-circle-fill"></i> About</a></li>
+        <li><a href="contact.html"><i class="bi bi-envelope-fill"></i> Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Customer Support -->
+    <div class="footer-col">
+      <h4><i class="bi bi-headset"></i> Customer Support</h4>
+      <ul>
+        <li><a href="#"><i class="bi bi-truck"></i> Order Tracking</a></li>
+        <li><a href="#"><i class="bi bi-arrow-repeat"></i> Return & Refund</a></li>
+        <li><a href="#"><i class="bi bi-file-earmark-check"></i> Shipping Policy</a></li>
+        <li><a href="#"><i class="bi bi-question-circle"></i> Help Center</a></li>
+      </ul>
+    </div>
+
+    <!-- Social -->
+    <div class="footer-col">
+      <h4><i class="bi bi-share-fill"></i> Follow Us</h4>
+      <div class="footer-social">
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">© 2025 RCShop • All Rights Reserved</div>
+</footer>
+<!-- ===================== PRODUCTS JAVASCRIPT ===================== -->
+<script src="{% static 'js/products.js' %}"></script>
+<script src="{% static 'js/product_details.js' %}"></script>
+
+
+{% endblock %}

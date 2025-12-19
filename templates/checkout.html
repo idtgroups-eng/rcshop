@@ -1,0 +1,269 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RCShop - Checkout</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+<!-- FontAwesome Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+<header class="ultra-header">
+    <div class="header-left">
+        <img src="{% static 'images/logo.png' %}" class="logo" alt="RCShop Logo">
+        <span class="brand">RCShop</span>
+    </div>
+
+    <nav class="header-center">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'products' %}">Products</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}">Contact</a>
+    </nav>
+
+    <div class="header-right-space"></div>
+</header>
+<div class="trust-bar">
+    <div class="trust-track">
+        <div class="group">
+            <span>🚚 Fast Delivery</span>
+            <span>🔒 Secure</span>
+            <span>🎧 24×7 Support</span>
+        </div>
+
+        <!-- Duplicate for infinite loop -->
+        <div class="group">
+            <span>🚚 Fast Delivery</span>
+            <span>🔒 Secure</span>
+            <span>🎧 24×7 Support</span>
+        </div>
+    </div>
+</div>
+
+<!-- TITLE -->
+<div class="title-box">
+    <h1><i class="fa-solid fa-cart-shopping"></i> Checkout</h1>
+</div>
+
+<!-- MAIN SPLIT AREA -->
+<div class="main-container">
+
+    <!-- LEFT: ORDER SUMMARY -->
+    <div class="card">
+        <h2 class="card-title">Order Summary</h2>
+ <table class="order-list" id="orderTable">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Qty</th>
+        </tr>
+    </thead>
+
+    <!-- ✅ FIXED: tbody now has an ID -->
+    <tbody id="orderBody"></tbody>
+
+    <tfoot>
+
+        <!-- SUBTOTAL -->
+        <tr>
+            <td colspan="4" style="padding:0;">
+                <div style="
+                    margin-top:12px;
+                    background:#eaf9ff;
+                    padding:10px 12px;
+                    border-left:4px solid #00b5ff;
+                    font-size:16px;
+                    display:flex;
+                    justify-content:space-between;">
+                    <span><i class="fa-solid fa-sack-dollar"></i> Subtotal</span>
+                    <span id="sumSubtotal">₹0</span>
+                </div>
+            </td>
+        </tr>
+
+        <!-- GST -->
+        <tr>
+            <td colspan="4" style="padding:0;">
+                <div style="
+                    background:#e1f7ff;
+                    padding:10px 12px;
+                    border-left:4px solid #00d0ff;
+                    font-size:16px;
+                    display:flex;
+                    justify-content:space-between;">
+                    <span><i class="fa-solid fa-receipt"></i> GST (18%)</span>
+                    <span id="sumGst">₹0</span>
+                </div>
+            </td>
+        </tr>
+
+        <!-- SHIPPING -->
+        <tr>
+            <td colspan="4" style="padding:0;">
+                <div style="
+                    background:#dff9ff;
+                    padding:10px 12px;
+                    border-left:4px solid #00e0ff;
+                    font-size:16px;
+                    display:flex;
+                    justify-content:space-between;">
+                    <span><i class="fa-solid fa-truck-fast"></i> Shipping</span>
+                    <span id="sumShip">₹0</span>
+                </div>
+            </td>
+        </tr>
+
+        <!-- FLAT DISCOUNT -->
+        <tr>
+            <td colspan="4" style="padding:0;">
+                <div style="
+                    background:#fff2ea;
+                    padding:10px 12px;
+                    border-left:4px solid #ff7f3f;
+                    font-size:16px;
+                    display:flex;
+                    justify-content:space-between;">
+                    <span style="color:#ff5f1f;"><i class="fa-solid fa-tag"></i> Flat Discount</span>
+                    <span id="sumFlat" style="color:#ff5f1f;">-₹0</span>
+                </div>
+            </td>
+        </tr>
+
+        <!-- EXTRA 10% OFF -->
+        <tr>
+            <td colspan="4" style="padding:0;">
+                <div style="
+                    background:#fff0f5;
+                    padding:10px 12px;
+                    border-left:4px solid #ff3990;
+                    font-size:16px;
+                    display:flex;
+                    justify-content:space-between;">
+                    <span style="color:#ff0a78;"><i class="fa-solid fa-badge-percent"></i> Extra 10% OFF</span>
+                    <span id="sumExtra" style="color:#ff0a78;">-₹0</span>
+                </div>
+            </td>
+        </tr>
+
+        <!-- FINAL TOTAL -->
+        <tr>
+            <td colspan="4" style="padding:0;">
+                <div style="
+                    background:#daf6ff;
+                    padding:14px 12px;
+                    border-left:5px solid #0099cc;
+                    font-size:22px;
+                    font-weight:700;
+                    display:flex;
+                    justify-content:space-between;
+                    color:#008ecb;
+                    margin-top:5px;">
+                    <span><i class="fa-solid fa-wallet"></i> Final Payable</span>
+                    <span id="grandTotal">₹0</span>
+                </div>
+            </td>
+        </tr>
+
+    </tfoot>
+</table>
+
+    </div>
+
+    <!-- RIGHT: SHIPPING FORM -->
+    <div class="card">
+        <h2 class="card-title">Shipping Details</h2>
+<form id="checkoutForm" method="POST" action="{% url 'checkout' %}">
+    {% csrf_token %}
+
+    <label>Full Name</label>
+    <input type="text" id="custName" name="name" required placeholder="Full Name">
+
+    <label>Email Address</label>
+    <input type="email" id="custEmail" name="email" required placeholder="Email Address">
+
+    <label>Mobile Number</label>
+    <input type="text" id="custMobile" name="mobile" required placeholder="Mobile Number">
+
+    <label>Address</label>
+    <textarea id="custAddress" name="address" required placeholder="Address"></textarea>
+
+    <label>PIN Code</label>
+    <input type="text" id="custPin" name="pincode" required placeholder="PIN Code">
+
+    <!-- ================= IMPORTANT HIDDEN FIELDS ================= -->
+    <input type="hidden" name="items" id="itemsInput">
+
+    <input type="hidden" name="subtotal" id="subtotalInput">
+    <input type="hidden" name="gst" id="gstInput">
+    <input type="hidden" name="flat_discount" id="flatDiscountInput">
+    <input type="hidden" name="extra_discount" id="extraDiscountInput">
+    <input type="hidden" name="total" id="totalInput">
+    <!-- ============================================================ -->
+
+    <button type="submit" id="proceedBtn" class="checkout-btn">
+        Proceed to Payment
+    </button>
+</form>
+
+
+    </div>
+
+</div>
+
+<footer class="premium-footer">
+
+    <div class="footer-top">
+        <div class="footer-col">
+            <h3>RCShop</h3>
+            <p>Your Trusted Tech Store for Laptops, Accessories, Gadgets & More.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Support</h4>
+            <a href="#">Return Policy</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+            <a href="#">FAQs</a>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contact Us</h4>
+            <p>📍 RCShop, New Delhi, India</p>
+            <p>📞 +91 98765 43210</p>
+            <p>📧 support@rcshop.com</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        © 2025 RCShop. All Rights Reserved.
+    </div>
+
+</footer>
+<script src="{% static 'js/checkout.js' %}"></script>
+
+
+</body>
+</html>

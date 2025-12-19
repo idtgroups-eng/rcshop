@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm COD - RCStore</title>
+    <link rel="stylesheet" href="{% static 'css/payment_cod.css' %}">
+</head>
+<body>
+
+<div class="cod-box">
+    <h1>🚚 Cash on Delivery</h1>
+
+    <p>Delivery ke time payment hoga. Order confirm karne ke liye OTP verify karein.</p>
+
+    <p><b>Order ID:</b> <span id="oid"></span></p>
+    <p><b>Total Amount:</b> ₹<span id="total"></span></p>
+
+    <button class="confirm" onclick="goToOTP()">Confirm & Verify OTP</button>
+    <button class="cancel" onclick="history.back()">Back</button>
+</div>
+
+<script src="{% static 'js/payment_cod.js' %}"></script>
+</body>
+</html>

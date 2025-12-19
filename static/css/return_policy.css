@@ -1,0 +1,42 @@
+body{
+    margin:0;
+    font-family: Poppins, sans-serif;
+    background:#02101f;
+    color:white;
+    line-height:1.7;
+}
+
+.box{
+    max-width:850px;
+    margin:50px auto;
+    background:#062a42;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 0 25px cyan;
+}
+
+h1{
+    text-align:center;
+    color:#00eaff;
+    margin-bottom:20px;
+}
+
+h2{
+    color:#00ff9d;
+    margin-top:30px;
+}
+
+p, li{
+    font-size:18px;
+}
+
+.btn{
+    background:#00eaff;
+    color:#002733;
+    padding:12px 25px;
+    border-radius:8px;
+    text-decoration:none;
+    display:inline-block;
+    margin-top:25px;
+    font-weight:bold;
+}
