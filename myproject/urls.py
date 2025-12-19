@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+from django.views.generic import TemplateView   # ✅ IMPORTANT IMPORT
 from main import views
 
 urlpatterns = [
@@ -15,7 +16,7 @@ urlpatterns = [
     path("checkout/", views.checkout, name="checkout"),
 
     # ================= SUPPORT PAGES =================
-    path("return-policy/", views.return_policy, name="return_policy"),  # ✅ ADDED
+    path("return-policy/", views.return_policy, name="return_policy"),
     path("return-request/", views.return_request, name="return_request"),
     path("order-tracking/", views.order_tracking, name="order_tracking"),
     path("shipping-policy/", views.shipping_policy, name="shipping_policy"),
@@ -35,8 +36,13 @@ urlpatterns = [
 
     # ================= API =================
     path("api/checkout/", views.api_checkout, name="api_checkout"),
+
+    # ================= GOOGLE SEARCH CONSOLE VERIFY =================
     path(
         "googlea564d4978a897b47.html",
-        TemplateView.as_view(template_name="googlea564d4978a897b47.html"),
+        TemplateView.as_view(
+            template_name="googlea564d4978a897b47.html",
+            content_type="text/html",
+        ),
     ),
 ]
