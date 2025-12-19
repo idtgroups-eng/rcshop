@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
+from django.contrib.sitemaps.views import sitemap
+from main.sitemaps import StaticViewSitemap
+
 from main import views
 
 urlpatterns = [
@@ -41,4 +44,18 @@ urlpatterns = [
         TemplateView.as_view(template_name="googlea56d4978a897b47.html"),
         name="google_verify"
     ),
+    
 ]
+sitemaps = {
+    'static': StaticViewSitemap,
+}
+
+urlpatterns += [
+    path(
+        'sitemap.xml',
+        sitemap,
+        {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap'
+    ),
+]
+

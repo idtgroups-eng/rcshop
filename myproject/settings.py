@@ -37,8 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # ✅ REQUIRED FOR SITEMAP
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+
+    # YOUR APP
     'main',
 ]
+
+# ✅ REQUIRED FOR django.contrib.sites
+SITE_ID = 1
 
 
 # ==============================
