@@ -4,6 +4,8 @@ import qrcode
 import os   
 from io import BytesIO
 from decimal import Decimal
+from reportlab.pdfbase import pdfmetrics   # ✅ ADD
+from reportlab.pdfbase.ttfonts import TTFont  # ✅ ADD
 
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
