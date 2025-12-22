@@ -103,69 +103,89 @@ def payment_online(request):
 # =========================
 # PDF INVOICE GENERATOR
 # =========================
+# =========================
+# PDF INVOICE GENERATOR
+# =========================
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from io import BytesIO
+from decimal import Decimal
+import os
+from django.conf import settings
+
+
 def generate_invoice_pdf(order):
     buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=A4)
     width, height = A4
 
-    # ✅ Unicode font (₹ support)
+    # ---------------- FONT SETUP (SAFE) ----------------
+    font_name = "Helvetica"
     font_path = os.path.join(
-        settings.BASE_DIR, "main/static/fonts/DejaVuSans.ttf"
+        settings.BASE_DIR, "main", "static", "fonts", "DejaVuSans.ttf"
     )
-    pdfmetrics.registerFont(TTFont("DejaVu", font_path))
 
-    # ---------- HEADER ----------
+    if os.path.exists(font_path):
+        try:
+            pdfmetrics.registerFont(TTFont("DejaVu", font_path))
+            font_name = "DejaVu"
+        except Exception:
+            font_name = "Helvetica"
+
+    # ---------------- HEADER ----------------
     y = height - 40
-    p.setFont("DejaVu", 16)
+    p.setFont(font_name, 18)
     p.drawString(40, y, "RCShop - Tax Invoice")
 
-    y -= 25
-    p.setFont("DejaVu", 10)
-    p.drawString(40, y, f"Order ID: {order.id}")
-    y -= 14
-    p.drawString(40, y, f"Customer: {order.name}")
-    y -= 14
-    p.drawString(40, y, f"Mobile: {order.mobile}")
-    y -= 14
-    p.drawString(40, y, f"Email: {order.email}")
-
-    # ---------- PRODUCTS ----------
     y -= 30
-    p.setFont("DejaVu", 12)
-    p.drawString(40, y, "Products")
-    y -= 15
+    p.setFont(font_name, 10)
+    p.drawString(40, y, f"Order ID: {order.id}")
+    p.drawString(40, y - 14, f"Customer: {order.name}")
+    p.drawString(40, y - 28, f"Mobile: {order.mobile}")
+    p.drawString(40, y - 42, f"Email: {order.email}")
 
-    p.setFont("DejaVu", 10)
+    # ---------------- PRODUCTS ----------------
+    y -= 70
+    p.setFont(font_name, 12)
+    p.drawString(40, y, "Products")
+
+    y -= 18
+    p.setFont(font_name, 10)
+
     for item in order.items:
         qty = int(item.get("quantity", 1))
         price = Decimal(str(item.get("price", 0)))
         total = qty * price
 
+        currency = "₹" if font_name == "DejaVu" else "Rs."
         p.drawString(
             45, y,
-            f"{item.get('name')}  x{qty}   ₹{total:,.2f}"
+            f"{item.get('name')}  x{qty}   {currency}{total:,.2f}"
         )
         y -= 14
 
-    # ---------- TOTAL ----------
+    # ---------------- TOTAL ----------------
     y -= 20
-    p.setFont("DejaVu", 12)
+    p.setFont(font_name, 12)
+    currency = "₹" if font_name == "DejaVu" else "Rs."
     p.drawString(
         40, y,
-        f"Total Amount: ₹{order.total_amount:,.2f}"
+        f"Total Amount: {currency}{order.total_amount:,.2f}"
     )
 
-    # ---------- FOOTER ----------
+    # ---------------- FOOTER ----------------
     y -= 35
-    p.setFont("DejaVu", 9)
+    p.setFont(font_name, 9)
     p.drawString(40, y, "Thank you for shopping with RCShop")
-    y -= 12
-    p.drawString(40, y, "This is a system-generated invoice.")
+    p.drawString(40, y - 12, "This is a system-generated invoice.")
 
     p.showPage()
     p.save()
     buffer.seek(0)
     return buffer
+
 # =========================
 # COD CONFIRM (EMAIL + PDF)
 # =========================
