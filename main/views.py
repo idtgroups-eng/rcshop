@@ -100,9 +100,7 @@ def payment_online(request):
     return render(request, "payment-online.html", {"total": data.get("total")})
 
 
-# =========================
-# PDF INVOICE GENERATOR
-# =========================
+
 # =========================
 # PDF INVOICE GENERATOR
 # =========================
@@ -121,65 +119,93 @@ def generate_invoice_pdf(order):
     p = canvas.Canvas(buffer, pagesize=A4)
     width, height = A4
 
-    # ---------------- FONT SETUP (SAFE) ----------------
     font_name = "Helvetica"
-    font_path = os.path.join(
-        settings.BASE_DIR, "main", "static", "fonts", "DejaVuSans.ttf"
+
+    # ---------- HEADER BAR ----------
+    p.setFillColorRGB(0.1, 0.2, 0.35)  # dark blue
+    p.rect(0, height - 80, width, 80, fill=1)
+    p.setFillColorRGB(1, 1, 1)
+
+    p.setFont(font_name, 20)
+    p.drawString(40, height - 50, "RCShop")
+
+    p.setFont(font_name, 11)
+    p.drawRightString(width - 40, height - 45, "TAX INVOICE")
+
+    # ---------- COMPANY INFO ----------
+    p.setFillColorRGB(0, 0, 0)
+    y = height - 110
+
+    p.setFont(font_name, 10)
+    p.drawString(40, y, "RCShop")
+    p.drawString(40, y - 14, "Rajgarh, Sirmour, Himachal Pradesh")
+    p.drawString(40, y - 28, "Phone: +91 7018677970")
+    p.drawString(40, y - 42, "Email: support@rcshop.co.in")
+
+    # ---------- INVOICE INFO BOX ----------
+    p.rect(width - 260, y - 55, 220, 70, stroke=1, fill=0)
+
+    p.setFont(font_name, 10)
+    p.drawString(width - 250, y - 15, f"Invoice No: RC-{order.id}")
+    p.drawString(width - 250, y - 30, f"Order ID: {order.id}")
+    p.drawString(
+        width - 250, y - 45,
+        f"Date: {order.created_at.strftime('%d %b %Y')}"
     )
 
-    if os.path.exists(font_path):
-        try:
-            pdfmetrics.registerFont(TTFont("DejaVu", font_path))
-            font_name = "DejaVu"
-        except Exception:
-            font_name = "Helvetica"
+    # ---------- CUSTOMER DETAILS ----------
+    y -= 90
+    p.setFont(font_name, 11)
+    p.drawString(40, y, "BILL TO")
 
-    # ---------------- HEADER ----------------
-    y = height - 40
-    p.setFont(font_name, 18)
-    p.drawString(40, y, "RCShop - Tax Invoice")
-
-    y -= 30
     p.setFont(font_name, 10)
-    p.drawString(40, y, f"Order ID: {order.id}")
-    p.drawString(40, y - 14, f"Customer: {order.name}")
-    p.drawString(40, y - 28, f"Mobile: {order.mobile}")
-    p.drawString(40, y - 42, f"Email: {order.email}")
+    p.drawString(40, y - 18, f"Name: {order.name}")
+    p.drawString(40, y - 32, f"Mobile: {order.mobile}")
+    p.drawString(40, y - 46, f"Email: {order.email}")
 
-    # ---------------- PRODUCTS ----------------
-    y -= 70
-    p.setFont(font_name, 12)
-    p.drawString(40, y, "Products")
+    # ---------- TABLE HEADER ----------
+    y -= 80
+    p.setFillColorRGB(0.9, 0.9, 0.9)
+    p.rect(40, y, width - 80, 25, fill=1)
 
-    y -= 18
+    p.setFillColorRGB(0, 0, 0)
+    p.setFont(font_name, 10)
+    p.drawString(50, y + 7, "Product")
+    p.drawString(width - 240, y + 7, "Qty")
+    p.drawString(width - 190, y + 7, "Price")
+    p.drawString(width - 120, y + 7, "Total")
+
+    # ---------- PRODUCTS ----------
+    y -= 25
     p.setFont(font_name, 10)
 
+    grand_total = 0
     for item in order.items:
         qty = int(item.get("quantity", 1))
         price = Decimal(str(item.get("price", 0)))
         total = qty * price
+        grand_total += total
 
-        currency = "₹" if font_name == "DejaVu" else "Rs."
-        p.drawString(
-            45, y,
-            f"{item.get('name')}  x{qty}   {currency}{total:,.2f}"
-        )
-        y -= 14
+        p.drawString(50, y + 7, item.get("name"))
+        p.drawRightString(width - 215, y + 7, str(qty))
+        p.drawRightString(width - 155, y + 7, f"Rs. {price:,.2f}")
+        p.drawRightString(width - 80, y + 7, f"Rs. {total:,.2f}")
 
-    # ---------------- TOTAL ----------------
-    y -= 20
-    p.setFont(font_name, 12)
-    currency = "₹" if font_name == "DejaVu" else "Rs."
-    p.drawString(
-        40, y,
-        f"Total Amount: {currency}{order.total_amount:,.2f}"
-    )
+        y -= 22
 
-    # ---------------- FOOTER ----------------
-    y -= 35
+    # ---------- TOTAL BOX ----------
+    y -= 10
+    p.setFont(font_name, 11)
+    p.drawRightString(width - 155, y, "Total Amount:")
+    p.setFont(font_name, 13)
+    p.drawRightString(width - 80, y, f"Rs. {order.total_amount:,.2f}")
+
+    # ---------- FOOTER ----------
+    y -= 50
     p.setFont(font_name, 9)
-    p.drawString(40, y, "Thank you for shopping with RCShop")
-    p.drawString(40, y - 12, "This is a system-generated invoice.")
+    p.drawString(40, y, "Payment Method: Cash on Delivery")
+    p.drawString(40, y - 14, "This is a computer-generated invoice. No signature required.")
+    p.drawString(40, y - 28, "Thank you for shopping with RCShop!")
 
     p.showPage()
     p.save()
