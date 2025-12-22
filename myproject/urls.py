@@ -10,6 +10,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
 
     # BASIC PAGES
+    path("dashboard/orders/", views.admin_orders, name="admin_orders"),
+    path("dashboard/order/<int:order_id>/status/", views.update_order_status, name="update_order_status"),
+    path("track-order/", views.track_order, name="track_order"),
     path("", views.index, name="home"),
     path("about/", views.about, name="about"),
     path("products/", views.products, name="products"),
@@ -59,3 +62,6 @@ urlpatterns += [
     ),
 ]
 
+def admin_orders(request):
+    orders = Order.objects.all().order_by("-created_at")
+    return render(request, "admin/orders.html", {"orders": orders})

@@ -141,16 +141,6 @@ def generate_invoice_pdf(order):
 # =========================
 # COD CONFIRM (EMAIL + PDF)
 # =========================
-
-from django.conf import settings
-from django.shortcuts import redirect, render
-from django.urls import reverse
-
-from .models import Order
-from .utils import send_brevo_email, render_to_pdf_bytes
-
-import base64
-
 def cod_details(request):
     data = request.session.get("checkout_data")
     if not data:
@@ -177,7 +167,7 @@ def cod_details(request):
             status="Placed",
         )
 
-        # ---------- PDF (NO SMTP, NO NETWORK ISSUE) ----------
+        # ---------- PDF ----------
         pdf_bytes = render_to_pdf_bytes(
             "emails/invoice_pdf.html",
             {"order": order}
@@ -213,17 +203,23 @@ def cod_details(request):
                 <p><b>Order ID:</b> {order.id}</p>
                 <p><b>Name:</b> {order.name}</p>
                 <p><b>Mobile:</b> {order.mobile}</p>
+                <p><b>Email:</b> {order.email}</p>
                 <p><b>Total:</b> ₹{order.total_amount}</p>
+                <p><b>Payment Mode:</b> Cash on Delivery</p>
+                <hr>
+                <p>Invoice PDF attached for verification.</p>
             """,
             to_emails=[settings.ADMIN_EMAIL],
+            attachments=attachments
         )
 
         # ---------- CLEAN SESSION ----------
         request.session.pop("checkout_data", None)
 
-        return redirect(f"{reverse('thankyou')}?order_id={order.id}")
+        return redirect(reverse("thankyou") + f"?order_id={order.id}")
 
     return render(request, "cod_details.html", {"data": data})
+
 
 # =========================
 # THANK YOU & INVOICE
@@ -287,3 +283,62 @@ def order_tracking(request): return render(request, "order_tracking.html")
 def shipping_policy(request): return render(request, "shipping_policy.html")
 def help_center(request): return render(request, "help_center.html")
 def return_policy(request): return render(request, "return_policy.html")
+from django.contrib.admin.views.decorators import staff_member_required
+
+from django.contrib.admin.views.decorators import staff_member_required
+
+
+# =========================
+# ADMIN ORDERS DASHBOARD
+# =========================
+@staff_member_required
+def admin_orders(request):
+    orders = Order.objects.all().order_by("-created_at")
+    return render(request, "admin/orders.html", {"orders": orders})
+
+
+# =========================
+# UPDATE ORDER STATUS
+# =========================
+@staff_member_required
+def update_order_status(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+
+    if request.method == "POST":
+        new_status = request.POST.get("status")
+
+        if new_status in dict(Order.ORDER_STATUS):
+            order.status = new_status
+            order.save()
+
+            # ---------- CUSTOMER STATUS EMAIL ----------
+            send_brevo_email(
+                subject=f"Order #{order.id} Status Updated",
+                html_content=f"""
+                    <h3>Your Order Status Updated</h3>
+                    <p>Hi {order.name},</p>
+                    <p>Your order <b>#{order.id}</b> status is now:</p>
+                    <h2>{order.status}</h2>
+                    <p>Thank you for shopping with RCShop.</p>
+                """,
+                to_emails=[order.email]
+            )
+
+    return redirect("admin_orders")
+def track_order(request):
+    order = None
+    error = None
+
+    if request.method == "POST":
+        order_id = request.POST.get("order_id")
+        mobile = request.POST.get("mobile")
+
+        try:
+            order = Order.objects.get(id=order_id, mobile=mobile)
+        except Order.DoesNotExist:
+            error = "Order not found. Please check details."
+
+    return render(request, "track_order.html", {
+        "order": order,
+        "error": error
+    })

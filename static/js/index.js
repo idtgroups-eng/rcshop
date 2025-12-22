@@ -187,3 +187,19 @@ function updateDots() {
 
 // Auto slide every 5 seconds
 setInterval(nextSlide, 5000);
+
+// ================= MOBILE HAMBURGER MENU =================
+const hamburger = document.getElementById("hamburgerBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+hamburger.addEventListener("click", () => {
+  mobileMenu.classList.toggle("show");
+});
+document.addEventListener("click", (e) => {
+  if (
+    !mobileMenu.contains(e.target) &&
+    !hamburger.contains(e.target)
+  ) {
+    mobileMenu.classList.remove("show");
+  }
+});

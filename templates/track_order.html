@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Track Order</title>
+    <style>
+        body { font-family: Arial; background:#f4f6f8; padding:20px }
+        .box { max-width:500px; margin:auto; background:#fff; padding:20px }
+        .status { padding:10px; margin-top:10px; background:#27ae60; color:#fff }
+        .error { background:#e74c3c; color:#fff; padding:10px }
+        input, button { width:100%; padding:10px; margin-top:10px }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>📦 Track Your Order</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="order_id" placeholder="Order ID" required>
+        <input type="text" name="mobile" placeholder="Mobile Number" required>
+        <button type="submit">Track Order</button>
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if order %}
+        <div class="status">
+            Order #{{ order.id }}<br>
+            Status: <b>{{ order.status }}</b>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

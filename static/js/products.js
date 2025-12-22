@@ -196,3 +196,9 @@ setTimeout(() => {
     });
 
 }, 100); // delay so products load first
+
+document.getElementById("productHamburger").addEventListener("click", function () {
+  document.getElementById("productMenu").classList.toggle("show");
+});
+
+

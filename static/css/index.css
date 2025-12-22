@@ -790,3 +790,249 @@ body {
   fill: #00bfff !important;
   stroke: #00bfff !important;
 }
+/* =====================================================
+   ✅ MOBILE HERO – CLEAR, SMALL & COMPACT (UPDATED)
+===================================================== */
+@media (max-width: 768px) {
+
+  /* Hero slider height reduced */
+  .hero-slider {
+    height: 60vh;              /* ⬇ height kam */
+    min-height: 360px;
+    background: #000;
+    overflow: hidden;
+  }
+
+  /* Each slide – CLEAR IMAGE */
+  .hero-slider .slide {
+    height: 100%;
+    background-size: contain !important;   /* ✅ image clear & small */
+    background-position: center center !important;
+    background-repeat: no-repeat;
+  }
+
+  /* Overlay LIGHT (no blur look) */
+  .hero-slider .slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.15),
+      rgba(0,0,0,0.55)
+    );
+    z-index: 1;
+  }
+
+  /* Hero content */
+  .hero-content {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    bottom: 10%;               /* ⬇ content thoda niche */
+    text-align: center;
+    z-index: 2;
+  }
+
+  .hero-content h1 {
+    font-size: 1.45rem;
+    line-height: 1.25;
+  }
+
+  .hero-content p {
+    font-size: 0.9rem;
+    opacity: 0.95;
+  }
+
+  .hero-btn {
+    margin-top: 8px;
+    padding: 9px 20px;
+    font-size: 13px;
+  }
+
+  /* Slider arrows */
+  .hero-slider .arrow {
+    font-size: 20px;
+    padding: 5px 8px;
+    z-index: 3;
+  }
+
+  /* Slider dots */
+  .hero-slider .dots {
+    bottom: 6px;
+  }
+}
+
+/* =====================================================
+   ✅ MOBILE RIGHT SLIDE NAV MENU (SIMPLE HAMBURGER)
+===================================================== */
+@media (max-width: 768px) {
+
+  /* Hamburger – simple 3 white lines */
+  .hamburger {
+    display: flex;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    z-index: 1102;
+
+    background: transparent;
+    border: none;
+    padding: 6px;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .hamburger span {
+    width: 26px;
+    height: 3px;
+    background: #ffffff;   /* PURE WHITE */
+    border-radius: 2px;
+  }
+
+  /* NAV DRAWER */
+  .navbar-nav {
+    position: fixed;
+    top: 0;
+    right: -260px;
+    width: 260px;
+    height: 100vh;
+    background: linear-gradient(180deg,#03162a,#001429);
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 90px 25px 25px;
+    gap: 18px;
+    transition: right 0.35s ease;
+    z-index: 1100;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.7);
+  }
+
+  /* Show drawer */
+  .navbar-nav.show {
+    right: 0;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 16px;
+    width: 100%;
+  }
+
+  /* Cart icon position */
+  .cart-premium {
+    position: absolute;
+    right: 16px;
+    top: 56px;
+    z-index: 1101;
+    font-size: 22px;
+  }
+}
+
+
+/* =====================================================
+   ✅ MOBILE CART POSITION FIX
+===================================================== */
+@media (max-width: 768px) {
+
+  .cart-premium {
+    position: absolute;
+    right: 16px;
+    top: 56px;   /* hamburger ke niche */
+    font-size: 22px;
+    transform: none; /* hover effect mobile me disable */
+  }
+}
+/* =====================================================
+   ✅ CATEGORY STRIP – MOBILE & DESKTOP FIX
+===================================================== */
+
+/* Hide scrollbar but keep scroll */
+.category-strip {
+  overflow-x: auto;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE / Edge */
+}
+
+.category-strip::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari */
+}
+
+/* Desktop: center pills, no scroll */
+@media (min-width: 769px) {
+  .category-strip {
+    justify-content: center;
+    overflow-x: hidden;
+  }
+}
+
+/* Mobile: smooth swipe */
+@media (max-width: 768px) {
+  .category-strip {
+    justify-content: flex-start;
+    padding-bottom: 8px;
+  }
+
+  .category-pill {
+    min-width: 180px;
+    flex-shrink: 0;
+  }
+}
+/* =====================================================
+   ✅ MOBILE FOOTER UPGRADE (PREMIUM)
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .rc-footer {
+    padding: 40px 15px 25px;
+    text-align: left;
+  }
+
+  .rc-footer .row > div {
+    background: rgba(255,255,255,0.04);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.35);
+  }
+
+  .rc-footer h3,
+  .rc-footer h5 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .rc-footer p,
+  .rc-footer a {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Quick links spacing */
+  .footer-link {
+    padding: 6px 0;
+  }
+
+  /* Social icons */
+  .rc-footer .bi {
+    font-size: 34px !important;
+    filter: drop-shadow(0 0 6px rgba(255,255,255,0.35));
+  }
+
+  /* Footer bottom text */
+  .rc-footer .text-center {
+    font-size: 13px;
+    margin-top: 20px;
+    opacity: 0.85;
+  }
+}
+@media (max-width: 768px) {
+  .rc-footer hr {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    opacity: 0.3;
+  }
+}
+
