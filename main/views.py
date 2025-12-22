@@ -113,7 +113,6 @@ from decimal import Decimal
 import os
 from django.conf import settings
 
-
 def generate_invoice_pdf(order):
     buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=A4)
@@ -122,7 +121,7 @@ def generate_invoice_pdf(order):
     font_name = "Helvetica"
 
     # ---------- HEADER BAR ----------
-    p.setFillColorRGB(0.1, 0.2, 0.35)  # dark blue
+    p.setFillColorRGB(0.1, 0.2, 0.35)
     p.rect(0, height - 80, width, 80, fill=1)
     p.setFillColorRGB(1, 1, 1)
 
@@ -145,7 +144,6 @@ def generate_invoice_pdf(order):
     # ---------- INVOICE INFO BOX ----------
     p.rect(width - 260, y - 55, 220, 70, stroke=1, fill=0)
 
-    p.setFont(font_name, 10)
     p.drawString(width - 250, y - 15, f"Invoice No: RC-{order.id}")
     p.drawString(width - 250, y - 30, f"Order ID: {order.id}")
     p.drawString(
@@ -179,26 +177,50 @@ def generate_invoice_pdf(order):
     y -= 25
     p.setFont(font_name, 10)
 
-    grand_total = 0
     for item in order.items:
         qty = int(item.get("quantity", 1))
-        price = Decimal(str(item.get("price", 0)))
+        price = float(item.get("price", 0))
         total = qty * price
-        grand_total += total
 
         p.drawString(50, y + 7, item.get("name"))
         p.drawRightString(width - 215, y + 7, str(qty))
         p.drawRightString(width - 155, y + 7, f"Rs. {price:,.2f}")
         p.drawRightString(width - 80, y + 7, f"Rs. {total:,.2f}")
-
         y -= 22
 
-    # ---------- TOTAL BOX ----------
+    # ---------- BILL BREAKUP ----------
     y -= 10
+    p.setFont(font_name, 10)
+
+    subtotal = float(order.subtotal or 0)
+    gst = float(order.gst or 0)
+    flat_discount = float(order.flat_discount or 0)
+    extra_discount = float(order.extra_discount or 0)
+    total_amount = float(order.total_amount or 0)
+
+    p.drawRightString(width - 155, y, "Subtotal:")
+    p.drawRightString(width - 80, y, f"Rs. {subtotal:,.2f}")
+
+    y -= 15
+    p.drawRightString(width - 155, y, "GST:")
+    p.drawRightString(width - 80, y, f"Rs. {gst:,.2f}")
+
+    if flat_discount > 0:
+        y -= 15
+        p.drawRightString(width - 155, y, "Flat Discount:")
+        p.drawRightString(width - 80, y, f"- Rs. {flat_discount:,.2f}")
+
+    if extra_discount > 0:
+        y -= 15
+        p.drawRightString(width - 155, y, "Extra Discount:")
+        p.drawRightString(width - 80, y, f"- Rs. {extra_discount:,.2f}")
+
+    # ---------- FINAL TOTAL ----------
+    y -= 20
     p.setFont(font_name, 11)
     p.drawRightString(width - 155, y, "Total Amount:")
     p.setFont(font_name, 13)
-    p.drawRightString(width - 80, y, f"Rs. {order.total_amount:,.2f}")
+    p.drawRightString(width - 80, y, f"Rs. {total_amount:,.2f}")
 
     # ---------- FOOTER ----------
     y -= 50
