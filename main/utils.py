@@ -148,3 +148,4 @@ def send_order_emails(order, admin_email):
     )
 
     return True
+

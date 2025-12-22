@@ -167,11 +167,9 @@ def cod_details(request):
             status="Placed",
         )
 
-        # ---------- PDF ----------
-        pdf_bytes = render_to_pdf_bytes(
-            "emails/invoice_pdf.html",
-            {"order": order}
-        )
+        # ---------- PDF (Render-safe) ----------
+        pdf_buffer = generate_invoice_pdf(order)
+        pdf_bytes = pdf_buffer.getvalue() if pdf_buffer else None
 
         attachments = []
         if pdf_bytes:
@@ -219,7 +217,6 @@ def cod_details(request):
         return redirect(reverse("thankyou") + f"?order_id={order.id}")
 
     return render(request, "cod_details.html", {"data": data})
-
 
 # =========================
 # THANK YOU & INVOICE
