@@ -1,68 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Orders</title>
+    <meta charset="UTF-8">
+    <title>Admin Orders | RCShop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
-        body { font-family: Arial; background:#f5f6fa; padding:20px }
-        h2 { margin-bottom:15px }
+        body {
+            font-family: Arial, sans-serif;
+            background:#f5f6fa;
+            padding:20px;
+        }
+
+        h2 {
+            margin-bottom:15px;
+        }
 
         table {
             width:100%;
             border-collapse:collapse;
             background:#fff;
         }
+
         th, td {
             padding:10px;
             border:1px solid #ddd;
             text-align:center;
             font-size:14px;
         }
+
         th {
             background:#222;
             color:#fff;
         }
+
         select, button {
-            padding:6px;
+            padding:6px 8px;
             font-size:13px;
+            cursor:pointer;
         }
+
+        button {
+            background:#2980b9;
+            color:#fff;
+            border:none;
+            border-radius:4px;
+        }
+
+        button:hover {
+            background:#1f6391;
+        }
+
         .badge {
-            padding:4px 8px;
-            border-radius:5px;
+            padding:4px 10px;
+            border-radius:6px;
             color:#fff;
             font-size:12px;
+            display:inline-block;
+            min-width:80px;
         }
+
+        /* STATUS COLORS */
         .Placed { background:#f39c12 }
         .Confirmed { background:#2980b9 }
         .Packed { background:#8e44ad }
         .Shipped { background:#16a085 }
         .Delivered { background:#27ae60 }
         .Cancelled { background:#c0392b }
-        a { text-decoration:none; color:#2980b9 }
+
+        a {
+            text-decoration:none;
+            color:#2980b9;
+            font-weight:600;
+        }
+
+        a:hover {
+            text-decoration:underline;
+        }
     </style>
 </head>
+
 <body>
 
 <h2>📦 Admin Orders Dashboard</h2>
 
 <table>
+<thead>
 <tr>
     <th>ID</th>
-    <th>Name</th>
+    <th>Customer</th>
     <th>Total</th>
     <th>Status</th>
     <th>Update</th>
     <th>Invoice</th>
 </tr>
+</thead>
 
+<tbody>
 {% for order in orders %}
 <tr>
     <td>#{{ order.id }}</td>
-    <td>{{ order.name }}</td>
+
+    <!-- 🔹 SAFE: name fallback -->
+    <td>{{ order.name|default:order.user.username }}</td>
+
     <td>₹{{ order.total_amount }}</td>
 
     <td>
-        <span class="badge {{ order.status }}">{{ order.status }}</span>
+        <span class="badge {{ order.status }}">
+            {{ order.status }}
+        </span>
     </td>
 
     <td>
@@ -90,6 +137,7 @@
     <td colspan="6">No orders found</td>
 </tr>
 {% endfor %}
+</tbody>
 </table>
 
 </body>

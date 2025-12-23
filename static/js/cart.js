@@ -96,9 +96,19 @@ function removeItem(i) {
 /* ==========================
    UPDATE CART COUNT
 ==============================*/
+/* ==========================
+   UPDATE CART COUNT (FIXED)
+==============================*/
 function updateCartCount() {
     let c = JSON.parse(localStorage.getItem("cartItems")) || [];
-    document.getElementById("cartCount").innerText = c.length;
+    let totalQty = 0;
+
+    c.forEach(item => {
+        totalQty += Number(item.qty) || 1;
+    });
+
+    const counter = document.getElementById("cartCount");
+    if (counter) counter.innerText = totalQty;
 }
 
 /* ==========================

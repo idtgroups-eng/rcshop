@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Orders</title>
+</head>
+<body>
+
+<h2>🧾 My Orders</h2>
+
+{% if orders %}
+<table border="1" cellpadding="10">
+  <tr>
+    <th>Order ID</th>
+    <th>Date</th>
+    <th>Total</th>
+    <th>Status</th>
+  </tr>
+
+  {% for o in orders %}
+  <tr>
+    <td>#{{ o.id }}</td>
+    <td>{{ o.created_at|date:"d M Y" }}</td>
+    <td>₹{{ o.total_amount }}</td>
+    <td>{{ o.status }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No orders yet.</p>
+{% endif %}
+
+<a href="/account/">⬅ Back to Account</a>
+
+</body>
+</html>

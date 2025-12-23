@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Details</title>
+</head>
+<body>
+
+<h2>Order #{{ order.id }}</h2>
+<p>Status: {{ order.status }}</p>
+<p>Date: {{ order.created_at }}</p>
+
+<h3>Products</h3>
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Name</th>
+    <th>Qty</th>
+    <th>Price</th>
+  </tr>
+
+  {% for i in items %}
+  <tr>
+    <td>{{ i.product_name }}</td>
+    <td>{{ i.qty }}</td>
+    <td>₹{{ i.price }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h3>Total: ₹{{ order.total_amount }}</h3>
+
+<a href="{% url 'invoice' %}?order_id={{ order.id }}">
+  Download Invoice
+</a>
+
+<br><br>
+<a href="{% url 'my_orders' %}">⬅ Back to My Orders</a>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Create Account</title>
+<style>
+body{font-family:Poppins;background:#f5f7fb}
+.form-box{
+  max-width:400px;margin:80px auto;
+  background:#fff;padding:30px;
+  border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.1)
+}
+input,button{
+  width:100%;padding:12px;margin-top:12px;
+  border-radius:6px;border:1px solid #ccc
+}
+button{background:#007bff;color:#fff;border:none;font-weight:600}
+a{display:block;margin-top:15px;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="form-box">
+<h2>Create Account</h2>
+
+{% for msg in messages %}
+<p style="color:red">{{msg}}</p>
+{% endfor %}
+
+<form method="post">
+{% csrf_token %}
+<input type="text" name="name" placeholder="Full Name" required>
+<input type="email" name="email" placeholder="Email" required>
+<input type="password" name="password" placeholder="Password" required>
+<input type="password" name="cpassword" placeholder="Confirm Password" required>
+<button>Create Account</button>
+</form>
+
+<a href="{% url 'login' %}">Already have account? Login</a>
+</div>
+
+</body>
+</html>

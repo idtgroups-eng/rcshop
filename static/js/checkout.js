@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* -------- LOAD CART DATA & SHOW SUMMARY -------- */
+    /* ==========================
+       LOAD CART DATA & SHOW SUMMARY
+    ========================== */
     let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
     let tableBody = document.getElementById("orderBody");
 
@@ -19,7 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         tableBody.innerHTML += `
             <tr>
-                <td><img src="${item.img}" width="60" style="border-radius:8px"></td>
+                <td>
+                    <img src="${item.img}" width="60" style="border-radius:8px"
+                         onerror="this.src='/static/images/no-image.png'">
+                </td>
                 <td>${item.name}</td>
                 <td>₹${price.toLocaleString()}</td>
                 <td>${qty}</td>
@@ -27,35 +32,38 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
     });
 
-    /* -------- CALCULATIONS -------- */
-    let gst = Math.round(subtotal * 0.18);
-    let shipping = subtotal > 20000 ? 0 : 99;
-    let flatDiscount = subtotal > 0 ? 50 : 0;
-    let extraDiscount = subtotal > 1999 ? Math.floor(subtotal * 0.10) : 0;
+    /* ==========================
+       CALCULATIONS (NO GST / NO DISCOUNT)
+    ========================== */
+    let shipping = 0;            // FREE SHIPPING
+    let finalTotal = subtotal;   // ONLY subtotal
 
-    let finalTotal = subtotal + gst + shipping - flatDiscount - extraDiscount;
-
-    /* -------- PRINT SUMMARY -------- */
+    /* ==========================
+       PRINT SUMMARY
+    ========================== */
     const setText = (id, text) => {
         const el = document.getElementById(id);
         if (el) el.innerText = text;
     };
 
     setText("sumSubtotal", "₹" + subtotal.toLocaleString());
-    setText("sumGst", "₹" + gst.toLocaleString());
-    setText("sumShip", shipping === 0 ? "FREE" : "₹" + shipping);
-    setText("sumFlat", "-₹" + flatDiscount.toLocaleString());
-    setText("sumExtra", "-₹" + extraDiscount.toLocaleString());
+    setText("sumShip", "FREE");
     setText("grandTotal", "₹" + finalTotal.toLocaleString());
 
-    /* -------- SET HIDDEN INPUTS (VERY IMPORTANT) -------- */
-    document.getElementById("subtotalInput").value = subtotal;
-    document.getElementById("gstInput").value = gst;
-    document.getElementById("flatDiscountInput").value = flatDiscount;
-    document.getElementById("extraDiscountInput").value = extraDiscount;
-    document.getElementById("totalInput").value = finalTotal;
+    /* ==========================
+       SET HIDDEN INPUTS
+    ========================== */
+    const subtotalInput = document.getElementById("subtotalInput");
+    const totalInput = document.getElementById("totalInput");
+    const itemsInput = document.getElementById("itemsInput");
 
-    /* -------- FORM SUBMIT HANDLER -------- */
+    if (subtotalInput) subtotalInput.value = subtotal;
+    if (totalInput) totalInput.value = finalTotal;
+    if (itemsInput) itemsInput.value = JSON.stringify(cart);
+
+    /* ==========================
+       FORM SUBMIT HANDLER (FINAL FIX)
+    ========================== */
     const form = document.getElementById("checkoutForm");
     if (!form) {
         console.error("checkoutForm not found!");
@@ -63,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     form.addEventListener("submit", function (e) {
-        e.preventDefault();
 
         const name = document.getElementById("custName").value.trim();
         const email = document.getElementById("custEmail").value.trim();
@@ -71,22 +78,22 @@ document.addEventListener("DOMContentLoaded", function () {
         const address = document.getElementById("custAddress").value.trim();
         const pin = document.getElementById("custPin").value.trim();
 
+        // ❌ Validation fail → stop submit
         if (!name || !email || !mobile || !address || !pin) {
             alert("Please fill all shipping details");
+            e.preventDefault();
             return;
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             alert("Please enter a valid email address");
+            e.preventDefault();
             return;
         }
 
-        // ✅ CART + BILL DATA → DJANGO
-        document.getElementById("itemsInput").value = JSON.stringify(cart);
-
-        // FINAL SUBMIT (Django handles redirect)
-        form.submit();
+        // ✅ Cart data already set in hidden input
+        // ✅ Browser will now submit naturally to /payment/
     });
 
 });

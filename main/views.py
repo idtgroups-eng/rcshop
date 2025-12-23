@@ -52,9 +52,6 @@ def checkout(request):
 
             # store as STRING (safe for Decimal)
             "subtotal": str(request.POST.get("subtotal", "0")),
-            "gst": str(request.POST.get("gst", "0")),
-            "flat_discount": str(request.POST.get("flat_discount", "0")),
-            "extra_discount": str(request.POST.get("extra_discount", "0")),
             "total": str(request.POST.get("total", "0")),
         }
         return redirect("payment")
@@ -63,17 +60,43 @@ def checkout(request):
 
 
 # =========================
-# PAYMENT OPTIONS
+# PAYMENT OPTIONS (FIXED)
 # =========================
 def payment(request):
+    """
+    Allow both:
+    - POST (from checkout form)
+    - GET  (direct link / debug)
+    """
+
     data = request.session.get("checkout_data")
+
+    # 🔓 Allow GET (direct open)
+    if request.method == "GET":
+        return render(request, "payment.html", {
+            "total": data.get("total") if data else "0"
+        })
+
+    # 🔒 POST case (normal checkout flow)
     if not data:
         return redirect("checkout")
-    return render(request, "payment.html", {"total": data.get("total")})
+
+    return render(request, "payment.html", {
+        "total": data.get("total")
+    })
 
 
 def payment_upi(request):
     data = request.session.get("checkout_data")
+
+    # 🔓 Allow GET
+    if request.method == "GET" and not data:
+        return render(request, "payment-upi.html", {
+            "qr_code": None,
+            "amount": "0",
+            "upi_id": "9625252254@ybl",
+        })
+
     if not data:
         return redirect("checkout")
 
@@ -95,11 +118,19 @@ def payment_upi(request):
 
 def payment_online(request):
     data = request.session.get("checkout_data")
+
+    # 🔓 Allow GET
+    if request.method == "GET":
+        return render(request, "payment-online.html", {
+            "total": data.get("total") if data else "0"
+        })
+
     if not data:
         return redirect("checkout")
-    return render(request, "payment-online.html", {"total": data.get("total")})
 
-
+    return render(request, "payment-online.html", {
+        "total": data.get("total")
+    })
 
 # =========================
 # PDF INVOICE GENERATOR
@@ -138,7 +169,7 @@ def generate_invoice_pdf(order):
     p.setFont(font_name, 10)
     p.drawString(40, y, "RCShop")
     p.drawString(40, y - 14, "Rajgarh, Sirmour, Himachal Pradesh")
-    p.drawString(40, y - 28, "Phone: +91 7018677970")
+    p.drawString(40, y - 28, "Phone: +91 9625252254")
     p.drawString(40, y - 42, "Email: support@rcshop.co.in")
 
     # ---------- INVOICE INFO BOX ----------
@@ -193,27 +224,12 @@ def generate_invoice_pdf(order):
     p.setFont(font_name, 10)
 
     subtotal = float(order.subtotal or 0)
-    gst = float(order.gst or 0)
-    flat_discount = float(order.flat_discount or 0)
-    extra_discount = float(order.extra_discount or 0)
     total_amount = float(order.total_amount or 0)
 
     p.drawRightString(width - 155, y, "Subtotal:")
     p.drawRightString(width - 80, y, f"Rs. {subtotal:,.2f}")
 
     y -= 15
-    p.drawRightString(width - 155, y, "GST:")
-    p.drawRightString(width - 80, y, f"Rs. {gst:,.2f}")
-
-    if flat_discount > 0:
-        y -= 15
-        p.drawRightString(width - 155, y, "Flat Discount:")
-        p.drawRightString(width - 80, y, f"- Rs. {flat_discount:,.2f}")
-
-    if extra_discount > 0:
-        y -= 15
-        p.drawRightString(width - 155, y, "Extra Discount:")
-        p.drawRightString(width - 80, y, f"- Rs. {extra_discount:,.2f}")
 
     # ---------- FINAL TOTAL ----------
     y -= 20
@@ -254,9 +270,6 @@ def cod_details(request):
             items=data.get("items", []),
 
             subtotal=Decimal(data.get("subtotal", "0")),
-            gst=Decimal(data.get("gst", "0")),
-            flat_discount=Decimal(data.get("flat_discount", "0")),
-            extra_discount=Decimal(data.get("extra_discount", "0")),
             total_amount=Decimal(data.get("total", "0")),
 
             payment_method="COD",
@@ -335,9 +348,6 @@ def invoice(request):
     return render(request, "invoice.html", {
         "order": order,
         "subtotal": order.subtotal,
-        "gst": order.gst,
-        "flat_discount": order.flat_discount,
-        "extra_discount": order.extra_discount,
         "total": order.total_amount,
         "qr_code": base64.b64encode(buffer.getvalue()).decode(),
         "upi_id": upi_id,
@@ -435,3 +445,117 @@ def track_order(request):
         "order": order,
         "error": error
     })
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib import messages
+
+def register(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        cpassword = request.POST.get("cpassword")
+
+        if password != cpassword:
+            messages.error(request, "Passwords do not match")
+            return redirect("register")
+
+        if User.objects.filter(username=email).exists():
+            messages.error(request, "Email already registered")
+            return redirect("register")
+
+        user = User.objects.create_user(
+            username=email,
+            email=email,
+            password=password,
+            first_name=name
+        )
+        user.save()
+
+        messages.success(request, "Account created successfully. Please login.")
+        return redirect("login")
+
+    return render(request, "register.html")
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
+from .models import UserProfile, Order
+
+
+# =========================
+# ✅ CHECKOUT (AUTO-FILL + MOBILE SAVE)
+# =========================
+@login_required(login_url="login")
+def checkout(request):
+    user = request.user
+
+    # 🔹 Get or create user profile (for mobile)
+    profile, created = UserProfile.objects.get_or_create(user=user)
+
+    if request.method == "POST":
+        # 📱 Save / update mobile number
+        mobile = request.POST.get("mobile")
+        if mobile:
+            profile.mobile = mobile
+            profile.save()
+
+        # ✅ IMPORTANT:
+        # Yahan aapka existing order-save / payment logic rahega
+        # Example:
+        # return redirect("payment")
+
+        return redirect("payment")  # 👉 temporary safe redirect
+
+    # 🔹 Data for auto-fill
+    context = {
+        "user_name": user.first_name,
+        "user_email": user.email,
+        "user_mobile": profile.mobile or "",
+    }
+
+    return render(request, "checkout.html", context)
+
+# =========================
+# ✅ MY ACCOUNT
+# =========================
+@login_required(login_url="login")
+def my_account(request):
+    return render(request, "account.html")
+
+
+# =========================
+# 🧾 MY ORDERS (ORDER HISTORY)
+# =========================
+@login_required(login_url="login")
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user).order_by("-created_at")
+    return render(request, "my_orders.html", {"orders": orders})
+@login_required(login_url="login")
+def order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    items = order.items.all()  # assuming related_name="items"
+
+    return render(request, "order_detail.html", {
+        "order": order,
+        "items": items
+    })
+@login_required
+def save_address(request):
+    if request.method == "POST":
+        UserAddress.objects.create(
+            user=request.user,
+            name=request.POST["name"],
+            mobile=request.POST["mobile"],
+            address=request.POST["address"],
+            pincode=request.POST["pincode"]
+        )
+    return redirect("checkout")
+@login_required
+def admin_orders(request):
+    if not request.user.is_staff:
+        return redirect("home")
+
+    orders = Order.objects.all().order_by("-created_at")
+    return render(request, "admin/orders.html", {"orders": orders})
+
+         

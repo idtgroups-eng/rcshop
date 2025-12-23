@@ -15,12 +15,13 @@
 <div class="rc-container">
   <h2 class="rc-logo">RCShop</h2>
   
-  <nav class="rc-nav">
-    <a href="{% url 'home' %}">Home</a>
-    <a class="active" href="{% url 'products' %}">Products</a>
-    <a href="{% url 'about' %}">About</a>
-    <a href="{% url 'contact' %}">Contact</a>
-  </nav>
+<nav class="rc-nav">
+  <a href="/">Home</a>
+  <a class="active" href="/products/">Products</a>
+  <a href="/about/">About</a>
+  <a href="/contact/">Contact</a>
+</nav>
+
 
   <!-- SEARCH -->
   <div class="search-box">
@@ -28,11 +29,12 @@
     <button id="micBtn" class="mic-btn"><i class="bi bi-mic-fill"></i></button>
   </div>
 
-  <!-- CART -->
-  <div class="rc-cart" onclick="window.location.href='{% url 'cart' %}'">
-    <i class="bi bi-cart4"></i>
-    <span class="rc-cart-count" id="cartCount">0</span>
-  </div>
+ <!-- CART -->
+<div class="rc-cart" onclick="window.location.href='/cart/'">
+  <i class="bi bi-cart4"></i>
+  <span class="rc-cart-count" id="cartCount">0</span>
+</div>
+
 </div>
 </header>
 

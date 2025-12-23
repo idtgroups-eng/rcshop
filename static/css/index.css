@@ -1035,4 +1035,199 @@ body {
     opacity: 0.3;
   }
 }
+/* =========================
+   MOBILE: HIDE NAV DIVIDERS
+========================= */
+@media (max-width: 768px) {
+  .nav-divider,
+  .nav-lines,
+  .divider,
+  .header-divider,
+  .premium-nav-divider {
+    display: none !important;
+  }
+}
 
+/* =========================
+   ACCOUNT (PREMIUM / COMPACT)
+========================= */
+
+.account-box {
+  position: relative;
+  margin-left: auto;          /* 🔥 right corner */
+  display: flex;
+  align-items: center;
+}
+
+.account-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #eafaff;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.account-main i {
+  font-size: 22px;
+  color: #00f2ff;
+}
+
+/* Text stack */
+.account-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.account-text .hello {
+  font-size: 11px;
+  opacity: 0.75;
+  font-weight: 400;
+}
+
+.account-text .account-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Dropdown */
+.account-dropdown {
+  position: absolute;
+  top: 130%;
+  right: 0;
+  background: #0b1e2d;
+  border-radius: 10px;
+  padding: 10px;
+  min-width: 180px;
+  display: none;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+.account-dropdown a {
+  display: block;
+  padding: 8px 12px;
+  color: #ffffff;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.account-dropdown a:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.account-dropdown .divider {
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin: 6px 0;
+}
+
+.account-dropdown .logout {
+  color: #ff6b6b;
+}
+
+/* Hover trigger */
+.account-box:hover .account-dropdown {
+  display: block;
+}
+/* =========================
+   MOBILE HEADER REFINEMENT
+========================= */
+@media (max-width: 768px) {
+
+  /* 🔹 Account icon only (text hide) */
+  .account-text {
+    display: none;
+  }
+
+  /* 🔹 Account main alignment */
+  .account-main {
+    gap: 0;
+    padding: 6px;
+  }
+
+  .account-main i {
+    font-size: 22px;          /* 👤 clean & premium */
+    color: #00f2ff;
+  }
+
+  /* 🔹 Right side icons container (hamburger + account) */
+  .nav-right,
+  .header-right,
+  .nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 14px;                /* ✅ MAIN FIX: distance */
+  }
+ }
+
+  /* 🔹 Account dropdown */
+  .account-dropdown {
+    right: 0;
+    top: 135%;
+    min-width: 170px;
+    border-radius: 10px;
+  }
+
+/* =========================
+   MOBILE: HIDE NAV DIVIDERS
+========================= */
+@media (max-width: 768px) {
+
+  /* Hide glowing / vertical dividers */
+  .nav-line-glow,
+  .nav-divider,
+  .divider {
+    display: none !important;
+  }
+
+}
+/* =========================
+   MOBILE HEADER FINAL FIX
+========================= */
+@media (max-width: 768px) {
+
+  .rc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    position: relative;
+    z-index: 1200;
+  }
+
+  .mobile-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .account-box {
+    order: 1;
+    font-size: 22px;
+  }
+
+  .hamburger {
+    order: 2;
+    position: relative;
+    margin: 0;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .hamburger {
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+  }
+
+}
+.hero-slider .hamburger,
+.slide .hamburger {
+  position: static !important;
+}
