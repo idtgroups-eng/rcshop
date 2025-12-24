@@ -69,7 +69,7 @@
 </button>
 
 <button class="buy-btn"
-        onclick="buyNow('HP Pavilion 15', 59999, '{% static "images/Toner1.jpeg" %}')">
+        onclick="buyNow('Toner Cartrage', 800, '{% static "images/Toner1.jpeg" %}')">
     Buy
 </button>
 <button class="view-btn"
@@ -80,7 +80,7 @@ onclick="openProductDetails(
         '{% static "images/toner1.jpeg" %}',
         '{% static "images/toner2.jpeg" %}',
         '{% static "images/toner3.webp" %}',
-        '{% static "images/toner4.jpeg" %}'
+        '{% static "images/toner4.jpg" %}'
     ],
     {
     highlights: [
@@ -113,7 +113,7 @@ onclick="openProductDetails(
 
 
 <!-- ⭐ Toner Cartridge -->
-<div class="product-card" data-category="toner">
+<div class="product-card" data-category="Toner Cartrage">
   <span class="sale-tag">Bulk Offer</span>
 
   <img src="{% static 'images/toner.jpg' %}">
@@ -129,7 +129,7 @@ onclick="openProductDetails(
     </button>
 
     <button class="buy-btn"
-      onclick="buyTonerNow('Toner Cartridge', 2500, '{% static 'images/toner.jpg' %}')">
+      onclick="buyNow('Toner Cartridge', 2500, '{% static 'images/toner.jpg' %}')">
       Buy
     </button>
 
@@ -141,7 +141,7 @@ onclick="openProductDetails(
       '{% static "images/toner1.jpeg" %}',
         '{% static "images/toner2.jpeg" %}',
         '{% static "images/toner3.webp" %}',
-        '{% static "images/toner4.jpeg" %}'
+        '{% static "images/toner4.jpg" %}'
     ],
     {
         highlights: [
@@ -171,25 +171,25 @@ onclick="openProductDetails(
 
   <img src="{% static 'images/ink.jpg' %}">
   <h5 class="mt-2">36A & 88A Toner Ink</h5>
-  <p class="price">₹2500</p>
+  <p class="price">₹100</p>
   <div class="rating">⭐⭐⭐⭐</div>
 
   <div class="d-flex justify-content-between mt-2">
 
     <button class="add-btn"
-      onclick="addTonerToCart('36A & 88A Toner Ink', 2500, '{% static 'images/ink.jpg' %}')">
+      onclick="addToCart('36A & 88A Toner Ink', 100, '{% static 'images/ink.jpg' %}')">
       Add
     </button>
 
     <button class="buy-btn"
-      onclick="buyTonerNow('36A & 88A Toner Ink', 2500, '{% static 'images/ink.jpg' %}')">
+      onclick="buyNow('36A & 88A Toner Ink', 100, '{% static 'images/ink.jpg' %}')">
       Buy
     </button>
 
     <button class="view-btn"
 onclick="openProductDetails(
     '36A & 88A Toner Ink',
-    2500,
+    100,
     [
         '{% static "images/ink1.jpg" %}',
         '{% static "images/ink3.jpg" %}',
@@ -226,20 +226,21 @@ onclick="openProductDetails(
 
   <img src="{% static 'images/WIFI ROUTER.JPG' %}">
   <h5 class="mt-2">ROUTER</h5>
-  <p class="price">₹2500</p>
+  <p class="price">₹1300</p>
   <div class="rating">⭐⭐⭐⭐</div>
 
   <div class="d-flex justify-content-between mt-2">
 
     <button class="add-btn"
-      onclick="addROUTERToCart('ROUTER', 1300, '{% static 'images/WIFI ROUTER.jpg' %}')">
+      onclick="addToCart('ROUTER', 1300, '{% static 'images/WIFI ROUTER.jpg' %}')">
       Add
     </button>
 
-    <button class="buy-btn"
-      onclick="buyROUTERNOW('ROUTER', 2500, '{% static 'images/WIFI ROUTER.jpg' %}')">
-      Buy
-    </button>
+ <button class="buy-btn"
+onclick="buyNow('Router', 1300, '{% static "images/WIFI ROUTER.jpg" %}')">
+Buy
+</button>
+
 
     <button class="view-btn"
 onclick="openProductDetails(
