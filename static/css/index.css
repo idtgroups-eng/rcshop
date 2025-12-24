@@ -1231,3 +1231,46 @@ body {
 .slide .hamburger {
   position: static !important;
 }
+/* ==== LOCK DRAWER (STOP AUTO SWIPE OPEN) ==== */
+.navbar-nav {
+  touch-action: pan-y !important;  /* only vertical scroll allowed */
+  overscroll-behavior: contain;
+}
+.logout-link{
+  margin-left:10px;
+  color:#ff5252;
+  font-weight:600;
+  text-decoration:none;
+}
+.logout-link:hover{
+  color:#fff;
+  text-shadow:0 0 10px #ff5252;
+}
+.account-dropdown{ position:relative; }
+
+.account-menu{
+  position:absolute;
+  right:0;
+  top:115%;
+  background:#041b33;
+  border-radius:10px;
+  width:160px;
+  display:none;
+  box-shadow:0 15px 35px rgba(0,0,0,.5);
+  overflow:hidden;
+}
+
+.account-menu a{
+  display:block;
+  padding:12px 14px;
+  color:#fff;
+  text-decoration:none;
+}
+
+.account-menu a:hover{
+  background:#0aa9ff;
+}
+
+.logout-btn{
+  color:#ff5a5a;
+}

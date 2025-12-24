@@ -57,24 +57,28 @@
 
     </ul>
 <div class="account-box ms-auto">
-  {% if user.is_authenticated %}
-    <div class="account-main">
-      <i class="bi bi-person-circle"></i>
-      <div class="account-text">
-        <span class="hello">Hello, {{ user.first_name|default:"User" }}</span>
-        <span class="account-label">Account & Orders</span>
-      </div>
-    </div>
-  {% else %}
-    <a href="/login/?next={{ request.path }}" class="account-main">
-      <i class="bi bi-person-circle"></i>
-      <div class="account-text">
-        <span class="hello">Hello, Sign in</span>
-        <span class="account-label">Account</span>
-      </div>
-    </a>
-  {% endif %}
+
+{% if user.is_authenticated %}
+<a href="{% url 'my_account' %}" class="account-main">
+  <i class="bi bi-person-circle"></i>
+  <div class="account-text">
+    <span class="hello">Hello, {{ user.first_name|default:user.username }}</span>
+    <span class="account-label">Account & Orders</span>
   </div>
+</a>
+
+{% else %}
+<a href="/login/?next={{ request.path }}" class="account-main">
+  <i class="bi bi-person-circle"></i>
+  <div class="account-text">
+    <span class="hello">Hello, Sign in</span>
+    <span class="account-label">Account</span>
+  </div>
+</a>
+{% endif %}
+
+</div>
+
 
     <button class="hamburger" id="hamburgerBtn">
   <span></span>

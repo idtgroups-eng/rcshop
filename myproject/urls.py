@@ -52,7 +52,8 @@ urlpatterns = [
         ),
         name="login"
     ),
-    path("logout/", auth_views.LogoutView.as_view(next_page="login"), name="logout"),
+    path("logout/", views.logout_user, name="logout"),
+    path("logout-success/", views.logout_page, name="logout_page"),
     path("account/", views.my_account, name="my_account"),
     path("my-orders/", views.my_orders, name="my_orders"),
     path("order/<int:order_id>/", views.order_detail, name="order_detail"),

@@ -1,3 +1,17 @@
+let startX = 0;
+
+document.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchmove", e => {
+  let moveX = e.touches[0].clientX;
+
+  if(startX < 30 && moveX > startX + 40){
+    e.preventDefault();   // BLOCK swipe open
+  }
+}, { passive:false });
+
 /* =========================
    ⭐ NAVBAR ACTIVE LINK
 ========================= */

@@ -62,38 +62,40 @@ document.addEventListener("DOMContentLoaded", function () {
     if (itemsInput) itemsInput.value = JSON.stringify(cart);
 
     /* ==========================
-       FORM SUBMIT HANDLER (FINAL FIX)
-    ========================== */
-    const form = document.getElementById("checkoutForm");
-    if (!form) {
-        console.error("checkoutForm not found!");
+   FORM SUBMIT HANDLER (FINAL FIX)
+========================== */
+const form = document.getElementById("checkoutForm");
+if (!form) {
+    console.error("checkoutForm not found!");
+    return;
+}
+
+form.addEventListener("submit", function (e) {
+
+    const name = document.getElementById("custName").value.trim();
+    const email = document.getElementById("custEmail").value.trim();
+    const mobile = document.getElementById("custMobile").value.trim();
+    const address = document.getElementById("custAddress").value.trim();
+    const pin = document.getElementById("custPin").value.trim();
+
+    if (!name || !email || !mobile || !address || !pin) {
+        alert("Please fill all shipping details");
+        e.preventDefault();
         return;
     }
 
-    form.addEventListener("submit", function (e) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address");
+        e.preventDefault();
+        return;
+    }
 
-        const name = document.getElementById("custName").value.trim();
-        const email = document.getElementById("custEmail").value.trim();
-        const mobile = document.getElementById("custMobile").value.trim();
-        const address = document.getElementById("custAddress").value.trim();
-        const pin = document.getElementById("custPin").value.trim();
+    // 🔥 IMPORTANT — re-fill hidden inputs before submit
+    itemsInput.value = JSON.stringify(cart);
+    subtotalInput.value = subtotal;
+    totalInput.value = finalTotal;
 
-        // ❌ Validation fail → stop submit
-        if (!name || !email || !mobile || !address || !pin) {
-            alert("Please fill all shipping details");
-            e.preventDefault();
-            return;
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            alert("Please enter a valid email address");
-            e.preventDefault();
-            return;
-        }
-
-        // ✅ Cart data already set in hidden input
-        // ✅ Browser will now submit naturally to /payment/
-    });
-
+    // 🚀 DO NOT preventDefault — allow normal POST to backend
 });
+})

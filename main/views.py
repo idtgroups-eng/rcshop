@@ -483,45 +483,62 @@ from .models import UserProfile, Order
 
 
 # =========================
-# ✅ CHECKOUT (AUTO-FILL + MOBILE SAVE)
+# ✅ FINAL CHECKOUT (AUTO-FILL + SESSION SAVE + PAYMENT FLOW)
 # =========================
 @login_required(login_url="login")
 def checkout(request):
-    user = request.user
 
-    # 🔹 Get or create user profile (for mobile)
-    profile, created = UserProfile.objects.get_or_create(user=user)
+    user = request.user
+    profile, _ = UserProfile.objects.get_or_create(user=user)
 
     if request.method == "POST":
-        # 📱 Save / update mobile number
+        try:
+            items = json.loads(request.POST.get("items", "[]"))
+        except:
+            items = []
+
         mobile = request.POST.get("mobile")
+
+        # Save mobile to profile
         if mobile:
             profile.mobile = mobile
             profile.save()
 
-        # ✅ IMPORTANT:
-        # Yahan aapka existing order-save / payment logic rahega
-        # Example:
-        # return redirect("payment")
+        # Save checkout session
+        request.session["checkout_data"] = {
+            "name": request.POST.get("name", ""),
+            "email": request.POST.get("email", ""),
+            "mobile": mobile or "",
+            "address": request.POST.get("address", ""),
+            "pincode": request.POST.get("pincode", ""),
+            "items": items,
+            "subtotal": str(request.POST.get("subtotal", "0")),
+            "total": str(request.POST.get("total", "0")),
+        }
 
-        return redirect("payment")  # 👉 temporary safe redirect
+        # 🚀 Redirect to payment
+        return redirect("payment")
 
-    # 🔹 Data for auto-fill
-    context = {
+    # Auto-fill user data
+    return render(request, "checkout.html", {
         "user_name": user.first_name,
         "user_email": user.email,
         "user_mobile": profile.mobile or "",
-    }
+    })
 
-    return render(request, "checkout.html", context)
-
-# =========================
 # ✅ MY ACCOUNT
 # =========================
 @login_required(login_url="login")
 def my_account(request):
     return render(request, "account.html")
+from django.contrib.auth import logout
 
+def logout_user(request):
+    logout(request)
+    return redirect("logout_page")
+
+def logout_page(request):
+    return render(request, "logout.html")
 
 # =========================
 # 🧾 MY ORDERS (ORDER HISTORY)
@@ -550,12 +567,3 @@ def save_address(request):
             pincode=request.POST["pincode"]
         )
     return redirect("checkout")
-@login_required
-def admin_orders(request):
-    if not request.user.is_staff:
-        return redirect("home")
-
-    orders = Order.objects.all().order_by("-created_at")
-    return render(request, "admin/orders.html", {"orders": orders})
-
-         

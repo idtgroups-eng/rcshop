@@ -199,3 +199,62 @@ footer{
     text-align:center;
     margin-top:40px;
 }
+@media (max-width:768px){
+
+/* Outer box full width */
+.cart-container{
+    width:100% !important;
+    margin:15px 0 !important;
+    padding:12px !important;
+    border-radius:16px;
+}
+
+/* Hide table header */
+.cart-container thead{
+    display:none !important;
+}
+
+/* Convert rows to cards */
+.cart-container table,
+.cart-container tbody,
+.cart-container tr{
+    display:block !important;
+    width:100%;
+}
+
+.cart-container tr{
+    background:#fff;
+    border-radius:14px;
+    margin-bottom:14px;
+    padding:12px;
+    box-shadow:0 6px 16px rgba(0,0,0,.15);
+}
+
+/* Each cell becomes label/value row */
+.cart-container td{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border:none !important;
+    padding:6px 4px;
+    font-size:14px;
+}
+
+/* Add left labels */
+.cart-container td:before{
+    content: attr(data-label);
+    font-weight:600;
+    color:#555;
+}
+
+/* Buttons full width */
+.proceed-btn{
+    width:100%;
+}
+
+/* Footer stack */
+.cart-footer{
+    flex-direction:column;
+    gap:10px;
+}
+}

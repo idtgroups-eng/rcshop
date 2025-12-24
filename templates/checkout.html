@@ -135,7 +135,8 @@
 <!-- RIGHT: SHIPPING FORM -->
 <div class="card">
     <h2 class="card-title">Shipping Details</h2>
-<form id="checkoutForm" method="POST" action="{% url 'payment' %}">
+<form id="checkoutForm" method="POST" action="{% url 'checkout' %}">
+
     {% csrf_token %}
 
     <label>Full Name</label>

@@ -1,122 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Account | RCStore</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>My Account | RCStore</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body{
-      margin:0;
-      font-family:Poppins, Arial, sans-serif;
-      background:#f4f6fb;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-    .account-container{
-      max-width:1000px;
-      margin:80px auto;
-      padding:20px;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:radial-gradient(circle at top,#0aa9ff,#020b1b);
+  min-height:100vh;
+  color:#fff;
+}
 
-    .account-header{
-      background:linear-gradient(135deg,#0d6efd,#00c6ff);
-      color:#fff;
-      padding:30px;
-      border-radius:14px;
-      box-shadow:0 10px 30px rgba(0,0,0,.15);
-    }
+/* HERO */
+.account-hero{
+  padding:70px 20px;
+  text-align:center;
+}
+.glass{
+  max-width:1000px;
+  margin:auto;
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(25px);
+  border-radius:30px;
+  padding:45px;
+  box-shadow:0 25px 70px rgba(0,0,0,.5);
+}
+.glass h1{margin:0;font-size:34px;}
+.glass p{opacity:.8}
 
-    .account-header h2{
-      margin:0;
-      font-size:28px;
-    }
+/* GRID */
+.account-grid{
+  max-width:1100px;
+  margin:60px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:35px;
+  padding:0 20px;
+}
 
-    .account-header p{
-      margin-top:6px;
-      opacity:.9;
-    }
+/* CARD */
+.card{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:26px;
+  padding:28px;
+  backdrop-filter:blur(16px);
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
+  transition:.4s;
+}
+.card:hover{transform:translateY(-10px);box-shadow:0 30px 90px rgba(0,234,255,.4);}
+.card h3{margin-top:0;font-size:20px}
+.muted{opacity:.7}
 
-    .account-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:20px;
-      margin-top:30px;
-    }
-
-    .card{
-      background:#fff;
-      padding:22px;
-      border-radius:14px;
-      box-shadow:0 6px 20px rgba(0,0,0,.08);
-    }
-
-    .card h3{
-      margin-top:0;
-      font-size:18px;
-      margin-bottom:10px;
-    }
-
-    .btn{
-      display:inline-block;
-      margin-top:10px;
-      padding:10px 16px;
-      border-radius:8px;
-      text-decoration:none;
-      font-weight:600;
-      background:#0d6efd;
-      color:#fff;
-    }
-
-    .btn.logout{
-      background:#dc3545;
-    }
-
-    .muted{
-      color:#666;
-      font-size:14px;
-    }
-  </style>
+/* BUTTONS */
+.btn{
+  display:inline-block;
+  margin-top:14px;
+  padding:12px 20px;
+  border-radius:14px;
+  text-decoration:none;
+  color:#fff;
+  font-weight:600;
+  background:linear-gradient(135deg,#00eaff,#0051ff);
+  box-shadow:0 0 15px rgba(0,234,255,.7);
+}
+.btn.logout{
+  background:linear-gradient(135deg,#ff5252,#b30000);
+  box-shadow:0 0 15px rgba(255,82,82,.7);
+}
+</style>
 </head>
 
 <body>
 
-<div class="account-container">
-
-  <!-- HEADER -->
-  <div class="account-header">
-    <h2>Welcome, {{ request.user.first_name|default:request.user.username }}</h2>
+<section class="account-hero">
+  <div class="glass">
+    <h1>Welcome, {{ request.user.first_name|default:request.user.username }}</h1>
     <p>{{ request.user.email }}</p>
   </div>
+</section>
 
-  <!-- DASHBOARD -->
-  <div class="account-grid">
+<section class="account-grid">
 
-    <!-- PROFILE -->
-    <div class="card">
-      <h3>👤 My Profile</h3>
-      <p class="muted">View your account details</p>
-      <p><b>Name:</b> {{ request.user.first_name }}</p>
-      <p><b>Email:</b> {{ request.user.email }}</p>
-    </div>
+<div class="card">
+  <h3>👤 My Profile</h3>
+  <p class="muted">View your account details</p>
+  <p><b>Name:</b> {{ request.user.first_name }}</p>
+  <p><b>Email:</b> {{ request.user.email }}</p>
+</div>
 
-    <!-- ORDERS -->
-    <div class="card">
+<div class="card">
   <h3>🧾 My Orders</h3>
   <p class="muted">View your order history</p>
   <a href="{% url 'my_orders' %}" class="btn">View Orders</a>
 </div>
 
-
-    <!-- ACTIONS -->
-    <div class="card">
-      <h3>⚙️ Account Actions</h3>
-      <a href="/" class="btn">🏠 Back to Home</a><br><br>
-      <a href="{% url 'logout' %}" class="btn logout">🚪 Logout</a>
-    </div>
-
-  </div>
-
+<div class="card">
+  <h3>⚙ Account Actions</h3>
+  <a href="/" class="btn">🏠 Back to Home</a><br><br>
+  <a href="{% url 'logout' %}" class="btn logout">🚪 Logout</a>
 </div>
+
+</section>
 
 </body>
 </html>

@@ -6,6 +6,9 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/products.css' %}">
+<link rel="stylesheet" href="{% static 'css/products.css' %}">
+
+
 {% endblock %}
 
 {% block content %}
@@ -57,7 +60,7 @@
 
 
   <img src="{% static 'images/toner1.jpeg' %}">
-  <h5 class="mt-2">Toner Cartrage</h5>
+  <h5 class="mt-2">Toner Cartrage (88A)</h5>
   <p class="price">₹800</p>
   <div class="rating">⭐⭐⭐⭐⭐</div>
 
@@ -114,10 +117,10 @@ onclick="openProductDetails(
 
 <!-- ⭐ Toner Cartridge -->
 <div class="product-card" data-category="Toner Cartrage">
-  <span class="sale-tag">Bulk Offer</span>
+  <span class="sale-tag">Bulk Offer Qty-5</span>
 
   <img src="{% static 'images/toner.jpg' %}">
-  <h5 class="mt-2">Toner Cartridge</h5>
+  <h5 class="mt-2">Toner Cartridge (88A)</h5>
   <p class="price" id="tonerPrice">₹2500</p>
   <div class="rating">⭐⭐⭐⭐</div>
 
@@ -224,20 +227,20 @@ onclick="openProductDetails(
 <!-- ⭐ ROUTER -->
 <div class="product-card" data-category="Router">
 
-  <img src="{% static 'images/WIFI ROUTER.jpg' %}">
-  <h5 class="mt-2">ROUTER</h5>
+  <img src="{% static 'images/tp1.jpg' %}">
+  <h5 class="mt-2">Router</h5>
   <p class="price">₹1300</p>
   <div class="rating">⭐⭐⭐⭐</div>
 
   <div class="d-flex justify-content-between mt-2">
 
     <button class="add-btn"
-      onclick="addToCart('ROUTER', 1300, '{% static 'images/WIFI ROUTER.jpg' %}')">
+      onclick="addToCart('ROUTER', 1300, '{% static 'images/tp1.jpg' %}')">
       Add
     </button>
 
  <button class="buy-btn"
-onclick="buyNow('ROUTER', 1300, '{% static "images/WIFI ROUTER.jpg" %}')">
+onclick="buyNow('ROUTER', 1300, '{% static "images/tp1.jpg" %}')">
 Buy
 </button>
 
@@ -277,9 +280,6 @@ onclick="openProductDetails(
 
   </div>
 </div>
-
-
-
 
 
 
@@ -335,6 +335,23 @@ onclick="openProductDetails(
 <!-- ===================== PRODUCTS JAVASCRIPT ===================== -->
 <script src="{% static 'js/products.js' %}"></script>
 <script src="{% static 'js/product_details.js' %}"></script>
+<!-- FLOATING CART -->
+<a href="{% url 'cart' %}" class="floating-cart">
+    🛒 <span id="floatCartCount">0</span>
+</a>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/917018677970" target="_blank" class="floating-whatsapp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+let c = JSON.parse(localStorage.getItem("cartItems")) || [];
+let f = document.getElementById("floatCartCount");
+if(f) f.innerText = c.length;
+</script>
 
 
 {% endblock %}
+</body>
+</html>
