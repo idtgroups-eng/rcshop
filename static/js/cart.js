@@ -125,3 +125,20 @@ function goCheckout() {
 /* INIT */
 loadCart();
 updateCartCount();
+
+document.getElementById("cartMenuBtn").onclick = () => {
+  document.getElementById("cartDrawer").classList.toggle("open");
+}
+
+document.addEventListener("click", function(e){
+  let drawer = document.getElementById("cartDrawer");
+  let btn = document.getElementById("cartMenuBtn");
+
+  if(drawer && btn && drawer.classList.contains("open")){
+    if(!drawer.contains(e.target) && !btn.contains(e.target)){
+      drawer.classList.remove("open");
+    }
+  }
+});
+
+

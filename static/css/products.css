@@ -195,3 +195,49 @@ footer {
     color: #000 !important;
     font-weight: 700 !important;
 }
+/* =========================
+   PRODUCTS PAGE MOBILE FOOTER LEFT ALIGN
+========================= */
+@media (max-width:768px){
+
+.products-page footer{
+    padding:35px 16px 25px;
+}
+
+/* Vertical left panel */
+.products-page .footer-container{
+    display:flex !important;
+    flex-direction:column;
+    align-items:flex-start !important;
+    text-align:left !important;
+    gap:26px;
+}
+
+/* Blocks aligned left */
+.products-page .footer-box{
+    width:100%;
+    align-items:flex-start !important;
+}
+
+/* Headings */
+.products-page .footer-box h3{
+    text-align:left;
+}
+
+/* Links */
+.products-page .footer-links li{
+    justify-content:flex-start;
+}
+
+/* Social icons */
+.products-page .footer-social{
+    justify-content:flex-start;
+}
+
+/* Copyright center */
+.products-page .footer-bottom{
+    text-align:center;
+    margin-top:25px;
+}
+
+}

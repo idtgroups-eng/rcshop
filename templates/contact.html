@@ -21,23 +21,38 @@
 
 <body>
 
-<!-- ================= HEADER ================= -->
-<header class="rc-header">
-  <div class="rc-left">
+<!-- ================= PREMIUM CONTACT HEADER ================= -->
+<header class="rc-header contact-header">
+
+  <div class="ch-left">
     <h2 class="rc-logo">RC</h2>
   </div>
 
-  <div class="rc-center">
-    <h3 class="rc-title">Welcome to Right Computers</h3>
+  <div class="ch-center">
+    <span class="welcome">Welcome to</span>
+    <h3 class="rc-title">Right Computers</h3>
   </div>
 
-  <nav class="rc-menu">
+  <button class="contact-hamburger" id="contactHamburger">☰</button>
+
+  <!-- Desktop Menu -->
+  <nav class="rc-menu desktop-menu">
     <a href="{% url 'home' %}">Home</a>
     <a href="{% url 'about' %}">About</a>
     <a href="{% url 'products' %}">Products</a>
     <a href="{% url 'contact' %}" class="active">Contact</a>
   </nav>
+
+  <!-- Mobile Drawer -->
+  <nav class="mobile-contact-drawer" id="contactDrawer">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'products' %}">Products</a>
+    <a href="{% url 'contact' %}" class="active">Contact</a>
+  </nav>
+
 </header>
+
 
 <div style="height:110px;"></div>
 
@@ -167,11 +182,34 @@
   <a href="#" class="back-top"><i class="bi bi-arrow-up"></i></a>
 </footer>
 
-<!-- WhatsApp Button -->
-<a href="https://wa.me/9625252254" class="whatsapp-float">
+<script>const cHam = document.getElementById("contactHamburger");
+const cDrawer = document.getElementById("contactDrawer");
+
+if(cHam && cDrawer){
+  cHam.addEventListener("click", ()=>{
+      cDrawer.classList.toggle("show");
+  });
+}
+const closeDrawer = document.getElementById("closeContactDrawer");
+
+if(closeDrawer){
+  closeDrawer.addEventListener("click", ()=>{
+      cDrawer.classList.remove("show");
+  });
+}
+
+/* Auto close on scroll */
+window.addEventListener("scroll", ()=>{
+   if(cDrawer && cDrawer.classList.contains("show")){
+      cDrawer.classList.remove("show");
+   }
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/919625225254" class="floating-whatsapp" target="_blank" aria-label="Chat on WhatsApp">
   <i class="bi bi-whatsapp"></i>
 </a>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -202,18 +202,38 @@ function updateDots() {
 // Auto slide every 5 seconds
 setInterval(nextSlide, 5000);
 
-// ================= MOBILE HAMBURGER MENU =================
+// ================= LOCKED MOBILE HAMBURGER MENU =================
+
 const hamburger = document.getElementById("hamburgerBtn");
 const mobileMenu = document.getElementById("mobileMenu");
 
-hamburger.addEventListener("click", () => {
-  mobileMenu.classList.toggle("show");
+/* ONLY CLICK OPEN */
+hamburger.addEventListener("click", function (e) {
+    e.stopPropagation();
+    mobileMenu.classList.toggle("show");
 });
-document.addEventListener("click", (e) => {
-  if (
-    !mobileMenu.contains(e.target) &&
-    !hamburger.contains(e.target)
-  ) {
-    mobileMenu.classList.remove("show");
-  }
+
+/* OUTSIDE CLICK CLOSE */
+document.addEventListener("click", function (e) {
+    if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        mobileMenu.classList.remove("show");
+    }
 });
+
+/* 🚫 FULLY DISABLE SWIPE OPEN */
+(function () {
+    let touchStartX = 0;
+
+    document.addEventListener("touchstart", function (e) {
+        touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    document.addEventListener("touchmove", function (e) {
+        const moveX = e.touches[0].clientX;
+
+        if (touchStartX > window.innerWidth - 80 && moveX < touchStartX - 30) {
+            e.preventDefault();
+            mobileMenu.classList.remove("show");
+        }
+    }, { passive: false });
+})();

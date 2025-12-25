@@ -1,4 +1,12 @@
 /* ---------------- BASIC --------------- */
+@media (max-width: 768px) {
+  html, body {
+      width: 100%;
+      overflow-x: hidden !important;
+      overscroll-behavior-x: none;
+      touch-action: pan-y;
+  }
+}
 
 body {
   background: radial-gradient(circle at top, #163b66 0, #050915 55%, #02030a 100%);
@@ -1232,20 +1240,47 @@ body {
   position: static !important;
 }
 /* ==== LOCK DRAWER (STOP AUTO SWIPE OPEN) ==== */
-.navbar-nav {
-  touch-action: pan-y !important;  /* only vertical scroll allowed */
-  overscroll-behavior: contain;
+@media(max-width:768px){
+
+  .navbar-nav{
+    position:fixed;
+    top:0;
+    right:-260px;
+    width:260px;
+    height:100vh;
+    max-width:260px;
+    background:linear-gradient(180deg,#03162a,#001429);
+    box-shadow:-12px 0 35px rgba(0,0,0,0.7);
+    padding:90px 24px 24px;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+    touch-action:pan-y;
+    transition:right .35s ease;
+    z-index:1200;
+  }
+
+  .navbar-nav.show{ right:0; }
+
 }
-.logout-link{
-  margin-left:10px;
-  color:#ff5252;
-  font-weight:600;
-  text-decoration:none;
+
+/* ===== DESKTOP RESTORE ===== */
+@media(min-width:769px){
+
+  .navbar-nav{
+    position:static !important;
+    height:auto !important;
+    width:auto !important;
+    max-width:none !important;
+    background:none !important;
+    box-shadow:none !important;
+    padding:0 !important;
+    overflow:visible !important;
+    touch-action:auto !important;
+  }
+
 }
-.logout-link:hover{
-  color:#fff;
-  text-shadow:0 0 10px #ff5252;
-}
+
+/* ===== ACCOUNT DROPDOWN ===== */
 .account-dropdown{ position:relative; }
 
 .account-menu{
@@ -1254,9 +1289,9 @@ body {
   top:115%;
   background:#041b33;
   border-radius:10px;
-  width:160px;
+  width:170px;
   display:none;
-  box-shadow:0 15px 35px rgba(0,0,0,.5);
+ box-shadow:0 15px 35px rgba(0,0,0,.5);
   overflow:hidden;
 }
 
@@ -1271,6 +1306,15 @@ body {
   background:#0aa9ff;
 }
 
-.logout-btn{
-  color:#ff5a5a;
+.logout-link{
+  margin-left:10px;
+  color:#ff5252;
+  font-weight:600;
+  text-decoration:none;
 }
+.logout-link:hover{
+  color:#fff;
+  text-shadow:0 0 10px #ff5252;
+}
+
+.logout-btn{ color:#ff5a5a; }
