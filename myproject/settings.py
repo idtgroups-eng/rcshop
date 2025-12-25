@@ -179,3 +179,13 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+import os
+if os.environ.get("RENDER") == "true":
+    from django.contrib.auth.models import User
+    if not User.objects.filter(username="rcadmin").exists():
+        User.objects.create_superuser(
+            "rcadmin",
+            "idtgroups@gmail.com",
+            "admin123!@#"
+        )
+
