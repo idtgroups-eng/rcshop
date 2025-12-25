@@ -1,41 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Create Account</title>
+<meta charset="UTF-8">
+<title>Create Account | RCShop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-body{font-family:Poppins;background:#f5f7fb}
-.form-box{
-  max-width:400px;margin:80px auto;
-  background:#fff;padding:30px;
-  border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.1)
+body{margin:0;font-family:Poppins;background:#f3f6fb;color:#333}
+
+/* HEADER */
+.rc-header{
+background:linear-gradient(90deg,#001f3f,#004080);
+padding:14px 22px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:#fff;
 }
-input,button{
-  width:100%;padding:12px;margin-top:12px;
-  border-radius:6px;border:1px solid #ccc
+.rc-header h2{margin:0;font-weight:600}
+.rc-header a{color:#0ff;text-decoration:none;margin-left:18px;font-weight:500}
+
+/* FORM BOX */
+.register-wrapper{
+max-width:440px;margin:60px auto;background:#fff;padding:34px;
+border-radius:18px;box-shadow:0 20px 45px rgba(0,0,0,.15);
 }
-button{background:#007bff;color:#fff;border:none;font-weight:600}
-a{display:block;margin-top:15px;text-align:center}
+.register-wrapper h3{text-align:center;margin-bottom:22px}
+.register-wrapper input{
+width:100%;padding:13px;border-radius:9px;border:1px solid #ccc;margin-bottom:14px;font-size:15px
+}
+.register-wrapper button{
+width:100%;padding:13px;border:none;border-radius:9px;
+background:linear-gradient(90deg,#2563eb,#3b82f6);
+color:#fff;font-weight:600;font-size:16px;cursor:pointer
+}
+.register-wrapper button:hover{opacity:.9}
+.register-wrapper a{display:block;text-align:center;margin-top:14px;color:#0066cc}
+
+/* FOOTER */
+.rc-footer{
+margin-top:90px;
+background:#001427;
+color:#9ad;
+text-align:center;
+padding:14px;
+font-size:13px
+}
 </style>
 </head>
+
 <body>
 
-<div class="form-box">
-<h2>Create Account</h2>
+<!-- HEADER -->
+<div class="rc-header">
+  <h2>RCShop</h2>
+  <div>
+    <a href="/">Home</a>
+    <a href="/products/">Products</a>
+    <a href="/contact/">Contact</a>
+  </div>
+</div>
+
+<!-- REGISTER FORM -->
+<div class="register-wrapper">
+<h3>Create your account</h3>
 
 {% for msg in messages %}
-<p style="color:red">{{msg}}</p>
+<p style="color:red;text-align:center">{{ msg }}</p>
 {% endfor %}
 
 <form method="post">
 {% csrf_token %}
 <input type="text" name="name" placeholder="Full Name" required>
-<input type="email" name="email" placeholder="Email" required>
+<input type="email" name="email" placeholder="Email Address" required>
 <input type="password" name="password" placeholder="Password" required>
 <input type="password" name="cpassword" placeholder="Confirm Password" required>
-<button>Create Account</button>
+<button type="submit">Create Account</button>
 </form>
 
-<a href="{% url 'login' %}">Already have account? Login</a>
+<a href="{% url 'login' %}">Already have an account? Login</a>
+</div>
+
+<!-- FOOTER -->
+<div class="rc-footer">
+© {{year|default:"2025"}} RCShop • Secure Signup • All Rights Reserved
 </div>
 
 </body>
