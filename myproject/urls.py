@@ -35,6 +35,7 @@ urlpatterns = [
     # ================= PAYMENT =================
     path("payment/", views.payment, name="payment"),
     path("payment/upi/", views.payment_upi, name="payment_upi"),
+    path("upi-verify/", views.upi_verify, name="upi_verify"),
     path("payment/online/", views.payment_online, name="payment_online"),
     path("payment/cod/", views.cod_details, name="cod_details"),
 

@@ -84,27 +84,34 @@ def payment(request):
     return render(request, "payment.html", {
         "total": data.get("total")
     })
-
+import uuid
 
 def payment_upi(request):
     data = request.session.get("checkout_data")
 
-    # 🔓 Allow GET
+    # Allow direct open safety
     if request.method == "GET" and not data:
         return render(request, "payment-upi.html", {
             "qr_code": None,
             "amount": "0",
             "upi_id": "9625252254@ybl",
+            "upi_url": "",
+            "order_id": ""
         })
 
     if not data:
         return redirect("checkout")
 
-    amount = data.get("total", "0")
+    amount = str(data.get("total", "0"))
     upi_id = "9625252254@ybl"
     name = "RCShop"
 
-    upi_url = f"upi://pay?pa={upi_id}&pn={name}&am={amount}&cu=INR"
+    # Generate secure unique order id
+    order_id = str(uuid.uuid4()).replace("-", "")[:12]
+    request.session["upi_order_id"] = order_id
+
+    upi_url = f"upi://pay?pa={upi_id}&pn={name}&am={amount}&cu=INR&tn=RCShop{order_id}"
+
     qr = qrcode.make(upi_url)
     buffer = BytesIO()
     qr.save(buffer, format="PNG")
@@ -113,7 +120,17 @@ def payment_upi(request):
         "qr_code": base64.b64encode(buffer.getvalue()).decode(),
         "amount": amount,
         "upi_id": upi_id,
+        "upi_url": upi_url,
+        "order_id": order_id
     })
+def upi_verify(request):
+    order_id = request.session.get("upi_order_id")
+
+    # Abhi basic safety (next step me Cashfree/Razorpay connect hoga)
+    if order_id:
+        return HttpResponse("PENDING")
+
+    return HttpResponse("FAILED")
 
 
 def payment_online(request):
