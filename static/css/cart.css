@@ -1,3 +1,4 @@
+/* v2.5 mobile-cart-fix */
 html,body{
   width:100%;
   overflow-x:hidden;
@@ -117,7 +118,7 @@ body{
   position:fixed;
   right:-270px;
   top:0;
-  width:260px;
+  width:200px;
   height:100vh;
   background:linear-gradient(180deg,#021024,#000);
   padding:100px 24px;
@@ -341,4 +342,153 @@ footer{
 /* ONLY MOBILE */
 @media(max-width:768px){
   .mobile-floating{display:flex}
+}
+/* =======================
+   MOBILE CART FIX
+======================= */
+@media (max-width:768px){
+
+.cart-container{
+    width:100% !important;
+    margin:12px 0 !important;
+    padding:14px !important;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.12);
+}
+
+/* Product Row Full Width */
+.cart-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 10px;
+}
+
+/* Product Image */
+.cart-item img{
+    width:80px;
+    height:80px;
+    object-fit:contain;
+    border-radius:10px;
+    background:#f5f7fb;
+}
+
+/* Product Details */
+.cart-item-details{
+    flex:1;
+}
+
+/* Price Bold */
+.cart-price{
+    font-size:15px;
+    font-weight:700;
+    color:#0b5ed7;
+}
+
+/* Qty Controls */
+.qty-box{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:8px;
+}
+
+/* Delete Button */
+.delete-btn{
+    background:#ff3d3d;
+    color:#fff;
+    border:none;
+    padding:7px 14px;
+    border-radius:10px;
+    font-size:13px;
+    margin-top:10px;
+}
+
+/* Total Section */
+.cart-total{
+    margin-top:18px;
+    padding-top:14px;
+    border-top:1px dashed #ddd;
+    font-size:16px;
+    text-align:right;
+}
+
+/* Checkout Button */
+.checkout-btn{
+    width:100%;
+    margin-top:14px;
+    padding:14px;
+    border-radius:14px;
+    font-size:16px;
+    background:linear-gradient(90deg,#0d6efd,#00c6ff);
+    box-shadow:0 8px 18px rgba(0,102,255,.35);
+}
+
+}
+/* ===========================
+   CART MOBILE FIX (ONLY MOBILE)
+=========================== */
+@media(max-width:768px){
+
+#cartBox{
+    width:100% !important;
+    margin:0 !important;
+    padding:14px !important;
+    border-radius:0 !important;
+}
+
+/* Table ko card layout bana do */
+#cartTable thead{
+    display:none;
+}
+
+#cartTable, 
+#cartTable tbody, 
+#cartTable tr{
+    display:block;
+    width:100%;
+}
+
+#cartTable tr{
+    background:#fff;
+    margin-bottom:14px;
+    padding:12px;
+    border-radius:14px;
+    box-shadow:0 8px 18px rgba(0,0,0,.12);
+}
+
+#cartTable td{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:6px 0;
+    font-size:14px;
+}
+
+/* Labels auto show */
+#cartTable td:nth-child(1)::before{content:"Product";}
+#cartTable td:nth-child(2)::before{content:"Name";}
+#cartTable td:nth-child(3)::before{content:"Price";}
+#cartTable td:nth-child(4)::before{content:"Qty";}
+#cartTable td:nth-child(5)::before{content:"Total";}
+#cartTable td:nth-child(6)::before{content:"Remove";}
+
+#cartTable td::before{
+    font-weight:600;
+    color:#555;
+}
+
+/* Total + Button */
+#grandBox{
+    text-align:right;
+    font-size:16px;
+    margin-top:16px;
+}
+
+.checkout-btn{
+    width:100%;
+    height:48px;
+    font-size:16px;
+    border-radius:14px;
+}
 }

@@ -281,6 +281,67 @@ onclick="openProductDetails(
 </div>
 
 
+<!-- ⭐ Gaming Mouse -->
+<div class="product-card" data-category="Gaming Mouse">
+
+  <img src="{% static 'images/gm.webp' %}">
+  <h5 class="mt-2">Gaming Mouse</h5>
+  <p class="price">₹750</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex justify-content-between mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Gaming Mouse', 750, '{% static 'images/gm.webp' %}')">
+      Add
+    </button>
+
+ <button class="buy-btn"
+onclick="buyNow('Gaming Mouse', 750, '{% static "images/gm.webp" %}')">
+Buy
+</button>
+
+
+    <button class="view-btn"
+onclick="openProductDetails(
+    'Gaming Mouse',
+    750,
+    [
+        '{% static "images/gm1.webp" %}',
+        '{% static "images/gm2.webp" %}',
+        '{% static "images/gm3.webp" %}',
+        '{% static "images/gm4.jpg" %}'
+    ],
+    {
+    highlights: [
+  'Dual Mode Wireless Connectivity – Bluetooth 5.3 + 2.4GHz USB Receiver',
+  'Ergonomic Gaming Design with Thumb Support for Long Hours Comfort',
+  'Built-in Rechargeable Battery with Fast Type-C Charging',
+  'Adjustable DPI Levels for Precision Gaming & Work Control',
+  'High-Precision Optical Sensor for Smooth & Accurate Tracking',
+  'RGB Lighting Effects (Selected Models) for Premium Gaming Look',
+  'Compatible with Laptop, Desktop, Gaming Console, Mac & Windows'
+],
+
+specs: [
+  'Connectivity: Bluetooth 5.3 & 2.4GHz Dual Wireless',
+  'DPI Range: Adjustable up to 2400 DPI',
+  'Buttons: 6 Buttons (Left, Right, Scroll, DPI, Forward, Backward)',
+  'Sensor Type: High Precision Optical Sensor',
+  'Design: Ergonomic Body with Thumb Rest Support',
+  'Power Source: Built-in Rechargeable Battery',
+  'Charging Port: Type-C Fast Charging',
+  'Compatibility: Windows, Mac, Laptop, Desktop, Gaming Consoles',
+  'Lighting: RGB Gaming Lights (Vader Pro / Toad One Models)'
+]
+
+}
+)">
+      View
+    </button>
+
+  </div>
+</div>
 
 <!-- ===================== RC SHOP FOOTER ===================== -->
 </div> <!-- productContainer close hona zaruri hai -->
