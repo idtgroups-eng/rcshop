@@ -1241,27 +1241,25 @@ body {
 }
 /* ==== LOCK DRAWER (STOP AUTO SWIPE OPEN) ==== */
 @media(max-width:768px){
-
-  .navbar-nav{
-    position:fixed;
-    top:0;
-    right:-260px;
-    width:260px;
-    height:100vh;
-    max-width:260px;
-    background:linear-gradient(180deg,#03162a,#001429);
-    box-shadow:-12px 0 35px rgba(0,0,0,0.7);
-    padding:90px 24px 24px;
-    overflow-x:hidden;
-    overscroll-behavior:contain;
-    touch-action:pan-y;
-    transition:right .35s ease;
-    z-index:1200;
-  }
-
-  .navbar-nav.show{ right:0; }
-
+/* NAV DRAWER */
+.navbar-nav{
+  position: fixed;
+  top: 0;
+  right: -260px;
+  width: 180px;     /* OLD was 280 / 300 */
+  height: 100vh;
+  background: linear-gradient(180deg,#03162a,#001429);
+  flex-direction: column !important;
+  padding: 85px 22px;
+  gap: 16px;
+  transition: 0.35s ease;
+  z-index: 1200;
+  box-shadow: -12px 0 35px rgba(0,0,0,0.7);
 }
+.navbar-nav.show{
+  right: 0;
+}
+
 
 /* ===== DESKTOP RESTORE ===== */
 @media(min-width:769px){
@@ -1318,3 +1316,4 @@ body {
 }
 
 .logout-btn{ color:#ff5a5a; }
+}

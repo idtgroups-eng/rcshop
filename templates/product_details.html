@@ -80,101 +80,156 @@
 
 <!---------------- Related Products ---------------->
 <h2>Related Products</h2>
+
 <div class="related-container" id="relatedContainer">
 
-    <!-- ASUS ROG -->
-    <div class="related-card">
-        <div class="img-box">
-            <img src="{% static 'images/rog.jpg' %}" alt="Asus ROG Laptop">
-            <button class="view-btn"
-onclick="openProductDetails(
-    'Asus ROG Laptop',
-    59999,
-    ['{% static "images/rog.jpg" %}','{% static "images/rog1.jpg" %}','{% static "images/rog2.webp" %}','{% static "images/rog3.jpg" %}'],
-    {
-        highlights: [
+  <!-- ASUS ROG -->
+  <div class="related-card">
+    <div class="img-box">
+      <img src="{% static 'images/rog.jpg' %}" alt="Asus ROG Laptop">
+
+      <button class="view-btn"
+      onclick="openProductDetails(
+        'Asus ROG Laptop',
+        59999,
+        ['{% static "images/rog.jpg" %}','{% static "images/rog1.jpg" %}','{% static "images/rog2.webp" %}','{% static "images/rog3.jpg" %}'],
+        {
+          highlights:[
             'High-end Gaming Performance',
             'RGB Backlit Keyboard',
             'Cooling Boost Technology',
             '144Hz High Refresh Display'
-        ],
-        specs: [
+          ],
+          specs:[
             'Intel Core i7 Processor',
             '8GB RTX Graphics',
             '16GB DDR4 RAM',
             '1TB NVMe SSD'
-        ]
-    }
-)">View</button>
-        </div>
-        <h3>Asus ROG Laptop</h3>
+          ]
+        }
+      )">View</button>
     </div>
+    <h3>Asus ROG Laptop</h3>
+  </div>
 
-   <div class="related-card">
+  <!-- ALL IN ONE PC -->
+  <div class="related-card">
     <div class="img-box">
-        <img src="{% static 'images/all in one i5.jpg' %}" alt="All-in-One PC">
+      <img src="{% static 'images/all in one i5.jpg' %}" alt="All-in-One PC">
 
-        <button class="view-btn"
-onclick="openProductDetails(
-    'All in One PC',
-    32999,
-    [
-        '{% static "images/all in one i5.jpg" %}',
-        '{% static "images/ALL IN ONE i3.jpg" %}'
-    ],
-    {
-        highlights: [
+      <button class="view-btn"
+      onclick="openProductDetails(
+        'All in One PC',
+        32999,
+        ['{% static "images/all in one i5.jpg" %}','{% static "images/ALL IN ONE i3.jpg" %}'],
+        {
+          highlights:[
             'Space Saving Premium Design',
             'Full HD Display',
             'Ideal for Office & Home Use',
             'Wireless Keyboard & Mouse Included'
-        ],
-        specs: [
+          ],
+          specs:[
             'Intel Core i5 Processor',
             '8GB DDR4 RAM',
             '512GB SSD',
             'WiFi + Bluetooth'
-        ]
-    }
-)">View</button>
+          ]
+        }
+      )">View</button>
     </div>
-
     <h3>All in One PC</h3>
-</div>
-<div class="related-card">
-    <div class="img-box">
-        <img src="{% static 'images/456.webp' %}" alt="Gaming Keyboard">
+  </div>
 
-        <button class="view-btn"
-onclick="openProductDetails(
-    'Gaming Keyboard',
-    1999,
-    [
-        '{% static "images/456.webp" %}'
-    ],
-    {
-        highlights: [
+  <!-- GAMING KEYBOARD -->
+  <div class="related-card">
+    <div class="img-box">
+      <img src="{% static 'images/456.webp' %}" alt="Gaming Keyboard">
+
+      <button class="view-btn"
+      onclick="openProductDetails(
+        'Gaming Keyboard',
+        1999,
+        ['{% static "images/456.webp" %}'],
+        {
+          highlights:[
             'Mechanical RGB Keys',
             '6-Mode LED Lighting',
             'Ergonomic Wrist Support',
             'Anti-Ghosting 104 Keys'
-        ],
-        specs: [
+          ],
+          specs:[
             'USB Wired RGB Keyboard',
             'Blue Switch Mechanical Keys',
             '50M Keystroke Life',
             'Braided Cable'
-        ]
-    }
-)">View</button>
+          ]
+        }
+      )">View</button>
     </div>
-
     <h3>Gaming Keyboard</h3>
+  </div>
+
+  <!-- GAMING KEYBOARD 2 -->
+  <div class="related-card">
+    <div class="img-box">
+      <img src="{% static 'images/456.webp' %}" alt="Gaming Keyboard">
+
+      <button class="view-btn"
+      onclick="openProductDetails(
+        'Gaming Keyboard Pro',
+        2499,
+        ['{% static "images/456.webp" %}'],
+        {
+          highlights:[
+            'Premium RGB Mechanical Keys',
+            'Aluminium Body Build',
+            'Detachable Wrist Support',
+            'Water Splash Resistant'
+          ],
+          specs:[
+            'USB Wired Mechanical Keyboard',
+            'Red Switch Keys',
+            '60M Keystroke Life',
+            'Gold Plated USB Connector'
+          ]
+        }
+      )">View</button>
+    </div>
+    <h3>Gaming Keyboard Pro</h3>
+  </div>
+
 </div>
 
-<!-- ============================= FOOTER ============================= -->
-<footer>
-    © 2025 RCStore® — Best Tech Store in India 🔥
+<footer class="ultra-footer">
+
+  <div class="footer-wrap">
+
+    <div class="f-brand">
+      <h2>RCStore</h2>
+      <p>Your Trusted Tech Partner</p>
+    </div>
+
+    <div class="f-links">
+      <h4>Quick Links</h4>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'products' %}">Products</a>
+      <a href="{% url 'about' %}">About</a>
+      <a href="{% url 'contact' %}">Contact</a>
+    </div>
+
+    <div class="f-contact">
+      <h4>Contact</h4>
+      <p>📞 +91 96252 52254</p>
+      <p>✉ support@rcstore.in</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bar">
+    © 2025 RCStore — Best Tech Store in India 🚀
+  </div>
+
 </footer>
 
 

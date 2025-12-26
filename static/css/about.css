@@ -274,3 +274,108 @@ body {
     color: white;
     padding-left: 6px;
 }
+/* ========== ABOUT MOBILE DRAWER ========== */
+
+.about-hamburger{
+  display:none;
+  background:none;
+  border:none;
+  width:32px;
+  height:24px;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.about-hamburger span{
+  height:3px;
+  background:#00f7ff;
+  border-radius:3px;
+}
+
+
+/* ================= MOBILE NAV ONLY ================= */
+@media(max-width:768px){
+
+  /* Top bar */
+  .premium-nav .d-flex{
+    flex-direction:row;
+    align-items:center;
+    position:relative;
+  }
+
+  .logo-area{
+    order:1;
+  }
+
+  .about-hamburger{
+    display:flex;
+    order:2;
+    margin-left:auto;
+  }
+
+  /* Welcome bar niche */
+  .welcome-area{
+    order:3;
+    width:100%;
+    margin-top:6px;
+    text-align:left;
+  }
+
+  .top-glass-bar{
+    font-size:11px;
+    padding:3px 10px !important;
+    border-radius:20px;
+  }
+
+  /* Drawer */
+  .menu-area{
+    position:fixed;
+    top:0;
+    right:-230px;
+    width:150px;
+    height:100vh;
+    background:linear-gradient(180deg,#031b35,#010b18);
+    padding:90px 22px;
+    transition:.4s ease;
+    z-index:1500;
+    box-shadow:-15px 0 40px rgba(0,0,0,.7);
+  }
+
+  .menu-area.active{
+    right:0;
+  }
+
+  .menu-area .navbar-nav{
+    flex-direction:column !important;
+    gap:18px;
+  }
+
+  .menu-area a{
+    color:#fff;
+    font-size:16px;
+    display:block;
+  }
+}
+
+/* No side scroll */
+html,body{
+  overflow-x:hidden;
+}
+@media(max-width:768px){
+
+  .top-glass-bar{
+    white-space:normal !important;
+    line-height:1.4;
+    text-align:center;          /* CENTER TEXT */
+    padding:6px 14px !important;
+    font-size:12px;
+    max-width:92%;
+    margin:6px auto 0;          /* CENTER BAR */
+  }
+
+  .top-glass-bar p{
+    display:block;
+    text-align:center;
+  }
+}
+

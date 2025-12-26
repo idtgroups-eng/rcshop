@@ -32,8 +32,115 @@ body{margin:0;font-family:Poppins,Segoe UI;background:#eef2ff;margin-bottom:40px
 .cart{background:#0066ff;padding:12px 26px;border:none;border-radius:6px;color:#fff;font-weight:700;cursor:pointer;}
 .box{background:white;padding:12px;border-radius:8px;margin-top:12px;}
 .description{width:90%;background:white;margin:20px auto;padding:22px;border-radius:14px;box-shadow:0 0 18px rgba(0,0,0,.1);}
-.related-container{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:30px;}
-.related-card{width:280px;background:#ffffff;padding:15px;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,0.1);text-align:center;}
-.related-card img{width:100%;height:200px;object-fit:cover;border-radius:12px;}
-.related-card .view-btn{background:linear-gradient(135deg,#00eaff,#007bff);color:#fff;border:none;padding:10px 28px;border-radius:40px;font-weight:600;cursor:pointer;box-shadow:0 0 12px rgba(0,200,255,.55);}
-.related-card .view-btn:hover{transform:translateY(-4px) scale(1.05);}
+.related-container{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);   /* 4 per row */
+  gap:26px;
+  max-width:1300px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.related-card{
+  background:#fff;
+  padding:15px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.12);
+  text-align:center;
+  transition:.3s ease;
+}
+
+.related-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 18px 40px rgba(0,200,255,.25);
+}
+
+.related-card img{
+  width:100%;
+  height:190px;
+  object-fit:contain;
+  border-radius:12px;
+}
+
+.related-card .view-btn{
+  background:linear-gradient(135deg,#00eaff,#007bff);
+  color:#fff;
+  border:none;
+  padding:10px 26px;
+  border-radius:40px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 0 14px rgba(0,200,255,.6);
+}
+
+/* Tablet */
+@media(max-width:992px){
+  .related-container{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+/* Mobile */
+@media(max-width:576px){
+  .related-container{
+    grid-template-columns:1fr;
+  }
+}
+
+/* =============== ULTRA PREMIUM FOOTER =============== */
+
+.ultra-footer{
+  background:linear-gradient(180deg,#000c1f,#001f3a);
+  color:#fff;
+  margin-top:80px;
+  box-shadow:0 -15px 50px rgba(0,247,255,.25);
+}
+
+.footer-wrap{
+  max-width:1400px;
+  margin:auto;
+  padding:55px 35px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:40px;
+}
+
+.f-brand h2{
+  color:#00f7ff;
+  font-size:30px;
+}
+
+.f-links a{
+  display:block;
+  color:#c9f7ff;
+  margin:8px 0;
+  transition:.3s;
+}
+
+.f-links a:hover{
+  color:#00f7ff;
+  padding-left:8px;
+}
+
+.f-contact p{
+  margin:8px 0;
+}
+
+.footer-bar{
+  text-align:center;
+  padding:14px;
+  background:rgba(0,0,0,.5);
+  box-shadow:0 -5px 25px rgba(0,247,255,.25);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .footer-wrap{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .f-links a{
+    display:inline-block;
+    margin:6px 12px;
+  }
+}

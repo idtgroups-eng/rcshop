@@ -79,7 +79,7 @@ body {
     position:fixed;
     top:0;
     right:-260px;
-    width:260px;
+    width: 150px;
     height:100vh;
     background:linear-gradient(180deg,#03162a,#001429);
     padding:90px 24px 24px;
