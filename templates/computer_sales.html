@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/computer_sales.css' %}">
+
+<!-- HERO -->
+<section class="cs-hero">
+  <div class="cs-hero-box">
+    <h1>Computer & Laptop Sales</h1>
+    <p>Buy original branded laptops, desktops & custom PCs at best price with full warranty.</p>
+    <div class="cs-btns">
+      <a href="https://wa.me/919625252254">WhatsApp Now</a>
+      <a href="tel:9625252254">Call Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="cs-section">
+  <h2>Product Categories</h2>
+  <div class="cs-grid">
+    <div class="cs-card">💻 Branded Laptops</div>
+    <div class="cs-card">🖥 Desktop Computers</div>
+    <div class="cs-card">🎮 Gaming PCs</div>
+    <div class="cs-card">🎓 Student Laptops</div>
+    <div class="cs-card">🏢 Office Systems</div>
+    <div class="cs-card">🧩 Custom PC Builds</div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-premium">
+  <h2>Why Buy From RCStore?</h2>
+
+  <div class="why-grid">
+
+    <div class="why-card">
+      <i class="bi bi-shield-check"></i>
+      <h4>100% Original Products</h4>
+      <p>We sell only genuine branded laptops & computers with GST invoice.</p>
+    </div>
+
+    <div class="why-card">
+      <i class="bi bi-tools"></i>
+      <h4>Free Installation</h4>
+      <p>Professional setup & installation absolutely free.</p>
+    </div>
+
+    <div class="why-card">
+      <i class="bi bi-award"></i>
+      <h4>1 Year Warranty</h4>
+      <p>Minimum 1 year company warranty on all products.</p>
+    </div>
+
+    <div class="why-card">
+      <i class="bi bi-headset"></i>
+      <h4>Local Service Support</h4>
+      <p>Dedicated service center & technician support in your city.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="cs-section">
+  <h2>Featured Laptops</h2>
+
+  <div class="product-grid">
+
+    <!-- Product 1 -->
+    <div class="product-card">
+      <img src="{% static 'images/12.webp' %}">
+      <h3>HP 15s</h3>
+      <p>i3 | 8GB | 512GB SSD</p>
+      <span class="price">₹38,999</span>
+      <button onclick="quote('HP 15s','₹38,999')">Get Quote</button>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card">
+      <img src="{% static 'images/12.webp' %}">
+      <h3>Dell Inspiron</h3>
+      <p>i5 | 16GB | 512GB SSD</p>
+      <span class="price">₹52,999</span>
+      <button onclick="quote('Dell Inspiron','₹52,999')">Get Quote</button>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card">
+      <img src="{% static 'images/12.webp' %}">
+      <h3>Lenovo IdeaPad</h3>
+      <p>Ryzen 5 | 16GB | 512GB SSD</p>
+      <span class="price">₹49,999</span>
+      <button onclick="quote('Lenovo IdeaPad','₹49,999')">Get Quote</button>
+    </div>
+
+  </div>
+</section>
+<script>
+function quote(name,price){
+  const msg = `Hello RCStore, I am interested in ${name} priced at ${price}. Please share full details.`;
+  window.open("https://wa.me/919625252254?text="+encodeURIComponent(msg),'_blank');
+}
+</script>
+
+
+<!-- CTA -->
+<section class="cs-cta">
+  <h2>Need Best Computer Deal?</h2>
+  <p>Call or WhatsApp us now for instant quotation.</p>
+  <a href="https://wa.me/919625252254">Get Quote on WhatsApp</a>
+</section>
+
+{% endblock %}

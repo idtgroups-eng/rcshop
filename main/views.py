@@ -25,10 +25,42 @@ from .utils import send_brevo_email   # ✅ Brevo API only
 # =========================
 def index(request): return render(request, "index.html")
 def about(request): return render(request, "about.html")
-def products(request): return render(request, "products.html")
+from django.db.models import Q
+from .models import Product
+
+def products(request):
+    q = request.GET.get("q")
+    cat = request.GET.get("cat")
+
+    products = Product.objects.all()
+
+    if q:
+        products = products.filter(
+            Q(name__icontains=q) |
+            Q(category__icontains=q) |
+            Q(description__icontains=q)
+        )
+
+    if cat:
+        products = products.filter(category__iexact=cat)
+
+    return render(request, "products.html", {"products": products})
+
 def product_details(request): return render(request, "product_details.html")
 def cart(request): return render(request, "cart.html")
 def contact(request): return render(request, "contact.html")
+def computer_sales(request):
+    return render(request, "computer_sales.html")
+def repair_maintenance(request):
+    return render(request, "repair_maintenance.html")
+def printer_toner(request):
+    return render(request, "printer_toner.html")
+def cctv_fitting(request):
+    return render(request, "cctv_fitting.html")
+def lokmitra_services(request):
+    return render(request, "lokmitra_services.html")
+def hp_retailer(request):
+    return render(request, "hp-retailer.html")
 
 
 # =========================

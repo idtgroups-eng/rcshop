@@ -21,14 +21,24 @@
     <li class="nav-line-glow"></li>
     <li class="nav-line-glow"></li>
 
-    <!-- CENTER SEARCH -->
-    <div class="center-search d-none d-lg-flex flex-column align-items-center mx-auto">
-      <input class="form-control search-glass" type="search" placeholder="Search products...">
-      <div class="nav-subtext mt-1 d-flex align-items-center">
-        <i class="bi bi-truck"></i>
-        <span class="ms-1">Free Delivery above ₹999</span>
-      </div>
-    </div>
+ <!-- CENTER SEARCH -->
+<form method="GET" action="{% url 'products' %}" class="center-search d-none d-lg-flex flex-column align-items-center mx-auto">
+
+  <input 
+    class="form-control search-glass"
+    type="search"
+    name="q"
+    placeholder="Search products..."
+    value="{{ request.GET.q }}"
+  >
+
+  <div class="nav-subtext mt-1 d-flex align-items-center">
+    <i class="bi bi-truck"></i>
+    <span class="ms-2">Free Delivery above ₹999</span>
+  </div>
+
+</form>
+
 
     <!-- DIVIDER -->
     <li class="nav-line-glow"></li>
@@ -156,73 +166,92 @@
 
 
 </section>
-<!-- 🔵 SERVICES SECTION START -->
-<section id="services" class="py-5" style="background: #f4faff;">
+<section id="services" class="py-5 service-area">
   <div class="container">
-    <h2 class="text-center mb-4 fw-bold" style="color:#0d6efd;">Our Services</h2>
+   <h2 class="text-center mb-2 fw-bold services-title">Our Services</h2>
     <p class="text-center mb-5 text-secondary">
       We provide complete computer and online service solutions.
     </p>
 
-    <div class="row g-4">
+    <div class="row g-4 service-grid">
 
       <!-- Service 1 -->
       <div class="col-md-4">
-        <div class="service-box p-4 shadow rounded-3 h-100">
-          <div class="icon mb-3"><i class="bi bi-laptop fs-1 text-primary"></i></div>
-          <h5 class="fw-bold">Computer & Laptop Sales</h5>
-          <p>Deals for sale and purchase of computers & laptops.</p>
-        </div>
+        <a href="{% url 'computer_sales' %}" class="service-link">
+          <div class="service-card">
+            <i class="bi bi-laptop"></i>
+            <h5>Computer & Laptop Sales</h5>
+            <p>Buy branded laptops, desktops & custom PCs at best price with warranty.</p>
+            <span>Explore Deals →</span>
+          </div>
+        </a>
       </div>
 
-      <!-- Service 2 -->
-      <div class="col-md-4">
-        <div class="service-box p-4 shadow rounded-3 h-100">
-          <div class="icon mb-3"><i class="bi bi-tools fs-1 text-primary"></i></div>
-          <h5 class="fw-bold">Repair & Maintenance</h5>
-          <p>Service & repair of computers, laptops and printers.</p>
-        </div>
-      </div>
+<div class="col-md-4">
+  <a href="{% url 'repair_maintenance' %}" class="service-link">
+    <div class="service-card">
+      <i class="bi bi-tools"></i>
+      <h5>Repair & Maintenance</h5>
+      <p>Professional repair of computers, laptops and printers.</p>
+      <span>Book Service →</span>
+    </div>
+  </a>
+</div>
+
 
       <!-- Service 3 -->
-      <div class="col-md-4">
-        <div class="service-box p-4 shadow rounded-3 h-100">
-          <div class="icon mb-3"><i class="bi bi-printer fs-1 text-primary"></i></div>
-          <h5 class="fw-bold">Printer Toner Refilling</h5>
-          <p>Fast & affordable laser printer toner refilling.</p>
-        </div>
-      </div>
+   <div class="col-md-4">
+  <a href="{% url 'printer_toner' %}" class="service-link">
+    <div class="service-card">
+      <i class="bi bi-printer"></i>
+      <h5>Printer Toner Refilling</h5>
+      <p>Fast & affordable laser printer toner refilling.</p>
+      <span>Book Refill →</span>
+    </div>
+  </a>
+</div>
+
 
       <!-- Service 4 -->
-      <div class="col-md-4">
-        <div class="service-box p-4 shadow rounded-3 h-100">
-          <div class="icon mb-3"><i class="bi bi-camera-video fs-1 text-primary"></i></div>
-          <h5 class="fw-bold">CCTV Camera Fitting</h5>
-          <p>CCTV installation and complete security setup.</p>
-        </div>
-      </div>
+   <div class="col-md-4">
+  <a href="{% url 'cctv_fitting' %}" class="service-link">
+    <div class="service-card premium">
+      <i class="bi bi-camera-video-fill"></i>
+      <h5>CCTV Camera Fitting</h5>
+      <p>Professional CCTV installation for home, shop & office.</p>
+      <span class="go-btn">Book Now</span>
+    </div>
+  </a>
+</div>
+
 
       <!-- Service 5 -->
-      <div class="col-md-4">
-        <div class="service-box p-4 shadow rounded-3 h-100">
-          <div class="icon mb-3"><i class="bi bi-file-earmark-text fs-1 text-primary"></i></div>
-          <h5 class="fw-bold">Aadhaar & PAN Card Services</h5>
-          <p>All Aadhaar, PAN card, Lokmitra & online services available.</p>
-        </div>
-      </div>
+     <div class="col-md-4">
+  <a href="{% url 'lokmitra_services' %}" class="service-link">
+    <div class="service-card premium">
+      <i class="bi bi-file-earmark-text-fill"></i>
+      <h5>Aadhaar, PAN & Lokmitra Services</h5>
+      <p>All Aadhaar, PAN, certificates & government online services at one place.</p>
+      <span class="go-btn">Visit Kendra</span>
+    </div>
+  </a>
+</div>
+
 
       <!-- Service 6 -->
-      <div class="col-md-4">
-        <div class="service-box p-4 shadow rounded-3 h-100">
-          <div class="icon mb-3"><i class="bi bi-badge-hd fs-1 text-primary"></i></div>
-          <h5 class="fw-bold">HP Authorised Retailer</h5>
-          <p>Original HP products with authorised support.</p>
-        </div>
-      </div>
-
+<div class="col-md-4">
+  <a href="{% url 'hp_retailer' %}" class="service-link">
+    <div class="service-card hp-card">
+      <i class="bi bi-badge-hd"></i>
+      <h5>HP Authorised Retailer</h5>
+      <p>Buy genuine HP laptops, printers, cartridges & accessories with official warranty.</p>
+      <span class="live-badge">Now Available</span>
     </div>
-  </div>
+  </a>
+</div>
+
 </section>
+
 <!-- 🔵 SERVICES SECTION END -->
 <!-- ⭐ RCShop INTRO SECTION WITH ANIMATION -->
 <div class="rc-intro text-center mt-5 mb-4">

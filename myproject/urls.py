@@ -20,6 +20,12 @@ urlpatterns = [
     path("product_details/", views.product_details, name="product_details"),
     path("contact/", views.contact, name="contact"),
     path("cart/", views.cart, name="cart"),
+    path("computer-sales/", views.computer_sales, name="computer_sales"),
+    path("repair-maintenance/", views.repair_maintenance, name="repair_maintenance"),
+    path("printer-toner/", views.printer_toner, name="printer_toner"),
+    path("cctv-fitting/", views.cctv_fitting, name="cctv_fitting"),
+    path("lokmitra-services/", views.lokmitra_services, name="lokmitra_services"),
+    path("hp-retailer/", views.hp_retailer, name="hp_retailer"),
 
     # ================= CHECKOUT =================
     path("checkout/", views.checkout, name="checkout"),

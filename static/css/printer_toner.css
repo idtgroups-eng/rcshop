@@ -1,0 +1,365 @@
+/* ===============================
+   PRINTER TONER – ULTRA PREMIUM
+================================ */
+
+body{
+  background:#f4f9ff;
+  font-family:'Poppins',sans-serif;
+  margin:0;
+}
+
+/* ===== HERO ===== */
+.pt-hero{
+  background:radial-gradient(circle at top,#00e5ff,#00274f 70%);
+  color:#fff;
+  padding:120px 20px;
+  text-align:center;
+}
+
+.pt-hero h1{
+  font-size:54px;
+  font-weight:900;
+  margin-bottom:10px;
+  text-shadow:0 0 30px rgba(0,255,255,.5);
+}
+
+.pt-hero p{
+  font-size:18px;
+  opacity:.9;
+}
+
+.pt-btns{
+  margin-top:30px;
+}
+
+.pt-btns a{
+  display:inline-block;
+  margin:10px;
+  padding:15px 36px;
+  border-radius:50px;
+  font-weight:700;
+  text-decoration:none;
+  color:#fff;
+  transition:.4s;
+}
+
+.pt-whatsapp{
+  background:linear-gradient(135deg,#25d366,#0bbf50);
+  box-shadow:0 0 25px rgba(37,211,102,.6);
+}
+
+.pt-call{
+  background:linear-gradient(135deg,#1e90ff,#0066ff);
+  box-shadow:0 0 25px rgba(0,102,255,.6);
+}
+
+.pt-btns a:hover{
+  transform:scale(1.08);
+}
+
+/* ===== SERVICES ===== */
+.pt-section{
+  padding:90px 20px;
+  text-align:center;
+}
+
+.pt-section h2{
+  font-size:38px;
+  color:#002f5f;
+  font-weight:900;
+  margin-bottom:50px;
+}
+
+.pt-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:28px;
+  max-width:1200px;
+  margin:auto;
+}
+
+.pt-card{
+  background:#fff;
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 20px 40px rgba(0,0,0,.12);
+  transition:.4s;
+}
+
+.pt-card i{
+  font-size:40px;
+  color:#00b3ff;
+  margin-bottom:15px;
+}
+
+.pt-card h4{
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.pt-card:hover{
+  transform:translateY(-12px);
+  box-shadow:0 25px 60px rgba(0,0,0,.2);
+}
+
+/* ===== WHY US ===== */
+.pt-why{
+  background:linear-gradient(135deg,#021b38,#043b6a);
+  color:#fff;
+  padding:90px 20px;
+  text-align:center;
+}
+
+.pt-why h2{
+  font-size:38px;
+  margin-bottom:40px;
+}
+
+.pt-why-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:25px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.pt-why-card{
+  background:rgba(255,255,255,.08);
+  padding:28px;
+  border-radius:18px;
+  box-shadow:0 0 25px rgba(0,200,255,.25);
+}
+
+.pt-why-card i{
+  font-size:34px;
+  color:#00e5ff;
+  margin-bottom:12px;
+}
+
+/* ===== CTA ===== */
+.pt-cta{
+  background:linear-gradient(135deg,#0d6efd,#00b3ff);
+  padding:90px 20px;
+  text-align:center;
+  color:#fff;
+}
+
+.pt-cta h2{
+  font-size:42px;
+  margin-bottom:15px;
+}
+
+.pt-cta a{
+  display:inline-block;
+  margin-top:20px;
+  background:#25d366;
+  padding:16px 44px;
+  border-radius:50px;
+  color:#fff;
+  font-weight:800;
+  text-decoration:none;
+  box-shadow:0 0 30px rgba(37,211,102,.7);
+}
+/* FORCE CARD TEXT VISIBILITY */
+.pt-card,
+.pt-card h3,
+.pt-card p,
+.pt-card span{
+    color:#062f5b !important;
+    opacity:1 !important;
+}
+
+/* Service card titles */
+.pt-card h3{
+    font-size:20px;
+    font-weight:700;
+}
+
+/* Service card description */
+.pt-card p{
+    font-size:14px;
+    line-height:1.6;
+    margin-top:8px;
+}
+
+/* Icon color */
+.pt-card i{
+    color:#0d6efd !important;
+    font-size:38px;
+    margin-bottom:12px;
+}
+/* WHY CHOOSE PREMIUM GLASS CARDS */
+.pt-why{
+    background:linear-gradient(135deg,#021b38,#043b6a);
+    padding:100px 20px;
+}
+
+.pt-why h2{
+    color:#fff;
+    font-weight:800;
+    text-align:center;
+    margin-bottom:60px;
+}
+
+/* Glass cards */
+.pt-why .pt-card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-radius:22px;
+    padding:34px 26px;
+    color:#fff;
+    box-shadow:0 15px 45px rgba(0,0,0,0.5);
+    transition:all .4s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+/* Glow border */
+.pt-why .pt-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:22px;
+    border:1px solid rgba(0,255,255,.3);
+    pointer-events:none;
+}
+
+/* Neon hover */
+.pt-why .pt-card:hover{
+    transform:translateY(-14px) scale(1.04);
+    box-shadow:0 25px 80px rgba(0,255,255,.45);
+}
+
+/* Icon glow */
+.pt-why .pt-card i{
+    font-size:38px;
+    color:#00e5ff;
+    margin-bottom:14px;
+    text-shadow:0 0 12px rgba(0,229,255,.8);
+}
+
+/* Titles */
+.pt-why .pt-card h3{
+    color:#fff;
+    font-size:20px;
+    font-weight:700;
+}
+
+/* Descriptions */
+.pt-why .pt-card p{
+    color:#cfeeff;
+    line-height:1.6;
+    font-size:14px;
+}
+/* FORCE HOVER ON ALL TONER PAGE CARDS */
+.pt-grid > div,
+.pt-why .pt-grid > div,
+.pt-why .pt-card{
+    position:relative;
+    transition:0.45s ease;
+    border-radius:22px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    box-shadow:0 15px 40px rgba(0,0,0,.45);
+    color:#fff;
+}
+
+/* neon border */
+.pt-grid > div::before,
+.pt-why .pt-grid > div::before,
+.pt-why .pt-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:22px;
+    border:1px solid rgba(0,255,255,.35);
+    opacity:.4;
+}
+
+/* HOVER EFFECT */
+.pt-grid > div:hover,
+.pt-why .pt-grid > div:hover,
+.pt-why .pt-card:hover{
+    transform:translateY(-16px) scale(1.05);
+    box-shadow:0 30px 90px rgba(0,255,255,.55);
+}
+
+/* ICON GLOW */
+.pt-grid i,
+.pt-why i{
+    color:#00e5ff;
+    font-size:36px;
+    text-shadow:0 0 14px rgba(0,229,255,.9);
+}
+
+/* TEXT FIX */
+.pt-grid h3,.pt-grid p,
+.pt-why h3,.pt-why p{
+    color:#eaf9ff !important;
+}
+/* ===============================
+   FINAL ULTRA PREMIUM FIX
+================================ */
+
+/* NORMAL SERVICE CARDS */
+.pt-grid .pt-card{
+    background:#ffffff !important;
+    color:#062f5b !important;
+    opacity:1 !important;
+    border-radius:22px;
+    box-shadow:0 15px 45px rgba(0,0,0,.12);
+    transition:.45s cubic-bezier(.19,1,.22,1);
+    position:relative;
+    overflow:hidden;
+}
+
+.pt-grid .pt-card h4,
+.pt-grid .pt-card p{
+    color:#062f5b !important;
+}
+
+/* HOVER PREMIUM */
+.pt-grid .pt-card:hover{
+    transform:translateY(-14px) scale(1.05);
+    box-shadow:0 30px 90px rgba(0,179,255,.45);
+}
+
+/* WHY US GLASS CARDS */
+.pt-why .pt-card{
+    background:rgba(255,255,255,0.08) !important;
+    color:#ffffff !important;
+    backdrop-filter:blur(18px);
+    border-radius:24px;
+    box-shadow:0 20px 60px rgba(0,0,0,.55);
+    transition:.5s cubic-bezier(.19,1,.22,1);
+}
+
+.pt-why .pt-card h3,
+.pt-why .pt-card p{
+    color:#e9f8ff !important;
+}
+
+/* GLOW BORDER */
+.pt-why .pt-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:24px;
+    border:1px solid rgba(0,255,255,.45);
+    pointer-events:none;
+}
+
+/* HOVER GLOW */
+.pt-why .pt-card:hover{
+    transform:translateY(-18px) scale(1.07);
+    box-shadow:0 40px 120px rgba(0,229,255,.6);
+}
+
+/* ICONS */
+.pt-card i{
+    font-size:38px;
+    color:#00e5ff !important;
+    text-shadow:0 0 16px rgba(0,229,255,.9);
+}

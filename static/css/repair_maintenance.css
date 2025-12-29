@@ -1,0 +1,281 @@
+/* ================= HERO ================= */
+.rm-hero{
+  background:linear-gradient(120deg,#021b38,#043b6a);
+  padding:120px 20px;
+  text-align:center;
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+}
+
+.rm-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at top,#00e5ff55,transparent 60%);
+}
+
+/* HERO TEXT */
+.rm-hero h1{
+  font-size:48px;
+  text-shadow:0 0 30px #00e5ff;
+}
+.rm-hero p{
+  font-size:18px;
+  opacity:.95;
+}
+
+/* HERO BUTTONS */
+.rm-btns a{
+  display:inline-block;
+  margin:14px;
+  padding:15px 38px;
+  border-radius:40px;
+  background:#25d366;
+  color:#fff;
+  text-decoration:none;
+  font-weight:800;
+  box-shadow:0 0 30px #25d366;
+  transition:.4s ease;
+}
+.rm-btns a:last-child{
+  background:#0d6efd;
+  box-shadow:0 0 30px #0d6efd;
+}
+.rm-btns a:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 55px #25d366;
+}
+
+/* ================= SERVICES ================= */
+.rm-section{
+  background:linear-gradient(120deg,#041c33,#020d1f);
+  padding:90px 20px;
+  text-align:center;
+  color:#fff;
+}
+
+.rm-section h2{
+  color:#fff;
+  font-size:38px;
+  text-shadow:0 0 18px #00e5ff;
+  margin-bottom:40px;
+}
+
+.rm-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:28px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.rm-card{
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  padding:28px 20px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.18);
+  font-weight:700;
+  transition:.4s ease;
+}
+.rm-card:hover{
+  transform:translateY(-12px) scale(1.05);
+  box-shadow:0 30px 60px rgba(0,0,0,.6);
+}
+
+/* ================= WHY ================= */
+.rm-why{
+  background:#f4faff;
+  padding:90px 20px;
+  text-align:center;
+}
+
+.rm-why h2{
+  color:#062f5b;
+  font-size:36px;
+  margin-bottom:40px;
+}
+
+.rm-why ul{
+  list-style:none;
+  max-width:450px;
+  margin:auto;
+}
+.rm-why li{
+  padding:14px 0;
+  font-weight:700;
+  color:#062f5b;
+}
+
+/* ================= CTA ================= */
+.rm-cta{
+  background:#0d6efd;
+  color:#fff;
+  padding:90px 20px;
+  text-align:center;
+}
+.rm-cta h2{
+  font-size:36px;
+}
+.rm-cta a{
+  background:#25d366;
+  padding:16px 40px;
+  border-radius:40px;
+  display:inline-block;
+  color:#fff;
+  font-weight:800;
+  text-decoration:none;
+  margin-top:18px;
+  box-shadow:0 0 40px #25d366;
+}
+.rm-cta a:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 70px #25d366;
+}
+.rm-why-premium{
+  background:#f4faff;
+  padding:100px 20px;
+  text-align:center;
+}
+
+.rm-why-premium h2{
+  color:#062f5b;
+  font-size:38px;
+  margin-bottom:45px;
+  text-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+.rm-why-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:28px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.rm-why-card{
+  background:#fff;
+  border-radius:22px;
+  padding:28px 22px;
+  box-shadow:0 20px 45px rgba(0,0,0,.1);
+  transition:.4s ease;
+}
+
+.rm-why-card:hover{
+  transform:translateY(-12px) scale(1.05);
+  box-shadow:0 30px 60px rgba(13,110,253,.25);
+}
+
+.rm-why-card i{
+  font-size:44px;
+  color:#0d6efd;
+  margin-bottom:10px;
+}
+
+.rm-why-card h4{
+  font-weight:700;
+  margin:10px 0;
+  color:#062f5b;
+}
+
+.rm-why-card p{
+  font-size:14px;
+  color:#444;
+}
+/* ================= BUTTON ANIMATION ================= */
+.rm-btns{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.rm-btns a{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  transition:all .35s ease;
+  cursor:pointer;
+}
+
+/* Hover move forward */
+.rm-btns a:hover{
+  transform:translateY(-6px) scale(1.05);
+}
+
+/* WhatsApp glow */
+.rm-whatsapp-btn{
+  background:#25d366;
+  box-shadow:0 0 35px rgba(37,211,102,.6);
+}
+.rm-whatsapp-btn:hover{
+  box-shadow:0 0 55px rgba(37,211,102,.9);
+}
+
+/* Call button */
+.rm-call-btn{
+  background:#0d6efd;
+  box-shadow:0 0 35px rgba(13,110,253,.6);
+}
+.rm-call-btn:hover{
+  box-shadow:0 0 55px rgba(13,110,253,.9);
+}
+
+/* ================= CALL DROPDOWN ================= */
+.rm-call-box{
+  position:relative;
+}
+
+.rm-call-numbers{
+  position:absolute;
+  top:120%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#fff;
+  border-radius:14px;
+  padding:12px 16px;
+  box-shadow:0 20px 40px rgba(0,0,0,.25);
+  display:none;
+  z-index:10;
+}
+
+.rm-call-numbers a{
+  display:block;
+  padding:8px 0;
+  color:#062f5b;
+  font-weight:700;
+  text-decoration:none;
+}
+
+/* Show numbers on hover */
+.rm-call-box:hover .rm-call-numbers{
+  display:block;
+}
+
+/* Icons */
+.rm-btns i{
+  font-size:18px;
+}
+.rm-hero::after{
+  pointer-events:none;
+}
+
+.rm-btns, .rm-btns *{
+  position:relative;
+  z-index:5;
+}
+/* STOP FLEX STRETCH BUG */
+.rm-btns{
+  align-items:center;
+}
+
+.rm-btns a{
+  flex:0 0 auto !important;
+  width:auto !important;
+}
+
+/* CLEAN PREMIUM HOVER */
+.rm-btns a:hover{
+  transform:translateY(-6px) scale(1.07);
+}

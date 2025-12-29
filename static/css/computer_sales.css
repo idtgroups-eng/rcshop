@@ -1,0 +1,225 @@
+.cs-hero{
+  background:linear-gradient(120deg,#021b38,#043b6a);
+  padding:100px 20px;
+  color:#fff;
+  text-align:center;
+}
+
+.cs-hero-box{max-width:700px;margin:auto;}
+/* ULTRA PREMIUM HERO */
+.cs-hero{
+  position:relative;
+  overflow:hidden;
+}
+
+/* Light particles */
+.cs-hero::before,
+.cs-hero::after{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  background:radial-gradient(circle,#00f2ff55,transparent 70%);
+  filter:blur(40px);
+  animation:float 12s infinite alternate ease-in-out;
+}
+
+.cs-hero::before{
+  top:-120px; left:-120px;
+}
+.cs-hero::after{
+  bottom:-140px; right:-140px;
+  animation-delay:6s;
+}
+
+@keyframes float{
+  from{ transform:translateY(0) translateX(0);}
+  to{ transform:translateY(40px) translateX(40px);}
+}
+
+/* Premium headline */
+.cs-hero h1{
+  font-size:52px;
+  letter-spacing:1px;
+  text-shadow:0 0 35px #00e5ff;
+}
+
+/* Buttons glow */
+.cs-btns a{
+  box-shadow:0 0 30px rgba(0,255,200,.6);
+  transition:.4s ease;
+}
+
+.cs-btns a:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 60px rgba(0,255,200,.9);
+}
+
+.cs-btns a{
+  display:inline-block;
+  margin:12px;
+  padding:14px 32px;
+  border-radius:30px;
+  background:#25d366;
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+}
+.cs-btns a:last-child{background:#0d6efd;}
+
+.cs-section{
+  padding:70px 20px;
+  text-align:center;
+}
+.cs-section.light{background:#f4faff;}
+
+/* SECTION HEADINGS */
+.cs-section h2{
+  color:#ffffff;
+  font-weight:900;
+  margin-bottom:30px;
+  letter-spacing:1px;
+  text-shadow:0 3px 10px rgba(0,0,0,.45);
+}
+
+/* GRID */
+.cs-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  max-width:1000px;
+  margin:auto;
+}
+
+/* CARDS */
+.cs-card{
+  background:#ffffff;
+  padding:20px;
+  border-radius:14px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  font-weight:700;
+  color:#062f5b;
+}
+
+/* WHY US LIST */
+.cs-list{
+  list-style:none;
+  max-width:500px;
+  margin:auto;
+  text-align:left;
+}
+.cs-list li{
+  padding:8px 0;
+  font-weight:700;
+  color:#062f5b;
+}
+
+/* CTA */
+.cs-cta{
+  background:#0d6efd;
+  color:#fff;
+  text-align:center;
+  padding:80px 20px;
+}
+.cs-cta a{
+  display:inline-block;
+  margin-top:20px;
+  background:#25d366;
+  padding:14px 32px;
+  border-radius:30px;
+  color:#fff;
+  font-weight:700;
+  text-decoration:none;
+}
+.cs-hero{
+  position:relative;
+  overflow:hidden;
+}
+
+.cs-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at top,#00d4ff40,transparent 60%);
+}
+
+.cs-hero h1{
+  font-size:48px;
+  text-shadow:0 0 25px #00d4ff;
+  animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{ text-shadow:0 0 15px #00d4ff;}
+  to{ text-shadow:0 0 35px #00d4ff;}
+}
+.cs-card{
+  backdrop-filter:blur(8px);
+  background:rgba(255,255,255,.97);
+  transition:.4s ease;
+}
+
+.cs-card:hover{
+  transform:translateY(-10px) scale(1.04);
+  box-shadow:0 30px 60px rgba(0,0,0,.35);
+}
+.cs-cta a{
+  box-shadow:0 0 25px #25d366;
+  animation:pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse{
+  from{ box-shadow:0 0 15px #25d366;}
+  to{ box-shadow:0 0 35px #25d366;}
+}
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.product-card{
+  background:#fff;
+  padding:22px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 12px 35px rgba(0,0,0,.15);
+  transition:.4s ease;
+}
+
+.product-card:hover{
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 30px 60px rgba(0,0,0,.35);
+}
+
+.product-card img{
+  width:100%;
+  max-height:180px;
+  object-fit:contain;
+}
+
+.product-card h3{
+  margin:12px 0 6px;
+  color:#062f5b;
+}
+
+.product-card p{font-size:14px;}
+
+.price{
+  font-size:18px;
+  font-weight:800;
+  color:#0d6efd;
+}
+
+.product-card button{
+  margin-top:12px;
+  border:none;
+  padding:12px 26px;
+  border-radius:25px;
+  background:#25d366;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+}

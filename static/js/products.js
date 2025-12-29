@@ -200,5 +200,17 @@ setTimeout(() => {
 document.getElementById("productHamburger").addEventListener("click", function () {
   document.getElementById("productMenu").classList.toggle("show");
 });
+document.querySelectorAll(".dropdown-toggle").forEach(btn=>{
+  btn.addEventListener("click",e=>{
+    e.preventDefault();
+    btn.parentElement.classList.toggle("open");
+  });
+});
+
+document.querySelectorAll(".dropdown").forEach(d=>{
+  d.addEventListener("mouseleave",()=>{
+    d.classList.remove("open");
+  });
+});
 
 

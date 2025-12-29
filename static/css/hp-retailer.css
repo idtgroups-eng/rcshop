@@ -1,0 +1,133 @@
+body{
+margin:0;
+font-family:Poppins;
+background:#f4f9ff;
+}
+
+/* HERO */
+.hp-hero{
+background:radial-gradient(circle at top,#00e5ff,#001a3a 70%);
+color:white;
+padding:130px 20px;
+text-align:center;
+}
+.hp-hero h1{
+font-size:52px;
+font-weight:900;
+text-shadow:0 0 40px cyan;
+}
+.hp-hero p{
+font-size:18px;
+opacity:.9;
+margin-bottom:30px;
+}
+
+/* BUTTONS */
+.hp-btn{
+display:inline-block;
+margin:12px;
+padding:16px 42px;
+border-radius:50px;
+color:white;
+font-weight:800;
+text-decoration:none;
+transition:.4s cubic-bezier(.4,0,.2,1);
+}
+.hp-btn.call{background:linear-gradient(135deg,#00f7ff,#0066ff)}
+.hp-btn.whatsapp{background:linear-gradient(135deg,#00ff88,#00cc66)}
+
+.hp-btn:hover{
+transform:translateY(-6px) scale(1.08);
+box-shadow:0 20px 60px rgba(0,200,255,.9);
+}
+
+/* PRODUCTS */
+.hp-products{
+padding:80px 10%;
+text-align:center;
+}
+.hp-products h2{
+font-size:40px;
+color:#002f5f;
+margin-bottom:50px;
+}
+
+/* GRID */
+.hp-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:30px;
+}
+
+/* CARDS */
+.hp-card{
+background:white;
+border-radius:22px;
+padding:35px;
+box-shadow:0 20px 60px rgba(0,0,0,.15);
+transition:.4s;
+position:relative;
+overflow:hidden;
+}
+.hp-card:hover{
+transform:translateY(-12px) scale(1.05);
+box-shadow:0 30px 80px rgba(0,200,255,.45);
+}
+.hp-card:after{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(circle at top,rgba(0,255,255,.2),transparent 60%);
+opacity:0;
+transition:.4s;
+}
+.hp-card:hover:after{opacity:1;}
+
+.hp-card i{
+font-size:44px;
+color:#0077ff;
+margin-bottom:15px;
+}
+.hp-card h4{
+font-size:20px;
+color:#002f5f;
+margin:10px 0;
+}
+.hp-card p{
+font-size:14px;
+opacity:.85;
+}
+
+/* FOOTER */
+.hp-footer{
+margin-top:90px;
+background:linear-gradient(135deg,#001a3a,#003cff);
+color:white;
+text-align:center;
+padding:90px 20px;
+}
+.hp-footer h2{
+font-size:36px;
+margin-bottom:20px;
+}
+
+.hp-footer-btn{
+display:inline-block;
+padding:16px 45px;
+border-radius:50px;
+background:#00e5ff;
+color:#001a3a;
+font-weight:900;
+text-decoration:none;
+transition:.4s;
+}
+.hp-footer-btn:hover{
+transform:translateY(-6px) scale(1.08);
+box-shadow:0 20px 60px rgba(0,230,255,.9);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.hp-hero h1{font-size:36px}
+.hp-products h2{font-size:28px}
+}

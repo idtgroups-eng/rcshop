@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}CCTV Camera Fitting | RCStore{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/cctv_fitting.css' %}">
+
+<section class="cctv-hero">
+  <h1>Professional CCTV Camera Installation</h1>
+  <p>Secure your Home, Shop & Office with RCStore Experts</p>
+  <div class="hero-btns">
+    <a href="tel:9625252254" class="call-btn">📞 Call Now</a>
+    <a href="https://wa.me/919625252254" class="wa-btn">💬 WhatsApp</a>
+  </div>
+</section>
+
+<section class="cctv-services">
+  <div class="cctv-card">🏠 Home CCTV Installation</div>
+  <div class="cctv-card">🏬 Shop & Showroom CCTV</div>
+  <div class="cctv-card">🏢 Office & Warehouse CCTV</div>
+  <div class="cctv-card">📶 Wireless Camera Setup</div>
+  <div class="cctv-card">☁ Cloud & Mobile App Setup</div>
+  <div class="cctv-card">🛠 Repair & Upgrade Service</div>
+</section>
+
+<section class="cctv-why">
+<h2>Why Choose <span>RCStore CCTV Services</span>?</h2>
+
+<div class="why-grid">
+
+  <div class="why-card">
+    <i class="bi bi-person-check-fill"></i>
+    <h4>Certified Technicians</h4>
+    <p>Government & commercial project experienced CCTV experts.</p>
+  </div>
+
+  <div class="why-card">
+    <i class="bi bi-diagram-3-fill"></i>
+    <h4>Clean & Safe Wiring</h4>
+    <p>Concealed wiring with proper cable management & safety.</p>
+  </div>
+
+  <div class="why-card">
+    <i class="bi bi-phone-fill"></i>
+    <h4>Mobile Live Monitoring</h4>
+    <p>Watch your property live anytime from your smartphone.</p>
+  </div>
+
+  <div class="why-card">
+    <i class="bi bi-headset"></i>
+    <h4>Lifetime Support</h4>
+    <p>We provide long-term service & maintenance support.</p>
+  </div>
+
+  <div class="why-card">
+    <i class="bi bi-currency-rupee"></i>
+    <h4>Best Price Promise</h4>
+    <p>Premium quality CCTV at most affordable pricing.</p>
+  </div>
+
+</div>
+</section>
+<section class="cctv-price">
+<h2>Starting Packages</h2>
+
+<div class="price-grid">
+
+  <div class="price-box basic">
+    <span class="tag">Basic</span>
+    <h3>2 Cameras</h3>
+    <p class="price">₹4,999</p>
+    <small>Home / Small Shop</small>
+  </div>
+
+  <div class="price-box popular">
+    <span class="tag hot">Most Popular</span>
+    <h3>4 Cameras</h3>
+    <p class="price">₹8,999</p>
+    <small>Shops / Offices</small>
+  </div>
+
+  <div class="price-box pro">
+    <span class="tag">Pro</span>
+    <h3>8 Cameras</h3>
+    <p class="price">₹14,999</p>
+    <small>Showroom / Warehouse</small>
+  </div>
+
+</div>
+</section>
+
+
+<section class="cctv-cta">
+<h2>Book Your Installation Today</h2>
+<a href="tel:9625252254">📞 Call Now</a>
+<a href="https://wa.me/919625252254">💬 WhatsApp Now</a>
+</section>
+
+{% endblock %}
