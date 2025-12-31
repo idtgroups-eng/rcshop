@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/support.css' %}">
+
+<section class="support-page">
+
+  <h1>Customer Support & Complaint Desk</h1>
+  <p>We are here to help you. Please submit your query or complaint below.</p>
+
+<div class="support-badges">
+  <div class="badge">24×7 Support</div>
+  <div class="badge">Same Day Response</div>
+  <div class="badge">Trusted RCStore Team</div>
+</div>
+
+
+  <!-- FORM -->
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="input-grid">
+      <input name="name" placeholder="Full Name" required>
+      <input name="phone" placeholder="Mobile Number" required>
+    </div>
+
+    <input name="email" type="email" placeholder="Email Address" required>
+
+    <select name="issue_type" required>
+      <option value="General">General Query</option>
+      <option value="Order">Order Related</option>
+      <option value="Payment">Payment Issue</option>
+      <option value="Return">Return / Refund</option>
+      <option value="Technical">Technical Problem</option>
+    </select>
+
+    <textarea name="message" placeholder="Describe your issue in detail..." rows="5" required></textarea>
+
+    <!-- FILE UPLOAD -->
+   <label class="upload-box">
+  <i class="bi bi-paperclip"></i>
+  Upload Photo / Bill / Product Image
+  <input type="file" name="photo" hidden>
+</label>
+
+
+    <button type="submit" class="support-submit-btn">Submit Ticket</button>
+  </form>
+
+  <!-- CONTACT -->
+  <div class="support-contact">
+    <p><i class="bi bi-telephone-fill"></i> Support: 9625-252-254</p>
+    <p><i class="bi bi-whatsapp"></i> WhatsApp: 9625-252-254</p>
+    <p><i class="bi bi-envelope-fill"></i> rightcomputers89@gmail.com</p>
+  </div>
+
+</section>
+{% endblock %}

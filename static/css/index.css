@@ -1877,3 +1877,10 @@ body {
   transform:scale(1.12);
   box-shadow:0 0 40px rgba(0,230,255,.9);
 }
+.rc-menu a[href*="support"]{
+  color:#fff !important;
+  text-decoration:none !important;
+}
+.rc-menu a[href*="support"]:hover{
+  color:#00e5ff !important;
+}

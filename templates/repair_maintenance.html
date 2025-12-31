@@ -20,20 +20,33 @@
       <i class="bi bi-whatsapp"></i> Book Service on WhatsApp
     </a>
 
-    <!-- Call Button with numbers -->
-    <div class="rm-call-box">
-      <a href="tel:9625252254" class="rm-call-btn">
-        <i class="bi bi-telephone-fill"></i> Call Technician
-      </a>
+    <!-- Call Popup Button -->
+    <a href="#" class="rm-call-btn" onclick="openCallBox()">
+      <i class="bi bi-telephone-fill"></i> Call Technician
+    </a>
 
-      <div class="rm-call-numbers">
-        <a href="tel:9625252254">📞 9625252254</a>
-        <a href="tel:6230037509">📞 6230037509</a>
-      </div>
-    </div>
+    <!-- Complaint / Query Button -->
+    <a href="{% url 'support' %}" class="rm-support">
+      <i class="bi bi-headset"></i> Complaint / Query
+    </a>
 
   </div>
 </section>
+
+<!-- CALL POPUP -->
+<div class="call-box" id="callBox">
+  <div class="call-card">
+    <h3>Call Right Computers</h3>
+    <p>Tap to Call</p>
+
+    <a href="tel:9625252254" class="call-btn">📞 9625-252-254</a>
+    <a href="tel:6230037509" class="call-btn" style="background:linear-gradient(135deg,#ff9800,#ff5722)">📞 6230-037-509</a>
+
+    <a href="https://wa.me/919625252254" target="_blank" class="wa-btn">💬 WhatsApp Chat</a>
+
+    <span onclick="closeCallBox()">Close</span>
+  </div>
+</div>
 
 <!-- SERVICES -->
 <section class="rm-section">
@@ -51,7 +64,6 @@
 <!-- WHY US -->
 <section class="rm-why-premium">
   <h2>Why Choose RCStore?</h2>
-
   <div class="rm-why-grid">
 
     <div class="rm-why-card">
@@ -77,8 +89,9 @@
       <h4>Same-Day Repairs</h4>
       <p>Quick diagnosis & fast repair turnaround.</p>
     </div>
-</section>
 
+  </div>
+</section>
 
 <!-- CTA -->
 <section class="rm-cta">
@@ -86,5 +99,14 @@
   <p>Contact our technician now for quick support.</p>
   <a href="https://wa.me/919625252254">Chat on WhatsApp</a>
 </section>
+
+<script>
+function openCallBox(){
+  document.getElementById("callBox").style.display="flex";
+}
+function closeCallBox(){
+  document.getElementById("callBox").style.display="none";
+}
+</script>
 
 {% endblock %}

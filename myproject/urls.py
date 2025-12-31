@@ -26,6 +26,8 @@ urlpatterns = [
     path("cctv-fitting/", views.cctv_fitting, name="cctv_fitting"),
     path("lokmitra-services/", views.lokmitra_services, name="lokmitra_services"),
     path("hp-retailer/", views.hp_retailer, name="hp_retailer"),
+    path("support/", views.support, name="support"),
+    path("track-ticket/", views.track_ticket, name="track_ticket"),
 
     # ================= CHECKOUT =================
     path("checkout/", views.checkout, name="checkout"),
@@ -37,7 +39,7 @@ urlpatterns = [
     path("order-tracking/", views.order_tracking, name="order_tracking"),
     path("shipping-policy/", views.shipping_policy, name="shipping_policy"),
     path("help-center/", views.help_center, name="help_center"),
-
+    
     # ================= PAYMENT =================
     path("payment/", views.payment, name="payment"),
     path("payment/upi/", views.payment_upi, name="payment_upi"),
@@ -98,3 +100,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

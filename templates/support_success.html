@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/support.css' %}">
+
+<section class="success-box">
+
+  <div class="success-glass">
+    <h1>🎉 Ticket Submitted Successfully</h1>
+    <p class="sub">Thank you for contacting RCStore Support.</p>
+
+    <div class="ticket-badge">
+      Ticket ID : <span>{{ ticket }}</span>
+    </div>
+
+    <p class="msg">Our team will contact you within 24 hours.</p>
+
+    <div class="success-info">
+      <p><i class="bi bi-telephone-fill"></i> Support: <b>9625-252-254</b></p>
+      <p><i class="bi bi-whatsapp"></i> WhatsApp: <b>9625-252-254</b></p>
+      <p><i class="bi bi-envelope-fill"></i> Email: <b>support@rcshop.co.in</b></p>
+    </div>
+
+    <a href="/" class="back-btn">← Back to Home</a>
+  </div>
+
+</section>
+{% endblock %}

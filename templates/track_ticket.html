@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/support.css' %}">
+
+<section class="support-page">
+
+<h1>Track Your Support Ticket</h1>
+<p>Enter your Ticket ID below</p>
+
+<form method="POST">{% csrf_token %}
+<input name="ticket_id" placeholder="Enter Ticket ID (Example: RC25)" required>
+<button type="submit">Track Ticket</button>
+</form>
+
+{% if ticket %}
+<div class="track-result">
+  <h3>Ticket #RC{{ ticket.id }}</h3>
+  <p><b>Name:</b> {{ ticket.name }}</p>
+  <p><b>Type:</b> {{ ticket.ticket_type }}</p>
+  <p><b>Status:</b> {{ ticket.status }}</p>
+  <p><b>Message:</b> {{ ticket.message }}</p>
+</div>
+{% elif ticket == None and request.method == "POST" %}
+<p class="error">Invalid Ticket ID</p>
+{% endif %}
+
+</section>
+{% endblock %}

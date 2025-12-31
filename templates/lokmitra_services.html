@@ -4,56 +4,86 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/lokmitra.css' %}">
 
+<!-- HERO -->
 <section class="lm-hero">
   <h1>Lokmitra Kendra & Aadhaar PAN Services</h1>
   <p>All government & online services at one trusted place</p>
+
   <div class="lm-btns">
-    <a href="tel:9625252254">📞 Call Now</a>
-    <a href="https://wa.me/919625252254">💬 WhatsApp</a>
+    <a href="#" onclick="openCallBox()" class="lm-call-btn">
+      <i class="bi bi-telephone-fill"></i> Call Now
+    </a>
+
+    <a href="https://wa.me/919625252254" class="lm-wa-btn">
+      <i class="bi bi-whatsapp"></i> WhatsApp
+    </a>
+
+    <!-- NEW SUPPORT BUTTON -->
+    <a href="/support/" class="lm-support-btn">
+      <i class="bi bi-headset"></i> Complaint / Query
+    </a>
   </div>
 </section>
 
+<!-- CALL POPUP -->
+<div class="call-box" id="callBox">
+  <div class="call-card">
+    <h3>Call Right Computers</h3>
+    <p>Tap to Call</p>
+
+    <a href="tel:9625252254" class="call-btn">📞 9625-252-254</a>
+    <a href="tel:6230037509" class="call-btn alt">📞 6230-037-509</a>
+
+    <a href="https://wa.me/919625252254" target="_blank" class="wa-btn">
+      <i class="bi bi-whatsapp"></i> WhatsApp Chat
+    </a>
+
+    <span onclick="closeCallBox()">Close</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
 <section class="lm-services">
 
 <div class="lm-card">
   <i class="bi bi-person-vcard-fill"></i>
   Aadhaar Card Services
-  <small> Check Status, Download & PVC card</small>
+  <small>Check Status, Download & PVC Card</small>
 </div>
 
 <div class="lm-card">
   <i class="bi bi-credit-card-fill"></i>
   PAN Card Services
-  <small>New PAN, correction & reprint services</small>
+  <small>New PAN, Correction & Reprint</small>
 </div>
 
 <div class="lm-card">
   <i class="bi bi-bank2"></i>
   Government Schemes
-  <small>All central & state government schemes</small>
+  <small>Central & State Schemes</small>
 </div>
 
 <div class="lm-card">
   <i class="bi bi-file-earmark-text-fill"></i>
   Certificates
-  <small>Income, Caste, Domicile & Birth Certificates</small>
+  <small>Income, Caste, Domicile</small>
 </div>
 
 <div class="lm-card">
   <i class="bi bi-lightning-charge-fill"></i>
   Bill Payments
-  <small>Electricity, water, gas & mobile recharge</small>
+  <small>Electricity, Water, Gas, Recharge</small>
 </div>
 
 <div class="lm-card">
   <i class="bi bi-cash-coin"></i>
   DBT & Subsidy
-  <small>Direct benefit transfer & subsidy services</small>
+  <small>Direct Benefit Transfers</small>
 </div>
 
 </section>
 
-
+<!-- WHY US -->
 <section class="lm-why">
 <h2>Why Choose <span>RCStore Lokmitra Kendra?</span></h2>
 
@@ -61,36 +91,42 @@
 
 <div class="lm-whycard">
   <i class="bi bi-patch-check-fill"></i>
-  Govt Authorised Kendra<br>
-  <small>Verified & trusted service center</small>
+  Govt Authorised Kendra
+  <small>Verified & Trusted</small>
 </div>
 
 <div class="lm-whycard">
   <i class="bi bi-lightning-charge-fill"></i>
-  Fast Same Day Service<br>
-  <small>Quick processing & instant updates</small>
+  Fast Same Day Service
+  <small>Quick Processing</small>
 </div>
 
 <div class="lm-whycard">
   <i class="bi bi-person-badge-fill"></i>
-  Experienced Operators<br>
-  <small>Handled by trained staff</small>
+  Experienced Operators
+  <small>Trained Staff</small>
 </div>
 
 <div class="lm-whycard">
   <i class="bi bi-globe2"></i>
-  All Online & Govt Work<br>
-  <small>Complete digital government services</small>
+  All Govt Work
+  <small>Complete Digital Services</small>
 </div>
 
 </div>
 </section>
 
-
+<!-- CTA -->
 <section class="lm-cta">
 <h2>Visit RCStore Lokmitra Kendra Today</h2>
-<a href="tel:9625252254">📞 Call Now</a>
-<a href="https://wa.me/919625252254">💬 WhatsApp</a>
+<a href="#" onclick="openCallBox()" class="lm-call-btn"><i class="bi bi-telephone-fill"></i> Call Now</a>
+<a href="https://wa.me/919625252254" class="lm-wa-btn"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+<a href="/support/" class="lm-support-btn"><i class="bi bi-headset"></i> Complaint / Query</a>
 </section>
+
+<script>
+function openCallBox(){ document.getElementById("callBox").style.display="flex"; }
+function closeCallBox(){ document.getElementById("callBox").style.display="none"; }
+</script>
 
 {% endblock %}

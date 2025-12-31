@@ -11,16 +11,47 @@
 
 <body>
 
+<!-- HERO -->
 <section class="hp-hero">
   <h1>HP Authorised Retailer</h1>
   <p>Genuine HP laptops, printers, cartridges & accessories with official warranty</p>
 
   <div class="hp-hero-btns">
-    <a href="tel:9625252254" class="hp-btn call"><i class="bi bi-telephone-fill"></i> Call Now</a>
-    <a href="https://wa.me/919625252254" class="hp-btn whatsapp"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+
+    <a href="#" class="hp-btn call" onclick="openCallBox()">
+      <i class="bi bi-telephone-fill"></i> Call Now
+    </a>
+
+    <a href="https://wa.me/919625252254" class="hp-btn whatsapp">
+      <i class="bi bi-whatsapp"></i> WhatsApp
+    </a>
+
+    <!-- SUPPORT BUTTON -->
+    <a href="/support/" class="hp-btn support">
+      <i class="bi bi-headset"></i> Complaint / Query
+    </a>
+
   </div>
 </section>
 
+<!-- CALL POPUP -->
+<div class="call-box" id="callBox">
+  <div class="call-card">
+    <h3>Call Right Computers</h3>
+    <p>Tap to Call</p>
+
+    <a href="tel:9625252254" class="call-btn">📞 9625-252-254</a>
+    <a href="tel:6230037509" class="call-btn alt">📞 6230-037-509</a>
+
+    <a href="https://wa.me/919625252254" target="_blank" class="wa-btn">
+      <i class="bi bi-whatsapp"></i> WhatsApp Chat
+    </a>
+
+    <span onclick="closeCallBox()">Close</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
 <section class="hp-products">
   <h2>Our HP Products</h2>
 
@@ -53,10 +84,20 @@
   </div>
 </section>
 
+<!-- FOOTER CTA -->
 <section class="hp-footer">
   <h2>Visit RCStore HP Showroom Today</h2>
   <a href="/contact/" class="hp-footer-btn">Get Directions</a>
 </section>
+
+<script>
+function openCallBox(){
+  document.getElementById("callBox").style.display="flex";
+}
+function closeCallBox(){
+  document.getElementById("callBox").style.display="none";
+}
+</script>
 
 </body>
 </html>

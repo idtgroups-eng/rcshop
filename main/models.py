@@ -122,3 +122,39 @@ class Product(models.Model):
     description = models.TextField()
     price = models.IntegerField()
     image = models.ImageField(upload_to="products/")
+class SupportTicket(models.Model):
+    TICKET_TYPE = [
+        ("Query","Query"),
+        ("Complaint","Complaint"),
+        ("Service","Service"),
+        ("Payment","Payment"),
+    ]
+
+    name = models.CharField(max_length=100)
+    mobile = models.CharField(max_length=15)
+    email = models.EmailField()
+    ticket_type = models.CharField(max_length=20, choices=TICKET_TYPE)
+    message = models.TextField()
+    status = models.CharField(max_length=20, default="Pending")
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Ticket #{self.id} - {self.name}"
+
+class SupportTicket(models.Model):
+    TICKET_TYPE = [
+        ('General', 'General Query'),
+        ('Order', 'Order Related'),
+        ('Payment', 'Payment Issue'),
+        ('Return', 'Return / Refund'),
+        ('Technical', 'Technical Problem'),
+    ]
+
+    ticket_id = models.CharField(max_length=20, unique=True)
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=15)
+    email = models.EmailField()
+    issue_type = models.CharField(max_length=50, choices=TICKET_TYPE)
+    message = models.TextField()
+    photo = models.ImageField(upload_to="support/", blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)

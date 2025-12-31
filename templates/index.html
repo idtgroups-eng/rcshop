@@ -64,7 +64,6 @@
   <a class="nav-link nav-ani" id="nav-contact" href="/contact/">Contact</a>
 </li>
 
-
     </ul>
 <div class="account-box ms-auto">
 
@@ -822,11 +821,16 @@ onclick="openProductDetails(
           🔗 Quick Links
         </h5>
 
-        <a href="/" class="footer-link" style="color:#d6e7ff; display:block; margin-bottom:6px;">🏠 Home</a>
+<a href="/" class="footer-link" style="color:#d6e7ff; display:block; margin-bottom:6px;">🏠 Home</a>
 <a href="/products/" class="footer-link" style="color:#d6e7ff; display:block; margin-bottom:6px;">🛒 Products</a>
 <a href="/about/" class="footer-link" style="color:#d6e7ff; display:block; margin-bottom:6px;">ℹ️ About</a>
 <a href="/contact/" class="footer-link" style="color:#d6e7ff; display:block; margin-bottom:6px;">✉️ Contact</a>
-<a href="/return-policy/" class="footer-link" style="color:#d6e7ff; display:block;">📄 Return Policy</a>
+<a href="/return-policy/" class="footer-link" style="color:#d6e7ff; display:block; margin-bottom:6px;">📄 Return Policy</a>
+
+<hr style="border:1px solid rgba(255,255,255,.2); margin:10px 0;">
+
+<a href="{% url 'support' %}" class="footer-link" style="color:#00e5ff; display:block; margin-bottom:6px;">🆘 Customer Support</a>
+<a href="{% url 'track_ticket' %}" class="footer-link" style="color:#00e5ff; display:block;">🎫 Track Your Ticket</a>
 
       </div>
 

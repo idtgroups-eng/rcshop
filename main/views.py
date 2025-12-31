@@ -61,7 +61,59 @@ def lokmitra_services(request):
     return render(request, "lokmitra_services.html")
 def hp_retailer(request):
     return render(request, "hp-retailer.html")
+import uuid
+from django.shortcuts import render
+from django.core.mail import send_mail
+from .models import SupportTicket
 
+# =============================
+# SUPPORT FORM SUBMIT
+# =============================
+def support(request):
+    if request.method == "POST":
+
+        tid = "RC-" + str(uuid.uuid4()).split("-")[0].upper()
+
+        ticket = SupportTicket.objects.create(
+            ticket_id = tid,
+            name = request.POST["name"],
+            phone = request.POST["phone"],
+            email = request.POST["email"],
+            issue_type = request.POST["issue_type"],
+            message = request.POST["message"],
+            photo = request.FILES.get("photo")
+        )
+
+        # AUTO EMAIL TO CUSTOMER
+        send_mail(
+            subject = f"Ticket {tid} Received - RCStore",
+            message = f"""Hello {ticket.name},
+
+Your support ticket {tid} has been successfully submitted.
+Our technical team will contact you within 24 hours.
+
+Thank you for choosing RCStore.
+""",
+            from_email = None,
+            recipient_list = [ticket.email],
+            fail_silently = True
+        )
+
+        return render(request, "support_success.html", {"ticket": tid})
+
+    return render(request, "support.html")
+
+
+# =============================
+# TRACK TICKET PAGE
+# =============================
+def track_ticket(request):
+    ticket = None
+    if request.method == "POST":
+        tid = request.POST.get("ticket_id").strip().upper()
+        ticket = SupportTicket.objects.filter(ticket_id=tid).first()
+
+    return render(request, "track_ticket.html", {"ticket": ticket})
 
 # =========================
 # CHECKOUT

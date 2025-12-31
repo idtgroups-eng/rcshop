@@ -1,0 +1,240 @@
+body{
+  background:#f4f9ff;
+  font-family:'Poppins',sans-serif;
+}
+
+/* Page Wrapper */
+.support-page{
+  max-width:700px;
+  margin:100px auto;
+  background:#fff;
+  padding:40px 35px;
+  border-radius:18px;
+  box-shadow:0 15px 50px rgba(0,0,0,.12);
+  text-align:center;
+}
+
+/* Heading */
+.support-page h1{
+  font-size:30px;
+  margin-bottom:10px;
+  color:#001f3f;
+}
+.support-page p{
+  color:#555;
+  margin-bottom:30px;
+}
+
+/* Inputs */
+.support-page input,
+.support-page select,
+.support-page textarea{
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px;
+  outline:none;
+  transition:.3s;
+}
+.support-page input:focus,
+.support-page select:focus,
+.support-page textarea:focus{
+  border-color:#007bff;
+}
+
+/* Submit Button */
+.support-page button{
+  background:linear-gradient(135deg,#007bff,#004cff);
+  color:#fff;
+  border:none;
+  padding:14px 40px;
+  border-radius:40px;
+  margin-top:15px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,123,255,.4);
+}
+.support-page button:hover{
+  transform:scale(1.05);
+}
+
+/* Success Page */
+.success-box{
+  max-width:500px;
+  margin:120px auto;
+  background:#fff;
+  padding:40px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.15);
+}
+.success-box h1{color:#00a152}
+.success-box h2{font-size:36px;color:#004cff}
+.track-result{
+  margin-top:25px;
+  padding:20px;
+  border-radius:14px;
+  background:#f4f9ff;
+  text-align:left;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+.track-result p{margin:6px 0}
+.error{color:red;margin-top:15px}
+/* =========================
+   TRACK TICKET RESULT
+========================= */
+.track-result{
+  margin-top:25px;
+  background:linear-gradient(135deg,#ffffff,#f3f9ff);
+  padding:24px 22px;
+  border-radius:18px;
+  box-shadow:0 18px 45px rgba(0,0,0,.15);
+}
+
+.track-result h3{
+  color:#004cff;
+  margin-bottom:12px;
+}
+
+.track-result p{
+  margin:6px 0;
+  color:#333;
+  font-size:14px;
+}
+
+.error{
+  margin-top:18px;
+  color:#ff3b3b;
+  font-weight:600;
+}
+
+/* Track Input */
+.support-page input{
+  border:1px solid #ccd9ff;
+}
+.support-page button{
+  background:linear-gradient(135deg,#00c853,#009624);
+}
+.upload-box{
+  display:block;
+  margin-top:15px;
+  padding:15px;
+  border:2px dashed #00c8ff;
+  border-radius:14px;
+  text-align:center;
+  color:#007bff;
+  cursor:pointer;
+  transition:.3s;
+  font-weight:600;
+}
+
+.upload-box:hover{
+  background:#00c8ff15;
+}
+
+.support-submit-btn{
+  background:linear-gradient(135deg,#00d2ff,#0066ff);
+  color:#fff;
+  padding:16px;
+  border-radius:50px;
+  width:100%;
+  border:none;
+  font-size:17px;
+  font-weight:700;
+  box-shadow:0 12px 35px rgba(0,0,0,.25);
+  transition:.3s;
+}
+
+.support-submit-btn:hover{
+  transform:scale(1.05);
+}
+.support-page form{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+.upload-box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-top:10px;
+  padding:14px;
+  border:2px dashed #00c8ff;
+  border-radius:14px;
+  text-align:center;
+  color:#0a58ca;
+  cursor:pointer;
+  transition:.3s;
+  font-weight:600;
+  background:#f4fbff;
+}
+
+.upload-box i{
+  font-size:18px;
+  color:#007bff;
+}
+
+.upload-box:hover{
+  background:#00c8ff15;
+}
+.support-submit-btn{
+    margin-bottom:30px;   /* button ke niche space */
+}
+
+.support-contact{
+    margin-top:25px;     /* contact section upar se door */
+}
+.support-contact p{
+    margin:10px 0;
+    font-weight:600;
+    color:#002b5b;
+}
+/* ===== Premium Hero ===== */
+.support-page{
+  padding:60px 15px 90px;
+  background:radial-gradient(circle at top,#e8f8ff,#f4fbff,#ffffff);
+}
+
+/* Hero Title */
+.support-page h1{
+  font-size:48px;
+  font-weight:900;
+  color:#002b5b;
+  text-align:center;
+  text-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+.support-page > p{
+  text-align:center;
+  font-size:18px;
+  margin-bottom:35px;
+  color:#004a8f;
+}
+
+/* Badges */
+.support-badges{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:35px;
+}
+
+.support-badges .badge{
+  padding:10px 20px;
+  border-radius:50px;
+  background:linear-gradient(135deg,#00d2ff,#0066ff);
+  color:#fff;
+  font-weight:700;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 0 rgba(0,210,255,.5);}
+  70%{box-shadow:0 0 25px rgba(0,210,255,.8);}
+  100%{box-shadow:0 0 0 rgba(0,210,255,.5);}
+}

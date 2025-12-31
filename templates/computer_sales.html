@@ -9,12 +9,31 @@
   <div class="cs-hero-box">
     <h1>Computer & Laptop Sales</h1>
     <p>Buy original branded laptops, desktops & custom PCs at best price with full warranty.</p>
+
     <div class="cs-btns">
-      <a href="https://wa.me/919625252254">WhatsApp Now</a>
-      <a href="tel:9625252254">Call Now</a>
+      <a href="https://wa.me/919625252254" class="cs-wa">WhatsApp Now</a>
+      <a href="#" class="cs-call" onclick="openCallBox()">
+        <i class="bi bi-telephone-fill"></i> Call Now
+      </a>
+      <a href="{% url 'support' %}" class="cs-support">
+        <i class="bi bi-headset"></i> Complaint / Query
+      </a>
     </div>
   </div>
 </section>
+
+<!-- CALL POPUP -->
+<div class="call-box" id="callBox">
+  <div class="call-card">
+    <h3>Call Right Computers</h3>
+    <p>Tap to Call</p>
+
+    <a href="tel:9625252254" class="call-btn">📞 9625-252-254</a>
+    <a href="https://wa.me/919625252254" target="_blank" class="wa-btn">💬 WhatsApp Chat</a>
+
+    <span onclick="closeCallBox()">Close</span>
+  </div>
+</div>
 
 <!-- CATEGORIES -->
 <section class="cs-section">
@@ -32,7 +51,6 @@
 <!-- WHY US -->
 <section class="why-premium">
   <h2>Why Buy From RCStore?</h2>
-
   <div class="why-grid">
 
     <div class="why-card">
@@ -62,13 +80,11 @@
   </div>
 </section>
 
-
+<!-- FEATURED PRODUCTS -->
 <section class="cs-section">
   <h2>Featured Laptops</h2>
-
   <div class="product-grid">
 
-    <!-- Product 1 -->
     <div class="product-card">
       <img src="{% static 'images/12.webp' %}">
       <h3>HP 15s</h3>
@@ -77,7 +93,6 @@
       <button onclick="quote('HP 15s','₹38,999')">Get Quote</button>
     </div>
 
-    <!-- Product 2 -->
     <div class="product-card">
       <img src="{% static 'images/12.webp' %}">
       <h3>Dell Inspiron</h3>
@@ -86,7 +101,6 @@
       <button onclick="quote('Dell Inspiron','₹52,999')">Get Quote</button>
     </div>
 
-    <!-- Product 3 -->
     <div class="product-card">
       <img src="{% static 'images/12.webp' %}">
       <h3>Lenovo IdeaPad</h3>
@@ -97,13 +111,19 @@
 
   </div>
 </section>
+
 <script>
 function quote(name,price){
   const msg = `Hello RCStore, I am interested in ${name} priced at ${price}. Please share full details.`;
   window.open("https://wa.me/919625252254?text="+encodeURIComponent(msg),'_blank');
 }
+function openCallBox(){
+  document.getElementById("callBox").style.display="flex";
+}
+function closeCallBox(){
+  document.getElementById("callBox").style.display="none";
+}
 </script>
-
 
 <!-- CTA -->
 <section class="cs-cta">
