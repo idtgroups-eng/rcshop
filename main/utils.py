@@ -141,3 +141,37 @@ def send_order_emails(order, admin_email):
     )
 
     return True
+# ==============================
+# SUPPORT TICKET EMAIL (ADMIN)
+# ==============================
+def send_support_ticket_email(ticket):
+
+    attachments = []
+
+    if ticket.photo:
+        try:
+            photo_bytes = ticket.photo.read()
+            attachments.append({
+                "content": base64.b64encode(photo_bytes).decode(),
+                "name": ticket.photo.name,
+                "type": "image/jpeg"
+            })
+        except Exception as e:
+            print("❌ Ticket photo attach error:", e)
+
+    admin_html = f"""
+        <h2>New Support Ticket</h2>
+        <p><b>Ticket ID:</b> {ticket.ticket_id}</p>
+        <p><b>Name:</b> {ticket.name}</p>
+        <p><b>Phone:</b> {ticket.phone}</p>
+        <p><b>Email:</b> {ticket.email}</p>
+        <p><b>Issue:</b> {ticket.issue_type}</p>
+        <p><b>Message:</b> {ticket.message}</p>
+    """
+
+    send_brevo_email(
+        subject=f"New Support Ticket - {ticket.ticket_id}",
+        html_content=admin_html,
+        to_emails=[settings.ADMIN_EMAIL],
+        attachments=attachments
+    )
