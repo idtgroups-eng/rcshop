@@ -71,6 +71,8 @@ from .models import SupportTicket
 # =============================
 # SUPPORT FORM SUBMIT
 # =============================
+from .utils import send_support_ticket_email, send_brevo_email
+
 def support(request):
     if request.method == "POST":
         tid = "RC-" + str(uuid.uuid4()).split("-")[0].upper()
@@ -85,32 +87,26 @@ def support(request):
             photo=request.FILES.get("photo")
         )
 
-        # CUSTOMER EMAIL
+        # 📧 ADMIN EMAIL WITH PHOTO ATTACHMENT
+        send_support_ticket_email(ticket)
+
+        # 📩 CUSTOMER CONFIRMATION EMAIL
         send_brevo_email(
-            subject=f"Ticket {tid} Received",
+            subject=f"Ticket {tid} Received - RCShop",
             html_content=f"""
-            <h3>Support Ticket Submitted</h3>
-            <p>Hello {ticket.name},</p>
-            <p>Your ticket <b>{tid}</b> has been registered.</p>
+                <h2>Support Ticket Received</h2>
+                <p>Hello {ticket.name},</p>
+                <p>Your support ticket <b>{tid}</b> has been successfully submitted.</p>
+                <p>Our technical team will contact you shortly.</p>
+                <p><b>Issue:</b> {ticket.issue_type}</p>
+                <p>{ticket.message}</p>
+                <br>
+                <p>Thank you for choosing RCShop.</p>
             """,
             to_emails=[ticket.email]
         )
 
-        # ADMIN EMAIL
-        send_brevo_email(
-            subject=f"New Support Ticket {tid}",
-            html_content=f"""
-            <h3>New Support Ticket</h3>
-            <p>Name: {ticket.name}</p>
-            <p>Phone: {ticket.phone}</p>
-            <p>Email: {ticket.email}</p>
-            <p>Issue: {ticket.issue_type}</p>
-            <p>{ticket.message}</p>
-            """,
-            to_emails=[settings.ADMIN_EMAIL]
-        )
-
-        return render(request, "support_success.html", {"ticket": ticket})
+        return render(request, "support_success.html", {"ticket": tid})
 
     return render(request, "support.html")
 
