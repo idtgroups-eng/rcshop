@@ -17,7 +17,8 @@ from django.conf import settings
 from django.urls import reverse
 
 from .models import Order
-from .utils import send_email, send_order_emails
+from .utils import send_brevo_email, send_order_emails
+
 
 
 
@@ -72,38 +73,46 @@ from .models import SupportTicket
 # =============================
 def support(request):
     if request.method == "POST":
-
         tid = "RC-" + str(uuid.uuid4()).split("-")[0].upper()
 
         ticket = SupportTicket.objects.create(
-            ticket_id = tid,
-            name = request.POST["name"],
-            phone = request.POST["phone"],
-            email = request.POST["email"],
-            issue_type = request.POST["issue_type"],
-            message = request.POST["message"],
-            photo = request.FILES.get("photo")
+            ticket_id=tid,
+            name=request.POST["name"],
+            phone=request.POST["phone"],
+            email=request.POST["email"],
+            issue_type=request.POST["issue_type"],
+            message=request.POST["message"],
+            photo=request.FILES.get("photo")
         )
 
-        # AUTO EMAIL TO CUSTOMER
-        send_mail(
-            subject = f"Ticket {tid} Received - RCStore",
-            message = f"""Hello {ticket.name},
-
-Your support ticket {tid} has been successfully submitted.
-Our technical team will contact you within 24 hours.
-
-Thank you for choosing RCStore.
-""",
-            from_email = None,
-            recipient_list = [ticket.email],
-            fail_silently = True
+        # CUSTOMER EMAIL
+        send_brevo_email(
+            subject=f"Ticket {tid} Received",
+            html_content=f"""
+            <h3>Support Ticket Submitted</h3>
+            <p>Hello {ticket.name},</p>
+            <p>Your ticket <b>{tid}</b> has been registered.</p>
+            """,
+            to_emails=[ticket.email]
         )
 
-        return render(request, "support_success.html", {"ticket": tid})
+        # ADMIN EMAIL
+        send_brevo_email(
+            subject=f"New Support Ticket {tid}",
+            html_content=f"""
+            <h3>New Support Ticket</h3>
+            <p>Name: {ticket.name}</p>
+            <p>Phone: {ticket.phone}</p>
+            <p>Email: {ticket.email}</p>
+            <p>Issue: {ticket.issue_type}</p>
+            <p>{ticket.message}</p>
+            """,
+            to_emails=[settings.ADMIN_EMAIL]
+        )
+
+        return render(request, "support_success.html", {"ticket": ticket})
 
     return render(request, "support.html")
-
 
 # =============================
 # TRACK TICKET PAGE
@@ -471,7 +480,7 @@ def update_order_status(request, order_id):
             order.save()
 
             # ---------- CUSTOMER STATUS EMAIL ----------
-            send_email(
+            send_brevo_email(
                 subject=f"Order #{order.id} Status Updated",
                 html_content=f"""
                     <h2>Order Status Updated</h2>
@@ -484,6 +493,7 @@ def update_order_status(request, order_id):
             )
 
     return redirect("admin_orders")
+
 def track_order(request):
     order = None
     error = None

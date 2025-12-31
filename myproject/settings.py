@@ -124,9 +124,6 @@ USE_TZ = True
 # ==============================
 # STATIC FILES (RENDER + WHITENOISE)
 # ==============================
-
-import os
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
@@ -135,9 +132,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-# ✅ WhiteNoise storage
+# WhiteNoise production static handler
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
@@ -151,55 +146,37 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CSRF (IMPORTANT FOR LIVE FORMS)
 # ==============================
 CSRF_TRUSTED_ORIGINS = [
+    'https://rcshop.co.in',
+    'https://www.rcshop.co.in',
     'https://rcshop-1.onrender.com',
     'https://*.onrender.com',
 ]
 
 
+
 # ==============================
-# EMAIL CONFIGURATION (GMAIL SMTP - LIVE)
+# EMAIL CONFIGURATION (BREVO API ONLY)
 # ==============================
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
-EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
-EMAIL_USE_TLS = True
-
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+BREVO_API_KEY = os.environ.get("BREVO_API_KEY")
 
 DEFAULT_FROM_EMAIL = os.environ.get(
     "DEFAULT_FROM_EMAIL",
-    EMAIL_HOST_USER
+    "noreply@rcstore.in"
 )
 
 ADMIN_EMAIL = os.environ.get(
     "ADMIN_EMAIL",
-    EMAIL_HOST_USER
+    "idtgroups@gmail.com"
 )
 
-
-# ==============================
-# AUTH REDIRECT
-# ==============================
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
-
-
-# ==============================
-# STATIC FILE FINDERS
-# ==============================
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-
-# ==============================
-# MEDIA FILES (SUPPORT PHOTO UPLOAD)
-# ==============================
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
