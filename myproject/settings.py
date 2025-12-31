@@ -157,28 +157,49 @@ CSRF_TRUSTED_ORIGINS = [
 
 
 # ==============================
-# EMAIL CONFIGURATION (BREVO API ONLY)
+# EMAIL CONFIGURATION (GMAIL SMTP - LIVE)
 # ==============================
 
-BREVO_API_KEY = os.environ.get("BREVO_API_KEY")
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 DEFAULT_FROM_EMAIL = os.environ.get(
     "DEFAULT_FROM_EMAIL",
-    "noreply@rcstore.in"
+    EMAIL_HOST_USER
 )
 
 ADMIN_EMAIL = os.environ.get(
     "ADMIN_EMAIL",
-    "idtgroups@gmail.com"
+    EMAIL_HOST_USER
 )
 
+
+# ==============================
+# AUTH REDIRECT
+# ==============================
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+
+# ==============================
+# STATIC FILE FINDERS
+# ==============================
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
+
+# ==============================
+# MEDIA FILES (SUPPORT PHOTO UPLOAD)
+# ==============================
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+

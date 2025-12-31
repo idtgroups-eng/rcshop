@@ -8,14 +8,12 @@
   <h1>Customer Support & Complaint Desk</h1>
   <p>We are here to help you. Please submit your query or complaint below.</p>
 
-<div class="support-badges">
-  <div class="badge">24×7 Support</div>
-  <div class="badge">Same Day Response</div>
-  <div class="badge">Trusted RCStore Team</div>
-</div>
+  <div class="support-badges">
+    <div class="badge">24×7 Support</div>
+    <div class="badge">Same Day Response</div>
+    <div class="badge">Trusted RCStore Team</div>
+  </div>
 
-
-  <!-- FORM -->
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
@@ -36,18 +34,18 @@
 
     <textarea name="message" placeholder="Describe your issue in detail..." rows="5" required></textarea>
 
-    <!-- FILE UPLOAD -->
-   <label class="upload-box">
-  <i class="bi bi-paperclip"></i>
-  Upload Photo / Bill / Product Image
-  <input type="file" name="photo" hidden>
-</label>
+    <!-- MULTI IMAGE GALLERY -->
+    <div id="previewGallery" class="support-gallery"></div>
 
+    <label class="upload-box">
+      <i class="bi bi-paperclip"></i>
+      Upload Photo / Bill / Product Image
+      <input type="file" name="photo" hidden multiple onchange="previewSupportImages(this)">
+    </label>
 
     <button type="submit" class="support-submit-btn">Submit Ticket</button>
   </form>
 
-  <!-- CONTACT -->
   <div class="support-contact">
     <p><i class="bi bi-telephone-fill"></i> Support: 9625-252-254</p>
     <p><i class="bi bi-whatsapp"></i> WhatsApp: 9625-252-254</p>
@@ -55,4 +53,17 @@
   </div>
 
 </section>
+
+<script>
+function previewSupportImages(input){
+  const gallery = document.getElementById("previewGallery");
+
+  for(let i=0;i<input.files.length;i++){
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(input.files[i]);
+    gallery.appendChild(img);
+  }
+}
+</script>
+
 {% endblock %}

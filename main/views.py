@@ -17,7 +17,8 @@ from django.conf import settings
 from django.urls import reverse
 
 from .models import Order
-from .utils import send_brevo_email   # ✅ Brevo API only
+from .utils import send_email, send_order_emails
+
 
 
 # =========================
@@ -351,9 +352,6 @@ def generate_invoice_pdf(order):
     buffer.seek(0)
     return buffer
 
-# =========================
-# COD CONFIRM (EMAIL + PDF)
-# =========================
 def cod_details(request):
     data = request.session.get("checkout_data")
     if not data:
@@ -369,57 +367,14 @@ def cod_details(request):
             mobile=data.get("mobile", ""),
             address=f"{data.get('address')}, {data.get('city')} - {data.get('pincode')}",
             items=data.get("items", []),
-
             subtotal=Decimal(data.get("subtotal", "0")),
             total_amount=Decimal(data.get("total", "0")),
-
             payment_method="COD",
             status="Placed",
         )
 
-        # ---------- PDF (Render-safe) ----------
-        pdf_buffer = generate_invoice_pdf(order)
-        pdf_bytes = pdf_buffer.getvalue() if pdf_buffer else None
-
-        attachments = []
-        if pdf_bytes:
-            attachments.append({
-                "content": base64.b64encode(pdf_bytes).decode(),
-                "name": f"Invoice_{order.id}.pdf",
-                "type": "application/pdf",
-            })
-
-        # ---------- CUSTOMER EMAIL ----------
-        send_brevo_email(
-            subject=f"Order Confirmed - #{order.id}",
-            html_content=f"""
-                <h2>Order Confirmed (Cash on Delivery)</h2>
-                <p>Hi {order.name},</p>
-                <p>Your order <b>#{order.id}</b> has been placed successfully.</p>
-                <p><b>Total Amount:</b> ₹{order.total_amount}</p>
-                <p>Invoice is attached with this email.</p>
-            """,
-            to_emails=[order.email],
-            attachments=attachments
-        )
-
-        # ---------- ADMIN EMAIL ----------
-        send_brevo_email(
-            subject=f"New COD Order - #{order.id}",
-            html_content=f"""
-                <h3>New COD Order Received</h3>
-                <p><b>Order ID:</b> {order.id}</p>
-                <p><b>Name:</b> {order.name}</p>
-                <p><b>Mobile:</b> {order.mobile}</p>
-                <p><b>Email:</b> {order.email}</p>
-                <p><b>Total:</b> ₹{order.total_amount}</p>
-                <p><b>Payment Mode:</b> Cash on Delivery</p>
-                <hr>
-                <p>Invoice PDF attached for verification.</p>
-            """,
-            to_emails=[settings.ADMIN_EMAIL],
-            attachments=attachments
-        )
+        # ---------- SEND ORDER EMAILS (PDF + CUSTOMER + ADMIN) ----------
+        send_order_emails(order, settings.ADMIN_EMAIL)
 
         # ---------- CLEAN SESSION ----------
         request.session.pop("checkout_data", None)
@@ -516,13 +471,13 @@ def update_order_status(request, order_id):
             order.save()
 
             # ---------- CUSTOMER STATUS EMAIL ----------
-            send_brevo_email(
+            send_email(
                 subject=f"Order #{order.id} Status Updated",
                 html_content=f"""
-                    <h3>Your Order Status Updated</h3>
-                    <p>Hi {order.name},</p>
-                    <p>Your order <b>#{order.id}</b> status is now:</p>
-                    <h2>{order.status}</h2>
+                    <h2>Order Status Updated</h2>
+                    <p>Hello {order.name},</p>
+                    <p>Your order <b>#{order.id}</b> status has been updated to:</p>
+                    <h3>{order.status}</h3>
                     <p>Thank you for shopping with RCShop.</p>
                 """,
                 to_emails=[order.email]
