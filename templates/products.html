@@ -47,7 +47,7 @@
   <button class="filter-btn" data-category="36A & 88A Ink">36A & 88A Ink </button>
   <button class="filter-btn" data-category="Router">Router</button>
   <button class="filter-btn" data-category="Gaming Mouse">Gaming Mouse</button>
-
+  <button class="filter-btn" data-category="CCTV JUNCTION BOX">cctv Junction Box</button>
 </div>
 
 <h2 class="section-title">Our Products</h2>
@@ -343,6 +343,70 @@ specs: [
 
   </div>
 </div>
+
+<!-- ⭐CCTV JUNCTION BOX -->
+
+<div class="product-card" data-category="CCTV JUNCTION BOX">
+ <span class="sale-tag">Bulk Offer Qty-5</span>
+  <img src="{% static 'images/jb.jpg' %}">
+  <h5 class="mt-2">cctv Junction Box</h5>
+  <p class="price">₹250</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex justify-content-between mt-2">
+
+<button class="add-btn"
+        onclick="addToCart('cctv Junction Box', 250, `{% static 'images/jb.jpg' %}`)">
+    Add
+</button>
+
+<button class="buy-btn"
+        onclick="buyNow('cctv Junction Box', 250, '{% static "images/jb.jpg" %}')">
+    Buy
+</button>
+<button class="view-btn"
+onclick="openProductDetails(
+    'CCTV Junction Box',
+    250,
+    [
+        '{% static "images/jb.jpg" %}',
+        '{% static "images/jb1.jpg" %}',
+        '{% static "images/jb2.jpg" %}',
+        '{% static "images/jb3.jpg" %}'
+    ],
+    {
+        highlights: [
+            'Weatherproof IP65/IP66 rated waterproof & dustproof protection',
+            'Concealed wiring prevents cable cutting and tampering',
+            'Provides neat and professional cable management',
+            'Universal compatibility with Hikvision, CP Plus, Dahua and all CCTV cameras',
+            'Strong body supports cameras up to 3 kg weight',
+            'Rust and oxidation resistant connector protection',
+            'Suitable for indoor and outdoor installation',
+            'Pre-drilled holes for quick wall and ceiling mounting'
+        ],
+        specs: [
+            'Product Type: CCTV Camera Junction Box',
+            'Material: Heavy Duty PVC, ABS Plastic, Aluminum Alloy',
+            'Size Options: 4x4 inch (100mm) or 5x5 inch (125mm)',
+            'IP Rating: IP65 or IP66 Waterproof and Dustproof',
+            'Mounting Type: Wall or Ceiling Mount',
+            'Load Capacity: Up to 3 Kg',
+            'Conduit Entry: 1-2 inch or 3-4 inch Threaded Pipe Inlets',
+            'Cable Management: Internal with Rubber Gasket Seal',
+            'Color: White',
+            'Compatible Brands: Hikvision, CP Plus, Dahua, Uniview, Bosch',
+            'Usage: Indoor and Outdoor CCTV Installations'
+        ]
+    }
+)">
+    View
+</button>
+
+
+  </div>
+</div>
+
 
 <!-- ===================== RC SHOP FOOTER ===================== -->
 </div> <!-- productContainer close hona zaruri hai -->

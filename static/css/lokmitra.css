@@ -358,3 +358,39 @@ border-radius:50px;background:#00ffd5;color:#000;font-weight:800;text-decoration
   transform:scale(1.1);
   box-shadow:0 0 55px rgba(0,120,255,1);
 }
+/* ===============================
+   MOBILE HERO FIX – LOKMITRA PAGE
+================================ */
+
+@media(max-width:768px){
+
+.lm-hero{
+    padding: 70px 16px 80px;
+    border-radius: 0 0 22px 22px;
+}
+
+.lm-hero h1{
+    font-size: 28px;
+    line-height: 1.25;
+}
+
+.lm-hero p{
+    font-size: 14px;
+    opacity: .9;
+}
+
+/* Buttons stacked full width */
+.lm-hero .lm-btns{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:25px;
+}
+
+.lm-hero .lm-btn{
+    width:100%;
+    padding:14px;
+    font-size:15px;
+    border-radius:30px;
+}
+}

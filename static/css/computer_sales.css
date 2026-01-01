@@ -324,3 +324,49 @@
   transform:scale(1.08);
   box-shadow:0 0 35px rgba(255,87,34,.8);
 }
+/* ===============================
+   MOBILE HERO FIX
+================================ */
+
+@media(max-width:768px){
+
+.cs-hero{
+    padding: 70px 16px 80px;
+    border-radius: 0 0 22px 22px;
+}
+
+.cs-hero h1{
+    font-size: 30px;
+    line-height: 1.25;
+}
+
+.cs-hero p{
+    font-size: 14px;
+    opacity: .9;
+}
+
+/* Buttons stacked & full width */
+.cs-hero .cs-btns{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:25px;
+}
+
+.cs-hero .cs-btn{
+    width:100%;
+    padding:14px;
+    font-size:15px;
+    border-radius:30px;
+}
+
+/* Product categories section */
+.cs-categories{
+    grid-template-columns: 1fr !important;
+    padding: 0 12px;
+}
+
+.cs-category-card{
+    margin-bottom: 16px;
+}
+}

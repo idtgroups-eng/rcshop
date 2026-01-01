@@ -380,3 +380,49 @@
   transform:scale(1.08);
   box-shadow:0 0 35px rgba(255,87,34,.8);
 }
+/* ===============================
+   MOBILE HERO FIX – REPAIR PAGE
+================================ */
+
+@media(max-width:768px){
+
+.rm-hero{
+    padding: 70px 16px 80px;
+    border-radius: 0 0 22px 22px;
+}
+
+.rm-hero h1{
+    font-size: 28px;
+    line-height: 1.25;
+}
+
+.rm-hero p{
+    font-size: 14px;
+    opacity: .9;
+}
+
+/* Buttons stacked full width */
+.rm-hero .rm-btns{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:25px;
+}
+
+.rm-hero .rm-btn{
+    width:100%;
+    padding:14px;
+    font-size:15px;
+    border-radius:30px;
+}
+
+/* Service cards mobile */
+.rm-services{
+    grid-template-columns: 1fr !important;
+    padding: 0 12px;
+}
+
+.rm-card{
+    margin-bottom: 16px;
+}
+}

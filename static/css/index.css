@@ -1884,3 +1884,84 @@ body {
 .rc-menu a[href*="support"]:hover{
   color:#00e5ff !important;
 }
+/* ===============================
+   TONER REFILL PREMIUM HIGHLIGHT
+================================ */
+.toner-highlight{
+    transform: scale(1.12);
+    border:2px solid #00e5ff;
+    box-shadow: 0 20px 60px rgba(0,229,255,0.45);
+    background: linear-gradient(180deg,#ffffff,#f3fbff);
+    z-index: 5;
+}
+
+.toner-highlight h5{font-size:22px;}
+.toner-highlight p{font-size:15px;}
+.toner-highlight span{font-weight:700;color:#007bff;}
+
+@media(max-width:768px){
+    .toner-highlight{transform:scale(1);}
+}
+/* ===============================
+   HP AUTHORISED RETAILER – SOLID
+================================ */
+
+.hp-solid{
+    opacity: 1 !important;
+    background: #ffffff;
+    border: 2px solid #2d6cff;
+    box-shadow: 0 20px 50px rgba(45,108,255,0.35);
+    transform: scale(1.03);
+}
+
+/* Icon strong */
+.hp-solid i{
+    color:#2d6cff;
+    filter: drop-shadow(0 0 6px rgba(45,108,255,.6));
+}
+
+/* Text darker */
+.hp-solid h5{
+    color:#0b1b3f;
+    font-size:21px;
+    font-weight:800;
+}
+
+.hp-solid p{
+    color:#444;
+}
+
+/* Button glow */
+.hp-solid span,
+.hp-solid .btn,
+.hp-solid a{
+    color:#2d6cff;
+    font-weight:700;
+}
+/* ===============================
+   SERVICES EQUAL HEIGHT FIX
+================================ */
+
+.service-card{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Disable scaling so all boxes same */
+.toner-highlight,
+.hp-solid{
+    transform: none !important;
+}
+
+/* Highlight glow without size change */
+.toner-highlight{
+    border: 2px solid #00e5ff;
+    box-shadow: 0 20px 45px rgba(0,229,255,0.35);
+}
+
+.hp-solid{
+    border: 2px solid #2d6cff;
+    box-shadow: 0 20px 45px rgba(45,108,255,0.35);
+}

@@ -464,3 +464,45 @@ body{
   transform:scale(1.08);
   box-shadow:0 0 35px rgba(255,87,34,.8);
 }
+/* ===============================
+   MOBILE HERO FIX – PRINTER TONER
+================================ */
+
+@media(max-width:768px){
+
+.pt-hero{
+    padding: 70px 16px 80px;
+    border-radius: 0 0 22px 22px;
+}
+
+.pt-hero h1{
+    font-size: 30px;
+    line-height: 1.25;
+}
+
+.pt-hero p{
+    font-size: 14px;
+    opacity: .9;
+}
+
+/* Buttons full width stacked */
+.pt-hero .pt-btns{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:25px;
+}
+
+.pt-hero .pt-btn{
+    width:100%;
+    padding:14px;
+    font-size:15px;
+    border-radius:30px;
+}
+
+/* Small features text */
+.pt-hero .pt-features{
+    font-size:13px;
+    line-height:1.6;
+}
+}

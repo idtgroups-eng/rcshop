@@ -550,3 +550,40 @@ font-weight:800;text-decoration:none
   transform:scale(1.1);
   box-shadow:0 0 55px rgba(0,114,255,1);
 }
+/* ===============================
+   MOBILE HERO FIX – CCTV PAGE
+================================ */
+
+@media(max-width:768px){
+
+.cctv-hero{
+    padding: 70px 16px 80px;
+    border-radius: 0 0 22px 22px;
+}
+
+.cctv-hero h1{
+    font-size: 28px;
+    line-height: 1.25;
+    text-shadow: 0 0 20px rgba(0,255,255,.7);
+}
+
+.cctv-hero p{
+    font-size: 14px;
+    opacity: .9;
+}
+
+/* Buttons stacked full width */
+.cctv-hero .cctv-btns{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-top:25px;
+}
+
+.cctv-hero .cctv-btn{
+    width:100%;
+    padding:14px;
+    font-size:15px;
+    border-radius:30px;
+}
+}
