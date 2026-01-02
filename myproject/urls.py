@@ -3,9 +3,12 @@ from django.urls import path
 from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 from main import views
 from main.sitemaps import StaticViewSitemap
+from main.views import upload_payment_proof, payment_pending, verify_payment
 
 
 urlpatterns = [
@@ -20,26 +23,27 @@ urlpatterns = [
     path("product_details/", views.product_details, name="product_details"),
     path("contact/", views.contact, name="contact"),
     path("cart/", views.cart, name="cart"),
+
+    # ================= SERVICES =================
     path("computer-sales/", views.computer_sales, name="computer_sales"),
     path("repair-maintenance/", views.repair_maintenance, name="repair_maintenance"),
     path("printer-toner/", views.printer_toner, name="printer_toner"),
     path("cctv-fitting/", views.cctv_fitting, name="cctv_fitting"),
     path("lokmitra-services/", views.lokmitra_services, name="lokmitra_services"),
     path("hp-retailer/", views.hp_retailer, name="hp_retailer"),
+
+    # ================= SUPPORT =================
     path("support/", views.support, name="support"),
     path("track-ticket/", views.track_ticket, name="track_ticket"),
 
     # ================= CHECKOUT =================
     path("checkout/", views.checkout, name="checkout"),
 
-    # ================= SUPPORT =================
-    path("track-order/", views.track_order, name="track_order"),
-    path("return-policy/", views.return_policy, name="return_policy"),
-    path("return-request/", views.return_request, name="return_request"),
-    path("order-tracking/", views.order_tracking, name="order_tracking"),
-    path("shipping-policy/", views.shipping_policy, name="shipping_policy"),
-    path("help-center/", views.help_center, name="help_center"),
-    
+    # ================= PAYMENT FLOW =================
+    path("upload-proof/", upload_payment_proof, name="upload_payment_proof"),
+    path("payment-pending/", payment_pending, name="payment_pending"),
+    path("verify-payment/<int:id>/", verify_payment, name="verify_payment"),
+
     # ================= PAYMENT =================
     path("payment/", views.payment, name="payment"),
     path("payment/upi/", views.payment_upi, name="payment_upi"),
@@ -82,11 +86,8 @@ urlpatterns = [
     ),
 ]
 
-
 # ================= SITEMAP =================
-sitemaps = {
-    "static": StaticViewSitemap,
-}
+sitemaps = {"static": StaticViewSitemap}
 
 urlpatterns += [
     path(
@@ -96,10 +97,8 @@ urlpatterns += [
         name="django.contrib.sitemaps.views.sitemap",
     ),
 ]
-from django.conf import settings
-from django.conf.urls.static import static
 
-# Serve static & media only in DEBUG (local)
+# ================= STATIC & MEDIA =================
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -4,7 +4,7 @@ from io import BytesIO
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
-from .models import Order
+from .models import Order, PaymentProof
 
 
 # =========================
@@ -22,9 +22,9 @@ def generate_invoice_pdf_admin(order):
 
     y -= 20
     p.setFont("Helvetica", 9)
-    p.drawString(40, y, "GSTIN: 02WRWPK1356B1Z0")   # 🔴 CHANGE TO REAL GST
+    p.drawString(40, y, "GSTIN: 02WRWPK1356B1Z0")
     y -= 12
-    p.drawString(40, y, "PAN:BRWPK1356B")          # 🔴 CHANGE TO REAL PAN
+    p.drawString(40, y, "PAN: BRWPK1356B")
 
     # ---------- ORDER DETAILS ----------
     y -= 20
@@ -75,7 +75,6 @@ def generate_invoice_pdf_admin(order):
 
     p.showPage()
     p.save()
-
     buffer.seek(0)
     return buffer
 
@@ -107,32 +106,19 @@ download_invoice.short_description = "📄 Download Invoice PDF"
 # =========================
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-
-    list_display = (
-        "id",
-        "name",
-        "email",
-        "mobile",
-        "payment_method",
-        "total_amount",
-        "status",
-        "created_at",
-    )
-
-    search_fields = (
-        "name",
-        "email",
-        "mobile",
-    )
-
-    list_filter = (
-        "payment_method",
-        "status",
-        "created_at",
-    )
-
+    list_display = ("id","name","email","mobile","payment_method","total_amount","status","created_at")
+    search_fields = ("name","email","mobile")
+    list_filter = ("payment_method","status","created_at")
     ordering = ("-created_at",)
-
     readonly_fields = ("created_at",)
-
     actions = [download_invoice]
+
+
+# =========================
+# PAYMENT PROOF ADMIN (SAFE)
+# =========================
+@admin.register(PaymentProof)
+class PaymentProofAdmin(admin.ModelAdmin):
+    list_display = ("order_id", "name", "phone", "amount", "verified")
+    list_filter = ("verified",)
+    search_fields = ("order_id", "name", "phone")

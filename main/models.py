@@ -36,11 +36,15 @@ class Order(models.Model):
     payment_method = models.CharField(max_length=30, default="COD")
     status = models.CharField(max_length=20, choices=ORDER_STATUS, default="Placed")
 
+    # 🚚 COURIER TRACKING
+    courier_name = models.CharField(max_length=100, blank=True)
+    tracking_id = models.CharField(max_length=100, blank=True)
+    tracking_link = models.URLField(blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Order #{self.id} - {self.name} ({self.status})"
-
 
 # =========================
 # USER PROFILE
@@ -81,10 +85,14 @@ class Product(models.Model):
         return self.name
 
 
+from django.db import models
+
+
 # =========================
 # SUPPORT TICKETS
 # =========================
 class SupportTicket(models.Model):
+
     TICKET_TYPE = [
         ('General', 'General Query'),
         ('Order', 'Order Related'),
@@ -93,15 +101,39 @@ class SupportTicket(models.Model):
         ('Technical', 'Technical Problem'),
     ]
 
-    ticket_id = models.CharField(max_length=20, unique=True)
-    name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=15)
-    email = models.EmailField()
-    issue_type = models.CharField(max_length=50, choices=TICKET_TYPE)
-    message = models.TextField()
-    photo = models.ImageField(upload_to="support/", blank=True, null=True)
-    status = models.CharField(max_length=20, default="Pending")
-    created_at = models.DateTimeField(auto_now_add=True)
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('In Progress', 'In Progress'),
+        ('Resolved', 'Resolved'),
+        ('Closed', 'Closed'),
+    ]
+
+    ticket_id   = models.CharField(max_length=20, unique=True)
+    name        = models.CharField(max_length=100)
+    phone       = models.CharField(max_length=15)
+    email       = models.EmailField()
+    issue_type  = models.CharField(max_length=50, choices=TICKET_TYPE)
+    message     = models.TextField()
+    photo       = models.ImageField(upload_to="support/", blank=True, null=True)
+    status      = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
+    created_at  = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.ticket_id
+
+
+# =========================
+# PAYMENT PROOF
+# =========================
+class PaymentProof(models.Model):
+    order_id   = models.CharField(max_length=50)
+    name       = models.CharField(max_length=100)
+    phone      = models.CharField(max_length=20)
+    email      = models.EmailField()
+    amount     = models.CharField(max_length=20)
+    screenshot = models.ImageField(upload_to="payment_proofs/")
+    verified   = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.order_id

@@ -175,3 +175,27 @@ def send_support_ticket_email(ticket):
         to_emails=[settings.ADMIN_EMAIL],
         attachments=attachments
     )
+def send_sms(phone, message):
+    import requests
+    headers = {
+        "authorization": settings.FAST2SMS_API_KEY,
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "route": "q",
+        "numbers": phone,
+        "message": message,
+        "sender_id": "RCSHOP"
+    }
+    try:
+        requests.post("https://www.fast2sms.com/dev/bulkV2", json=payload, headers=headers, timeout=8)
+    except Exception as e:
+        print("❌ SMS Error:", e)
+def send_whatsapp(phone, message):
+    import requests, urllib.parse
+    text = urllib.parse.quote(message)
+    url = f"https://api.callmebot.com/whatsapp.php?phone={phone}&text={text}&apikey={settings.WHATSAPP_PHONE}"
+    try:
+        requests.get(url, timeout=8)
+    except Exception as e:
+        print("❌ WhatsApp error:", e)

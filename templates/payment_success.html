@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment Successful | RCShop</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+body{
+margin:0;font-family:Poppins;
+background:radial-gradient(circle at top,#00ffcc,#003366);
+min-height:100vh;display:flex;align-items:center;justify-content:center
+}
+.success-box{
+background:#fff;padding:45px;border-radius:25px;text-align:center;
+max-width:460px;width:100%;box-shadow:0 25px 60px rgba(0,0,0,.4)
+}
+.success-box h1{color:#00b894;font-size:36px}
+.success-box p{opacity:.9}
+.success-box a{
+display:inline-block;margin-top:20px;padding:14px 30px;
+border-radius:50px;background:linear-gradient(135deg,#00e5ff,#0099ff);
+color:#fff;text-decoration:none;font-weight:700
+}
+</style>
+</head>
+
+<body>
+<div class="success-box">
+  <h1>Payment Successful 🎉</h1>
+  <p>Thank you {{ payment.name }}!<br>
+     Your payment of ₹{{ payment.amount }} has been verified.<br>
+     Order ID: <b>{{ payment.order_id }}</b></p>
+
+  <a href="/">Continue Shopping</a>
+</div>
+</body>
+</html>

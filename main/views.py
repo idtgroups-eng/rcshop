@@ -629,3 +629,63 @@ def save_address(request):
             pincode=request.POST["pincode"]
         )
     return redirect("checkout")
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import PaymentProof
+from .utils import send_brevo_email
+
+
+# ===============================
+# UPLOAD PAYMENT PROOF
+# ===============================
+def upload_payment_proof(request):
+    data = request.session.get("checkout_data")
+
+    if not data:
+        return redirect("checkout")
+
+    if request.method == "POST":
+        PaymentProof.objects.create(
+            order_id = data.get("order_id"),
+            name     = data.get("name"),
+            phone    = data.get("phone"),
+            email    = data.get("email"),
+            amount   = data.get("total"),
+            screenshot = request.FILES.get("screenshot")
+        )
+        return redirect("payment_pending")
+
+    return render(request, "upload-proof.html", {"data": data})
+
+
+# ===============================
+# PAYMENT PENDING (THANK YOU)
+# ===============================
+def payment_pending(request):
+    return render(request, "payment_pending.html")
+
+
+# ===============================
+# ADMIN VERIFY PAYMENT
+# ===============================
+def verify_payment(request, id):
+    p = get_object_or_404(PaymentProof, id=id)
+
+    p.verified = True
+    p.save()
+
+    # Auto Email
+    send_brevo_email(
+        subject = "Payment Successful - RCShop",
+        html_content = f"""
+        <h2>Payment Successful</h2>
+        <p>Hello {p.name},</p>
+        <p>Your payment of <b>₹{p.amount}</b> has been verified.</p>
+        <p>Order ID: <b>{p.order_id}</b></p>
+        <p>Your order is now confirmed and will be processed shortly.</p>
+        """,
+        to_emails = [p.email]
+    )
+
+    # Success Page
+    return render(request, "payment_success.html", {"payment": p})
