@@ -51,9 +51,27 @@
 
 </div>
 
-    <div class="back-btn" onclick="history.back()">← Back</div>
+<div class="back-btn" onclick="history.back()">← Back</div>
+
+<!-- ===== PREMIUM PAYMENT FOOTER ===== -->
+<footer class="pay-footer">
+  <div class="pay-footer-box">
+    <h4>Legal</h4>
+    <a href="{% url 'website_policy' %}">Website Policy</a>
+    <a href="{% url 'return_policy' %}">Return & Refund Policy</a>
+    <a href="{% url 'return_request' %}">Return Request</a>
   </div>
 
-  <script src="{% static 'js/payment.js' %}"></script>
+  <div class="pay-footer-box">
+    <h4>Need Help?</h4>
+    <p>📞 96252 52254</p>
+    <p>📧 support@rcshop.co.in</p>
+  </div>
+</footer>
+
+</div>
+
+<script src="{% static 'js/payment.js' %}"></script>
 </body>
 </html>
+

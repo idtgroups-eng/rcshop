@@ -71,6 +71,8 @@ def return_policy(request):
     return render(request, "return_policy.html")
 def return_request(request):
     return render(request, "return_request.html")
+def website_policy(request):
+    return render(request, "website_policy.html")
 
 # =============================
 # SUPPORT FORM SUBMIT

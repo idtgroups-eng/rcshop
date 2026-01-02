@@ -40,6 +40,7 @@ urlpatterns = [
     path("cart/", views.cart, name="cart"),
     path("return-policy/", views.return_policy, name="return_policy"),
     path("return-request/", views.return_request, name="return_request"),
+    path("website-policy/", views.website_policy, name="website_policy"),
 
     # ================= LIVE ADMIN CREATOR (TEMP) =================
     path("create-live-admin/", create_live_admin),
