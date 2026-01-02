@@ -38,6 +38,8 @@ urlpatterns = [
     path("product_details/", views.product_details, name="product_details"),
     path("contact/", views.contact, name="contact"),
     path("cart/", views.cart, name="cart"),
+    path("return-policy/", views.return_policy, name="return_policy"),
+    path("return-request/", views.return_request, name="return_request"),
 
     # ================= LIVE ADMIN CREATOR (TEMP) =================
     path("create-live-admin/", create_live_admin),
@@ -120,3 +122,4 @@ urlpatterns += [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

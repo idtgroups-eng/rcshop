@@ -11,6 +11,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.urls import reverse
@@ -66,6 +67,10 @@ import uuid
 from django.shortcuts import render
 from django.core.mail import send_mail
 from .models import SupportTicket
+def return_policy(request):
+    return render(request, "return_policy.html")
+def return_request(request):
+    return render(request, "return_request.html")
 
 # =============================
 # SUPPORT FORM SUBMIT
