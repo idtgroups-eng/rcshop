@@ -6,6 +6,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UPI Payment - RCShop</title>
 <link rel="stylesheet" href="{% static 'css/payment-upi.css' %}">
+<style>
+.proof-upload-box{
+  margin-top:25px;
+  padding:18px;
+  background:rgba(255,255,255,.1);
+  border-radius:16px;
+  text-align:center;
+}
+.proof-upload-box h3{color:#fff;margin-bottom:8px}
+.proof-upload-box input{color:#fff;margin:10px 0}
+.upload-btn{
+  background:linear-gradient(135deg,#00f0ff,#007bff);
+  border:none;
+  color:#fff;
+  padding:12px 32px;
+  border-radius:30px;
+  font-weight:700;
+  cursor:pointer;
+}
+</style>
 </head>
 <body>
 
@@ -35,7 +55,19 @@
   <div class="instructions">
     <p>✔ Click above button or scan QR</p>
     <p>✔ Complete payment in your UPI App</p>
-    <p>✔ This page will auto-detect payment success</p>
+    <p>✔ Upload screenshot below after payment</p>
+  </div>
+
+  <!-- ================= UPLOAD PAYMENT PROOF ================= -->
+  <div class="proof-upload-box">
+    <h3>Upload Payment Screenshot</h3>
+    <form method="POST" enctype="multipart/form-data" action="{% url 'upload_payment_proof' %}">
+      {% csrf_token %}
+      <input type="file" name="screenshot" required>
+      <button type="submit" class="upload-btn">
+        Submit Payment Proof
+      </button>
+    </form>
   </div>
 
   <div id="processing" style="display:none;text-align:center;margin-top:12px;">
@@ -48,17 +80,6 @@
 <script>
 const upiURL = "{{ upi_url }}";
 document.getElementById("upiIntentBtn").href = upiURL;
-
-// AUTO VERIFY LOOP
-setInterval(()=>{
-  fetch("/upi-verify/?order_id={{ order_id }}")
-    .then(r=>r.text())
-    .then(res=>{
-      if(res === "PAID"){
-        window.location.href = "/thankyou/?order_id={{ order_id }}";
-      }
-    });
-}, 3000);
 </script>
 
 </body>
