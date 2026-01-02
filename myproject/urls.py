@@ -5,10 +5,25 @@ from django.contrib.sitemaps.views import sitemap
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 from main import views
 from main.sitemaps import StaticViewSitemap
 from main.views import upload_payment_proof, payment_pending, verify_payment
+
+
+# ================= TEMP LIVE ADMIN CREATOR =================
+def create_live_admin(request):
+    if User.objects.filter(username="admin").exists():
+        return HttpResponse("Admin already exists")
+
+    User.objects.create_superuser(
+        username="admin",
+        email="admin@rcshop.co.in",
+        password="Admin@123"
+    )
+    return HttpResponse("Live admin created")
 
 
 urlpatterns = [
@@ -23,6 +38,9 @@ urlpatterns = [
     path("product_details/", views.product_details, name="product_details"),
     path("contact/", views.contact, name="contact"),
     path("cart/", views.cart, name="cart"),
+
+    # ================= LIVE ADMIN CREATOR (TEMP) =================
+    path("create-live-admin/", create_live_admin),
 
     # ================= SERVICES =================
     path("computer-sales/", views.computer_sales, name="computer_sales"),
