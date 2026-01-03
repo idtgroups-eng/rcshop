@@ -363,6 +363,13 @@ def generate_invoice_pdf(order):
     buffer.seek(0)
     return buffer
 
+from decimal import Decimal
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.conf import settings
+from .models import Order, OrderItem
+from .utils import generate_invoice_pdf, send_invoice_mail
+
 def cod_details(request):
     data = request.session.get("checkout_data")
     if not data:
@@ -377,17 +384,42 @@ def cod_details(request):
             email=data.get("email", ""),
             mobile=data.get("mobile", ""),
             address=f"{data.get('address')}, {data.get('city')} - {data.get('pincode')}",
-            items=data.get("items", []),
             subtotal=Decimal(data.get("subtotal", "0")),
             total_amount=Decimal(data.get("total", "0")),
             payment_method="COD",
             status="Placed",
         )
 
-        # ---------- SEND ORDER EMAILS (PDF + CUSTOMER + ADMIN) ----------
-        send_order_emails(order, settings.ADMIN_EMAIL)
+        # ---------- SAVE ORDER ITEMS ----------
+        for item in data.get("items", []):
+            OrderItem.objects.create(
+                order=order,
+                product_name=item["name"],
+                price=Decimal(item["price"]),
+                quantity=item["qty"]
+            )
 
-        # ---------- CLEAN SESSION ----------
+        # ---------- GENERATE INVOICE PDF ----------
+        items = OrderItem.objects.filter(order=order)
+        pdf_path = generate_invoice_pdf(order, items)
+
+        # ---------- SEND EMAIL TO CUSTOMER ----------
+        send_invoice_mail(
+            subject="Your RCShop Invoice",
+            body=f"Hello {order.name},\n\nThank you for shopping with RCShop.\nYour invoice is attached.",
+            to=[order.email],
+            pdf_path=pdf_path
+        )
+
+        # ---------- SEND EMAIL TO ADMIN ----------
+        send_invoice_mail(
+            subject=f"New Order Invoice #{order.id}",
+            body="New order received. Invoice PDF attached.",
+            to=[settings.ADMIN_EMAIL],
+            pdf_path=pdf_path
+        )
+
+        # ---------- CLEAR SESSION ----------
         request.session.pop("checkout_data", None)
 
         return redirect(reverse("thankyou") + f"?order_id={order.id}")

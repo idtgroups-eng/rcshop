@@ -199,3 +199,36 @@ def send_whatsapp(phone, message):
         requests.get(url, timeout=8)
     except Exception as e:
         print("❌ WhatsApp error:", e)
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table
+from reportlab.lib.styles import getSampleStyleSheet
+import os
+from django.conf import settings
+
+def generate_invoice_pdf(order, items):
+    file_path = os.path.join(settings.MEDIA_ROOT, f"invoice_{order.id}.pdf")
+    doc = SimpleDocTemplate(file_path, pagesize=A4)
+    styles = getSampleStyleSheet()
+
+    data = [["Product", "Qty", "Price"]]
+    for i in items:
+        data.append([i.product.name, i.quantity, f"₹{i.price}"])
+
+    doc.build([
+        Paragraph("<b>RCShop Invoice</b>", styles["Title"]),
+        Spacer(1,12),
+        Paragraph(f"Order ID: {order.id}", styles["BodyText"]),
+        Paragraph(f"Customer: {order.name}", styles["BodyText"]),
+        Spacer(1,12),
+        Table(data),
+        Spacer(1,12),
+        Paragraph(f"Total: ₹{order.total}", styles["BodyText"])
+    ])
+
+    return file_path
+from django.core.mail import EmailMessage
+
+def send_invoice_mail(subject, body, to, pdf_path):
+    mail = EmailMessage(subject, body, settings.EMAIL_HOST_USER, to)
+    mail.attach_file(pdf_path)
+    mail.send()
