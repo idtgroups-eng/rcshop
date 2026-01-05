@@ -184,15 +184,19 @@ def create_razorpay_order(request):
     if not data:
         return JsonResponse({"error": "No checkout session"})
 
-    amount = int(Decimal(data["total"]) * 100)
+    # Amount in paise (safe decimal conversion)
+    amount = int(Decimal(str(data["total"])) * 100)
 
-    order = client.order.create({
+    rp_order = client.order.create({
         "amount": amount,
         "currency": "INR",
         "payment_capture": 1
     })
 
-    return JsonResponse(order)
+    return JsonResponse({
+        "order_id": rp_order["id"],
+        "amount": amount
+    })
 
 
 # =========================
