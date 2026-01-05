@@ -10,7 +10,6 @@ from django.http import HttpResponse
 
 from main import views
 from main.sitemaps import StaticViewSitemap
-from main.views import upload_payment_proof, payment_pending, verify_payment
 
 
 # ================= TEMP LIVE ADMIN CREATOR =================
@@ -42,7 +41,7 @@ urlpatterns = [
     path("return-request/", views.return_request, name="return_request"),
     path("website-policy/", views.website_policy, name="website_policy"),
 
-    # ================= LIVE ADMIN CREATOR (TEMP) =================
+    # ================= LIVE ADMIN CREATOR =================
     path("create-live-admin/", create_live_admin),
 
     # ================= SERVICES =================
@@ -61,31 +60,17 @@ urlpatterns = [
     path("checkout/", views.checkout, name="checkout"),
 
     # ================= PAYMENT FLOW =================
-    path("upload-proof/", upload_payment_proof, name="upload_payment_proof"),
-    path("payment-pending/", payment_pending, name="payment_pending"),
-    path("verify-payment/<int:id>/", verify_payment, name="verify_payment"),
-
-    # ================= PAYMENT =================
     path("payment/", views.payment, name="payment"),
-    path("payment/upi/", views.payment_upi, name="payment_upi"),
-    path("upi-verify/", views.upi_verify, name="upi_verify"),
-    path("payment/online/", views.payment_online, name="payment_online"),
+    path("create-order/", views.create_razorpay_order, name="create_razorpay_order"),
+    path("payment-success/", views.razorpay_success, name="razorpay_success"),
     path("payment/cod/", views.cod_details, name="cod_details"),
 
     # ================= ORDER SUCCESS =================
     path("thankyou/", views.thankyou, name="thankyou"),
-    path("invoice/", views.invoice, name="invoice"),
 
     # ================= USER ACCOUNT =================
     path("register/", views.register, name="register"),
-    path(
-        "login/",
-        auth_views.LoginView.as_view(
-            template_name="login.html",
-            redirect_authenticated_user=True
-        ),
-        name="login"
-    ),
+    path("login/", auth_views.LoginView.as_view(template_name="login.html", redirect_authenticated_user=True), name="login"),
     path("logout/", views.logout_user, name="logout"),
     path("logout-success/", views.logout_page, name="logout_page"),
     path("account/", views.my_account, name="my_account"),
@@ -100,23 +85,13 @@ urlpatterns = [
     path("api/checkout/", views.api_checkout, name="api_checkout"),
 
     # ================= GOOGLE VERIFY =================
-    path(
-        "googlea56d4978a897b47.html",
-        TemplateView.as_view(template_name="googlea56d4978a897b47.html"),
-        name="google_verify"
-    ),
+    path("googlea56d4978a897b47.html", TemplateView.as_view(template_name="googlea56d4978a897b47.html")),
 ]
 
 # ================= SITEMAP =================
 sitemaps = {"static": StaticViewSitemap}
-
 urlpatterns += [
-    path(
-        "sitemap.xml",
-        sitemap,
-        {"sitemaps": sitemaps},
-        name="django.contrib.sitemaps.views.sitemap",
-    ),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
 ]
 
 # ================= STATIC & MEDIA =================
@@ -124,13 +99,8 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-from django.contrib.auth import views as auth_views
-
+# ================= PASSWORD RESET =================
 urlpatterns += [
-    path("login/", auth_views.LoginView.as_view(template_name="login.html"), name="login"),
-    path("logout/", auth_views.LogoutView.as_view(next_page="home"), name="logout"),
-
-    # Forgot password system
     path("password-reset/", auth_views.PasswordResetView.as_view(template_name="password_reset.html"), name="password_reset"),
     path("password-reset/done/", auth_views.PasswordResetDoneView.as_view(template_name="password_reset_done.html"), name="password_reset_done"),
     path("reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_confirm.html"), name="password_reset_confirm"),

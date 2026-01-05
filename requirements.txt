@@ -40,3 +40,6 @@ urllib3==2.6.2
 webencodings==0.5.1
 whitenoise==6.11.0
 xhtml2pdf==0.2.17
+
+# 🔥 Razorpay Payment Gateway
+razorpay==1.4.2

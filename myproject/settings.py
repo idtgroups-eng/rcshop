@@ -10,8 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ==============================
 # SECURITY
 # ==============================
-SECRET_KEY = 'django-insecure-4(o0bfmd2bvp$(72tnasld&x&0^&gay2@70jr4q$*gvrzaggg&'
-import os
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-local-dev-only")
 
 # ==============================
 # DEBUG MODE (LOCAL + RENDER)
@@ -20,12 +19,11 @@ DEBUG = os.environ.get("DEBUG", "True") == "True"
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
+    "localhost",
     "rcshop.co.in",
     "www.rcshop.co.in",
     "rcshop-1.onrender.com",
 ]
-
-
 
 # ==============================
 # APPLICATIONS
@@ -38,27 +36,22 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # ✅ REQUIRED FOR SITEMAP
+    # Required for sitemap
     'django.contrib.sites',
     'django.contrib.sitemaps',
 
-    # YOUR APP
+    # Your App
     'main',
 ]
 
-# ✅ REQUIRED FOR django.contrib.sites
 SITE_ID = 1
-
 
 # ==============================
 # MIDDLEWARE
 # ==============================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
-    # ✅ WhiteNoise (STATIC FILES FIX)
     'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -66,7 +59,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 
 # ==============================
 # URL & WSGI
@@ -90,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
-
 # ==============================
 # DATABASE
 # ==============================
@@ -101,7 +92,6 @@ DATABASES = {
     }
 }
 
-
 # ==============================
 # PASSWORD VALIDATION
 # ==============================
@@ -111,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
-
 
 # ==============================
 # INTERNATIONALIZATION
@@ -125,25 +114,17 @@ USE_TZ = True
 # STATIC FILES (RENDER + WHITENOISE)
 # ==============================
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
-
+STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# WhiteNoise production static handler
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 
 # ==============================
 # DEFAULT PRIMARY KEY
 # ==============================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 # ==============================
-# CSRF (IMPORTANT FOR LIVE FORMS)
+# CSRF
 # ==============================
 CSRF_TRUSTED_ORIGINS = [
     'https://rcshop.co.in',
@@ -152,43 +133,43 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
 ]
 
-
-
 # ==============================
-# EMAIL CONFIGURATION (BREVO API ONLY)
+# EMAIL CONFIG (BREVO)
 # ==============================
+BREVO_API_KEY = os.environ.get("BREVO_API_KEY", "")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@rcstore.in")
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "idtgroups@gmail.com")
 
-BREVO_API_KEY = os.environ.get("BREVO_API_KEY")
-
-DEFAULT_FROM_EMAIL = os.environ.get(
-    "DEFAULT_FROM_EMAIL",
-    "noreply@rcstore.in"
-)
-
-ADMIN_EMAIL = os.environ.get(
-    "ADMIN_EMAIL",
-    "idtgroups@gmail.com"
-)
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp-relay.brevo.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_PASSWORD = BREVO_API_KEY
 
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
+# ==============================
+# MEDIA
+# ==============================
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-FAST2SMS_API_KEY = "PASTE_YOUR_FAST2SMS_KEY"
+
+# ==============================
+# SMS / WHATSAPP
+# ==============================
+FAST2SMS_API_KEY = os.environ.get("FAST2SMS_API_KEY", "")
 WHATSAPP_PHONE = "919625252254"
 
-
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-
-EMAIL_HOST = "smtp-relay.brevo.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
-EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = BREVO_API_KEY
+# ==============================
+# RAZORPAY (LIVE)
+# ==============================
+RAZORPAY_KEY_ID = os.environ.get("rzp_live_S09PoHkF4Qkj8R")
+RAZORPAY_KEY_SECRET = os.environ.get("K0EwnmRnVyEuMm36uAWzu0LT")

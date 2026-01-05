@@ -4,8 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UPI Payment - RCShop</title>
+<title>Secure Payment - RCShop</title>
 <link rel="stylesheet" href="{% static 'css/payment-upi.css' %}">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <style>
 .proof-upload-box{
   margin-top:25px;
@@ -27,6 +29,7 @@
 }
 </style>
 </head>
+
 <body>
 
 <h2 class="title">Complete Your Payment</h2>
@@ -34,52 +37,54 @@
 <div class="main-box">
 
   <div class="qr-wrapper">
-    <img src="data:image/png;base64,{{ qr_code }}" class="qr-img" width="260">
-    <div class="upi-id">UPI ID: <b>{{ upi_id }}</b></div>
+    <img src="{% static 'images/razorpay.png' %}" class="qr-img" width="220">
 
     <div class="amount-box">
       ₹{{ amount }}
-      <small>Pay exactly this amount</small>
+      <small>Secure Razorpay Gateway</small>
     </div>
 
-    <!-- AUTO OPEN ALL UPI APPS -->
-    <a id="upiIntentBtn" class="upi-btn">
-      Pay via PhonePe / Google Pay / Paytm
-    </a>
-  </div>
-
-  <div class="timer">
-    Checking payment in <span id="countdown">05:00</span>
+    <button id="payBtn" class="upi-btn">
+      Pay via UPI / Card / NetBanking
+    </button>
   </div>
 
   <div class="instructions">
-    <p>✔ Click above button or scan QR</p>
-    <p>✔ Complete payment in your UPI App</p>
-    <p>✔ Upload screenshot below after payment</p>
-  </div>
-
-  <!-- ================= UPLOAD PAYMENT PROOF ================= -->
-  <div class="proof-upload-box">
-    <h3>Upload Payment Screenshot</h3>
-    <form method="POST" enctype="multipart/form-data" action="{% url 'upload_payment_proof' %}">
-      {% csrf_token %}
-      <input type="file" name="screenshot" required>
-      <button type="submit" class="upload-btn">
-        Submit Payment Proof
-      </button>
-    </form>
-  </div>
-
-  <div id="processing" style="display:none;text-align:center;margin-top:12px;">
-    <div class="loader"></div>
-    <div style="margin-top:6px;">Verifying your payment securely...</div>
+    <p>✔ Instant automatic payment</p>
+    <p>✔ Auto success confirmation</p>
+    <p>✔ No screenshot upload needed</p>
   </div>
 
 </div>
 
 <script>
-const upiURL = "{{ upi_url }}";
-document.getElementById("upiIntentBtn").href = upiURL;
+document.getElementById("payBtn").onclick = function(){
+
+fetch("/create-order/",{
+method:"POST",
+headers:{ "X-CSRFToken":"{{ csrf_token }}" },
+body:new URLSearchParams({amount:"{{ amount }}"})
+})
+.then(res=>res.json())
+.then(data=>{
+
+var options = {
+  "key":"{{ RAZORPAY_KEY_ID }}",
+  "amount":data.amount,
+  "currency":"INR",
+  "name":"RCShop",
+  "description":"Order Payment",
+  "order_id":data.id,
+  "handler": function (response){
+     window.location.href="/payment-success/?payment_id="+response.razorpay_payment_id;
+  },
+  "theme":{"color":"#00f0ff"}
+};
+
+var rzp = new Razorpay(options);
+rzp.open();
+});
+}
 </script>
 
 </body>
