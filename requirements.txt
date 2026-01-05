@@ -43,3 +43,5 @@ xhtml2pdf==0.2.17
 
 # 🔥 Razorpay Payment Gateway
 razorpay==1.4.2
+setuptools
+
