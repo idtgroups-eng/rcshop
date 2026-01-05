@@ -36,14 +36,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Required for sitemap
+    # Sitemap / SEO
     'django.contrib.sites',
     'django.contrib.sitemaps',
 
-    # Your App
+    # Your main app
     'main',
 ]
 
+# Django Sites Framework
 SITE_ID = 1
 
 # ==============================
@@ -171,5 +172,6 @@ WHATSAPP_PHONE = "919625252254"
 # ==============================
 # RAZORPAY (LIVE)
 # ==============================
-RAZORPAY_KEY_ID = os.environ.get("rzp_live_S09PoHkF4Qkj8R")
-RAZORPAY_KEY_SECRET = os.environ.get("K0EwnmRnVyEuMm36uAWzu0LT")
+RAZORPAY_KEY_ID = os.environ.get("RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET = os.environ.get("RAZORPAY_KEY_SECRET")
+

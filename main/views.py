@@ -176,7 +176,7 @@ def payment(request):
 
 
 # =========================
-# RAZORPAY ORDER CREATE
+# RAZORPAY ORDER CREATE (FINAL)
 # =========================
 @require_POST
 def create_razorpay_order(request):
@@ -184,20 +184,29 @@ def create_razorpay_order(request):
     if not data:
         return JsonResponse({"error": "No checkout session"})
 
-    # Amount in paise (safe decimal conversion)
+    # Amount in paise
     amount = int(Decimal(str(data["total"])) * 100)
 
     rp_order = client.order.create({
         "amount": amount,
         "currency": "INR",
+        "receipt": "RC-" + uuid.uuid4().hex[:10],
+        "notes": {
+            "name": data.get("name"),
+            "email": data.get("email"),
+            "mobile": data.get("mobile"),
+        },
         "payment_capture": 1
     })
 
+    # Save order id for verification later
+    request.session["razorpay_order_id"] = rp_order["id"]
+
     return JsonResponse({
         "order_id": rp_order["id"],
-        "amount": amount
+        "amount": amount,
+        "currency": "INR"
     })
-
 
 # =========================
 # RAZORPAY PAYMENT SUCCESS
