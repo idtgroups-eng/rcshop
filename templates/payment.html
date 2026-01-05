@@ -9,69 +9,61 @@
 </head>
 <body>
 
-  <div class="page-wrap">
-    <!-- PREMIUM HEADER WITH BREADCRUMB -->
-    <div class="header">
-      <div class="breadcrumb">
-        🛒 Cart › Address › <span class="active-step">Payment</span>
-      </div>
-
-      <div class="center-brand">
-        <div class="header-title">RCStore</div>
-        <div class="tagline">The Trusted Tech Store</div>
-      </div>
-
-      <div class="secure-right">Secure 🔒</div>
+<div class="page-wrap">
+  <!-- PREMIUM HEADER WITH BREADCRUMB -->
+  <div class="header">
+    <div class="breadcrumb">
+      🛒 Cart › Address › <span class="active-step">Payment</span>
     </div>
 
-    <h2>Select Payment Method</h2>
+    <div class="center-brand">
+      <div class="header-title">RCStore</div>
+      <div class="tagline">The Trusted Tech Store</div>
+    </div>
 
-<div class="options">
-
-  <!-- 📱 UPI PAYMENT -->
-  <div class="card" onclick="window.location.href='{% url 'payment_upi' %}'">
-    <div class="icon">📱</div>
-    <h3>UPI Payment</h3>
-    <p>Pay using PhonePe, Google Pay, Paytm, BHIM</p>
+    <div class="secure-right">Secure 🔒</div>
   </div>
 
-  <!-- 🚚 CASH ON DELIVERY (UPDATED FLOW) -->
-  <div class="card" onclick="window.location.href='{% url 'cod_details' %}'">
-    <div class="icon">🚚</div>
-    <h3>Cash on Delivery</h3>
-    <p>Pay when product is delivered</p>
+  <h2>Select Payment Method</h2>
+
+  <div class="options">
+
+    <!-- 📱 UPI / CARD / NETBANKING (RAZORPAY) -->
+    <div class="card" onclick="window.location.href='{% url 'create_razorpay_order' %}'">
+      <div class="icon">📱</div>
+      <h3>UPI / Card / NetBanking</h3>
+      <p>Pay using PhonePe, Google Pay, Paytm, BHIM, Cards & Banks</p>
+    </div>
+
+    <!-- 🚚 CASH ON DELIVERY -->
+    <div class="card" onclick="window.location.href='{% url 'cod_details' %}'">
+      <div class="icon">🚚</div>
+      <h3>Cash on Delivery</h3>
+      <p>Pay when product is delivered</p>
+    </div>
+
   </div>
 
-  <!-- 💳 ONLINE PAYMENT -->
-  <div class="card" onclick="window.location.href='{% url 'payment_online' %}'">
-    <div class="icon">💳</div>
-    <h3>Online Payment</h3>
-    <p>Debit Card, Credit Card, NetBanking</p>
-  </div>
+  <div class="back-btn" onclick="history.back()">← Back</div>
 
-</div>
+  <!-- ===== PREMIUM PAYMENT FOOTER ===== -->
+  <footer class="pay-footer">
+    <div class="pay-footer-box">
+      <h4>Legal</h4>
+      <a href="{% url 'website_policy' %}">Website Policy</a>
+      <a href="{% url 'return_policy' %}">Return & Refund Policy</a>
+      <a href="{% url 'return_request' %}">Return Request</a>
+    </div>
 
-<div class="back-btn" onclick="history.back()">← Back</div>
-
-<!-- ===== PREMIUM PAYMENT FOOTER ===== -->
-<footer class="pay-footer">
-  <div class="pay-footer-box">
-    <h4>Legal</h4>
-    <a href="{% url 'website_policy' %}">Website Policy</a>
-    <a href="{% url 'return_policy' %}">Return & Refund Policy</a>
-    <a href="{% url 'return_request' %}">Return Request</a>
-  </div>
-
-  <div class="pay-footer-box">
-    <h4>Need Help?</h4>
-    <p>📞 96252 52254</p>
-    <p>📧 support@rcshop.co.in</p>
-  </div>
-</footer>
+    <div class="pay-footer-box">
+      <h4>Need Help?</h4>
+      <p>📞 96252 52254</p>
+      <p>📧 support@rcshop.co.in</p>
+    </div>
+  </footer>
 
 </div>
 
 <script src="{% static 'js/payment.js' %}"></script>
 </body>
 </html>
-
