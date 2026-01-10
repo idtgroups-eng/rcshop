@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 User = get_user_model()
-
 
 # =========================
 # ORDERS
@@ -36,7 +36,13 @@ class Order(models.Model):
     payment_method = models.CharField(max_length=30, default="COD")
     status = models.CharField(max_length=20, choices=ORDER_STATUS, default="Placed")
 
-    # 🚚 COURIER TRACKING
+    # Razorpay Fields (🔥 MAIN FIX)
+    razorpay_order_id = models.CharField(max_length=120, blank=True, null=True)
+    razorpay_payment_id = models.CharField(max_length=120, blank=True, null=True)
+    razorpay_signature = models.CharField(max_length=255, blank=True, null=True)
+    is_paid = models.BooleanField(default=False)
+
+    # Courier Tracking
     courier_name = models.CharField(max_length=100, blank=True)
     tracking_id = models.CharField(max_length=100, blank=True)
     tracking_link = models.URLField(blank=True)
@@ -45,6 +51,7 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.id} - {self.name} ({self.status})"
+
 
 # =========================
 # USER PROFILE
@@ -83,9 +90,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
-
-from django.db import models
 
 
 # =========================
@@ -135,9 +139,13 @@ class PaymentProof(models.Model):
     verified   = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
-def __str__(self):
-    return self.name
+    def __str__(self):
+        return self.name
 
+
+# =========================
+# ORDER ITEMS
+# =========================
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="order_items")
     product_name = models.CharField(max_length=255)
@@ -146,3 +154,22 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return self.product_name
+
+
+# =========================
+# CUSTOMER
+# =========================
+class Customer(models.Model):
+    phone = models.CharField(max_length=15, unique=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField(blank=True, null=True)
+
+    address = models.TextField()
+    city = models.CharField(max_length=50)
+    pincode = models.CharField(max_length=10)
+    landmark = models.CharField(max_length=100, blank=True, null=True)
+
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.phone

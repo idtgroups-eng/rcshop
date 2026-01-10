@@ -232,3 +232,74 @@ def send_invoice_mail(subject, body, to, pdf_path):
     mail = EmailMessage(subject, body, settings.EMAIL_HOST_USER, to)
     mail.attach_file(pdf_path)
     mail.send()
+import requests
+
+def send_sms_otp(phone, otp):
+    url = "https://www.fast2sms.com/dev/bulkV2"
+
+    payload = {
+        "route": "otp",
+        "variables_values": otp,
+        "numbers": phone,
+    }
+
+    headers = {
+        "authorization": "YOUR_FAST2SMS_API_KEY",
+        "Content-Type": "application/json"
+    }
+
+    requests.post(url, json=payload, headers=headers)
+import requests
+
+def send_whatsapp_otp(phone, otp):
+    url = "https://live-mt-server.wati.io/XXXXXXXX/api/v1/sendTemplateMessage?whatsappNumber=91" + phone
+
+    payload = {
+        "template_name": "rcshop_otp",
+        "broadcast_name": "rcshop",
+        "parameters": [
+            {"name": "otp", "value": otp}
+        ]
+    }
+
+    headers = {
+        "Authorization": "Bearer YOUR_WATI_TOKEN",
+        "Content-Type": "application/json"
+    }
+
+    requests.post(url, json=payload, headers=headers)
+import requests
+
+def send_sms_otp(phone, otp):
+    url = "https://www.fast2sms.com/dev/bulkV2"
+
+    payload = {
+        "route": "otp",
+        "variables_values": otp,
+        "numbers": phone,
+    }
+
+    headers = {
+        "authorization": "PASTE_YOUR_FAST2SMS_API_KEY_HERE",
+        "Content-Type": "application/json"
+    }
+
+    try:
+        requests.post(url, json=payload, headers=headers, timeout=10)
+    except:
+        pass
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+
+def send_invoice_mail(order):
+    subject = f"RCShop Invoice #{order.id}"
+    html = render_to_string("invoice_email.html", {"order": order})
+
+    email = EmailMessage(
+        subject,
+        html,
+        settings.DEFAULT_FROM_EMAIL,
+        [order.email]
+    )
+    email.content_subtype = "html"
+    email.send()

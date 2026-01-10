@@ -2,19 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Select Payment Method</title>
-  <link rel="stylesheet" href="{% static 'css/payment.css' %}">
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select Payment Method</title>
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
 
 <div class="page-wrap">
   <div class="header">
-    <div class="breadcrumb">
-      🛒 Cart › Address › <span class="active-step">Payment</span>
-    </div>
+    <div class="breadcrumb">🛒 Cart › Address › <span class="active-step">Payment</span></div>
     <div class="center-brand">
       <div class="header-title">RCStore</div>
       <div class="tagline">The Trusted Tech Store</div>
@@ -22,96 +20,70 @@
     <div class="secure-right">Secure 🔒</div>
   </div>
 
-  <h2>Select Payment Method</h2>
+<h2>Select Payment Method</h2>
 
-  <div class="options">
+<div class="options">
 
-    <!-- 🔥 RAZORPAY LIVE PAYMENT -->
- <div class="card" id="payBtn">
-      <div class="icon">📱</div>
-      <h3>UPI / Card / NetBanking</h3>
-      <p>PhonePe, Google Pay, Paytm, BHIM, Cards & Banks</p>
-    </div>
-
-    <!-- 🚚 COD -->
-    <div class="card" onclick="window.location.href='{% url 'cod_details' %}'">
-      <div class="icon">🚚</div>
-      <h3>Cash on Delivery</h3>
-      <p>Pay when product is delivered</p>
-    </div>
-  </div>
-
-  <div class="back-btn" onclick="history.back()">← Back</div>
-
-  <footer class="pay-footer">
-    <div class="pay-footer-box">
-      <h4>Legal</h4>
-      <a href="{% url 'website_policy' %}">Website Policy</a>
-      <a href="{% url 'return_policy' %}">Return & Refund Policy</a>
-      <a href="{% url 'return_request' %}">Return Request</a>
-    </div>
-    <div class="pay-footer-box">
-      <h4>Need Help?</h4>
-      <p>📞 96252 52254</p>
-      <p>📧 support@rcshop.co.in</p>
-    </div>
-  </footer>
+<div class="card" id="payBtn">
+  <div class="icon">📱</div>
+  <h3>UPI / Card / NetBanking</h3>
+  <p>PhonePe, GPay, Paytm, Cards & Banks</p>
 </div>
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<div class="card" onclick="window.location.href='{% url 'cod_details' %}'">
+  <div class="icon">🚚</div>
+  <h3>Cash on Delivery</h3>
+  <p>Pay when delivered</p>
+</div>
+
+</div>
+
+<div class="back-btn" onclick="history.back()">← Back</div>
+</div>
+
 <script>
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        document.cookie.split(';').forEach(c => {
-            c = c.trim();
-            if (c.startsWith(name + '=')) {
-                cookieValue = decodeURIComponent(c.substring(name.length + 1));
-            }
-        });
-    }
-    return cookieValue;
+function getCookie(name){
+ let v=null;
+ document.cookie.split(";").forEach(c=>{
+   c=c.trim();
+   if(c.startsWith(name+"=")) v=decodeURIComponent(c.substring(name.length+1));
+ });
+ return v;
 }
 
-document.getElementById("payBtn").addEventListener("click", function(){
+document.getElementById("payBtn").onclick = function(){
 
-    fetch("{% url 'create_razorpay_order' %}", {
-        method: "POST",
-        headers: {
-            "X-CSRFToken": getCookie("csrftoken")
-        }
-    })
-    .then(r => r.json())
-    .then(data => {
+fetch("{% url 'create_razorpay_order' %}", {
+ method:"POST",
+ headers:{ "X-CSRFToken":getCookie("csrftoken") }
+})
+.then(r=>r.json())
+.then(data=>{
 
-        if(!data.order_id){
-            alert("Payment could not start. Try again.");
-            return;
-        }
+var options = {
+ "key": data.key,
+ "amount": data.amount,
+ "currency": "INR",
+ "name": "RCShop",
+ "description": "Secure Order Payment",
+ "order_id": data.order_id,
+ "handler": function (response){
+   window.location.href = "{% url 'razorpay_success' %}?razorpay_payment_id="
+   +response.razorpay_payment_id
+   +"&razorpay_order_id="+response.razorpay_order_id
+   +"&razorpay_signature="+response.razorpay_signature;
+ },
+ "prefill": {
+   "name":"{{request.user.first_name}}",
+   "email":"{{request.user.email}}"
+ },
+ "theme":{"color":"#00f0ff"}
+};
 
-        var options = {
-            "key": "{{ RAZORPAY_KEY_ID }}",
-            "amount": data.amount,
-            "currency": "INR",
-            "name": "RCShop",
-            "description": "Order Payment",
-            "order_id": data.order_id,
-            "handler": function (response){
-                window.location.href = "{% url 'razorpay_success' %}?payment_id="+response.razorpay_payment_id;
-            },
-            "prefill": {
-                "name": "{{ request.user.first_name }}",
-                "email": "{{ request.user.email }}"
-            },
-            "theme": {"color":"#00f0ff"}
-        };
-
-        new Razorpay(options).open();
-    })
-    .catch(()=> alert("Network error. Try again."));
+new Razorpay(options).open();
 });
+}
 </script>
-
 
 </body>
 </html>

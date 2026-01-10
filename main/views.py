@@ -4,7 +4,8 @@
 import json, base64, os, uuid, qrcode
 from io import BytesIO
 from decimal import Decimal
-
+from .utils import send_sms_otp, send_whatsapp_otp
+from .utils import send_sms_otp
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
@@ -211,11 +212,17 @@ def create_razorpay_order(request):
 # =========================
 # RAZORPAY PAYMENT SUCCESS
 # =========================
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
 def razorpay_success(request):
     data = request.session.get("checkout_data")
-    pid = request.GET.get("payment_id")
 
-    if not data or not pid:
+    payment_id = request.GET.get("razorpay_payment_id")
+    order_id = request.GET.get("razorpay_order_id")
+    signature = request.GET.get("razorpay_signature")
+
+    if not data or not payment_id:
         return redirect("checkout")
 
     order = Order.objects.create(
@@ -228,9 +235,15 @@ def razorpay_success(request):
         subtotal=Decimal(data["subtotal"]),
         total_amount=Decimal(data["total"]),
         payment_method="ONLINE",
-        status="Paid",
-        razorpay_payment_id=pid
+        status="Placed",
+        razorpay_order_id=order_id,
+        razorpay_payment_id=payment_id,
+        razorpay_signature=signature,
+        is_paid=True
     )
+
+    # 🔔 SEND EMAIL
+    send_invoice_mail(order)
 
     request.session.pop("checkout_data", None)
 
@@ -410,21 +423,49 @@ def register(request):
 # API CHECKOUT (OPTIONAL)
 # =========================
 @require_POST
-def api_checkout(request):
+def create_razorpay_order(request):
+    data = request.session.get("checkout_data")
+    if not data:
+        return JsonResponse({"error": "No checkout session"})
+
+    amount = int(Decimal(str(data["total"])) * 100)
+
+    rp_order = client.order.create({
+        "amount": amount,
+        "currency": "INR",
+        "receipt": "RC-" + uuid.uuid4().hex[:10],
+        "payment_capture": 1
+    })
+
+    request.session["razorpay_order_id"] = rp_order["id"]
+
+    return JsonResponse({
+        "order_id": rp_order["id"],
+        "amount": amount,
+        "key": settings.RAZORPAY_KEY_ID
+    })
+@csrf_exempt
+def razorpay_webhook(request):
+    payload = request.body
+    signature = request.headers.get("X-Razorpay-Signature")
+
     try:
-        data = json.loads(request.body)
+        client.utility.verify_webhook_signature(
+            payload, signature, settings.RAZORPAY_WEBHOOK_SECRET
+        )
     except:
-        return HttpResponseBadRequest("Invalid JSON")
+        return HttpResponseBadRequest("Invalid Signature")
 
-    order = Order.objects.create(
-        name=data.get("name", ""),
-        email=data.get("email", ""),
-        mobile=data.get("mobile", ""),
-        address=data.get("address", ""),
-        items=data.get("items", []),
-        total_amount=Decimal(str(data.get("total", "0"))),
-        payment_method="ONLINE",
-        status="Paid"
-    )
+    data = json.loads(payload)
 
-    return JsonResponse({"success": True, "order_id": order.id})
+    if data["event"] == "payment.captured":
+        rp_order = data["payload"]["payment"]["entity"]["order_id"]
+        rp_payment = data["payload"]["payment"]["entity"]["id"]
+
+        order = Order.objects.filter(razorpay_order_id=rp_order).first()
+        if order:
+            order.is_paid = True
+            order.razorpay_payment_id = rp_payment
+            order.save()
+
+    return JsonResponse({"status": "ok"})
