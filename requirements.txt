@@ -3,3 +3,4 @@ gunicorn
 whitenoise
 razorpay
 requests
+setuptools
