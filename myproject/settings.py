@@ -16,14 +16,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-local-dev-only")
 # DEBUG MODE (LOCAL + RENDER)
 # ==============================
 DEBUG = os.environ.get("DEBUG", "True") == "True"
-
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    "rcshop.co.in",
-    "www.rcshop.co.in",
-    "rcshop-1.onrender.com",
-]
+ALLOWED_HOSTS = os.environ.get(
+    "ALLOWED_HOSTS",
+    "127.0.0.1,localhost"
+).split(",")
 
 # ==============================
 # APPLICATIONS
