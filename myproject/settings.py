@@ -118,7 +118,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+WHITENOISE_MAX_AGE = 60 * 60 * 24 * 365   # 1 year cache
 # ==============================
 # DEFAULT PRIMARY KEY
 # ==============================
