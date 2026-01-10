@@ -7,4 +7,3 @@ qrcode
 requests
 python-dotenv
 reportlab
-
