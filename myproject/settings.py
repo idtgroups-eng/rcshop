@@ -124,11 +124,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CSRF
 # ==============================
 CSRF_TRUSTED_ORIGINS = [
-    'https://rcshop.co.in',
-    'https://www.rcshop.co.in',
-    'https://rcshop-1.onrender.com',
-    'https://*.onrender.com',
+    "https://rcshop.co.in",
+    "https://www.rcshop.co.in",
+
+    # Render (old)
+    "https://rcshop-1.onrender.com",
+    "https://*.onrender.com",
+
+    # Railway (NEW)
+    "https://rcshop-1-production.up.railway.app",
+    "https://*.up.railway.app",
+    "https://*.railway.app",
 ]
+
 
 # ==============================
 # EMAIL CONFIG (BREVO)
