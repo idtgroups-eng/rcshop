@@ -1,9 +1,10 @@
 Django==4.2.10
-gunicorn
-whitenoise
 razorpay
 pillow
 qrcode
 requests
 python-dotenv
 reportlab
+gunicorn
+whitenoise
+dj-database-url
