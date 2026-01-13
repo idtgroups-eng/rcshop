@@ -63,7 +63,6 @@ urlpatterns = [
     path("payment/", views.payment, name="payment"),
     path("create-order/", views.create_razorpay_order, name="create_razorpay_order"),
     path("razorpay-success/", views.razorpay_success, name="razorpay_success"),
-    path("razorpay-webhook/", views.razorpay_webhook, name="razorpay_webhook"),
     path("payment/cod/", views.cod_details, name="cod_details"),
 
     # ================= ORDER SUCCESS =================
