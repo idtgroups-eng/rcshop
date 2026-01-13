@@ -213,49 +213,69 @@ def create_razorpay_order(request):
 # RAZORPAY PAYMENT SUCCESS
 # =========================
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import redirect, render, get_object_or_404
+from django.urls import reverse
+from django.conf import settings
+from decimal import Decimal
+import razorpay
 
 @csrf_exempt
 def razorpay_success(request):
-    data = request.session.get("checkout_data")
 
     payment_id = request.GET.get("razorpay_payment_id")
     order_id = request.GET.get("razorpay_order_id")
     signature = request.GET.get("razorpay_signature")
 
-    if not data or not payment_id:
+    if not payment_id or not order_id:
         return redirect("checkout")
 
-    order = Order.objects.create(
-        user=request.user if request.user.is_authenticated else None,
-        name=data["name"],
-        email=data["email"],
-        mobile=data["mobile"],
-        address=data["address"],
-        items=data["items"],
-        subtotal=Decimal(data["subtotal"]),
-        total_amount=Decimal(data["total"]),
-        payment_method="ONLINE",
-        status="Placed",
-        razorpay_order_id=order_id,
-        razorpay_payment_id=payment_id,
-        razorpay_signature=signature,
-        is_paid=True
-    )
+    try:
+        # 🔐 VERIFY SIGNATURE
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        client.utility.verify_payment_signature({
+            'razorpay_order_id': order_id,
+            'razorpay_payment_id': payment_id,
+            'razorpay_signature': signature
+        })
 
-    # 🔔 SEND EMAIL
-    send_invoice_mail(order)
+        data = request.session.get("checkout_data")
 
-    request.session.pop("checkout_data", None)
+        if not data:
+            return redirect("checkout")
 
-    return redirect(reverse("thankyou") + f"?order_id={order.id}")
+        order = Order.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            name=data.get("name"),
+            email=data.get("email"),
+            mobile=data.get("mobile"),
+            address=data.get("address"),
+            items=data.get("items"),
+            subtotal=Decimal(data.get("subtotal")),
+            total_amount=Decimal(data.get("total")),
+            payment_method="ONLINE",
+            status="Placed",
+            razorpay_order_id=order_id,
+            razorpay_payment_id=payment_id,
+            razorpay_signature=signature,
+            is_paid=True
+        )
+
+        send_invoice_mail(order)
+        request.session.pop("checkout_data", None)
+
+        return redirect(reverse("thankyou") + f"?order_id={order.id}")
+
+    except Exception as e:
+        print("RAZORPAY ERROR:", e)
+        return redirect("checkout")
 
 # =========================
 # THANK YOU
 # =========================
 def thankyou(request):
-    order = get_object_or_404(Order, id=request.GET.get("order_id"))
+    order_id = request.GET.get("order_id")
+    order = get_object_or_404(Order, id=order_id)
     return render(request, "thankyou.html", {"order": order})
-
 
 # =========================
 # GENERATE INVOICE PDF
