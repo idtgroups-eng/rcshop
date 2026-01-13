@@ -80,10 +80,6 @@ urlpatterns = [
     # ================= ADMIN DASHBOARD =================
     path("dashboard/orders/", views.admin_orders, name="admin_orders"),
     path("dashboard/order/<int:order_id>/status/", views.update_order_status, name="update_order_status"),
-
-    # ================= API =================
-    path("api/checkout/", views.api_checkout, name="api_checkout"),
-
     # ================= GOOGLE VERIFY =================
     path("googlea56d4978a897b47.html", TemplateView.as_view(template_name="googlea56d4978a897b47.html")),
 ]
