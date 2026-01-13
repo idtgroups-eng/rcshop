@@ -36,7 +36,8 @@ class Order(models.Model):
     payment_method = models.CharField(max_length=30, default="COD")
     status = models.CharField(max_length=20, choices=ORDER_STATUS, default="Placed")
 
-    # Razorpay Fields (🔥 MAIN FIX)
+    # Razorpay Fields (🔥 FINAL FIX)
+    temp_order_id = models.CharField(max_length=120, blank=True, null=True)
     razorpay_order_id = models.CharField(max_length=120, blank=True, null=True)
     razorpay_payment_id = models.CharField(max_length=120, blank=True, null=True)
     razorpay_signature = models.CharField(max_length=255, blank=True, null=True)
@@ -51,7 +52,6 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.id} - {self.name} ({self.status})"
-
 
 # =========================
 # USER PROFILE

@@ -1,14 +1,15 @@
 # =========================
 # IMPORTS
 # =========================
+
 import json, base64, os, uuid, qrcode
 from io import BytesIO
 from decimal import Decimal
-from .utils import send_sms_otp, send_whatsapp_otp
-from .utils import send_sms_otp
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt   # 🔥 MUST
 from django.conf import settings
 from django.urls import reverse
 from django.db.models import Q
@@ -25,15 +26,19 @@ from .models import (
     Product, Order, OrderItem, SupportTicket,
     UserProfile, PaymentProof
 )
+
 from .utils import (
     send_support_ticket_email,
     send_brevo_email,
-    send_invoice_mail
+    send_invoice_mail,
+    send_sms_otp,
+    send_whatsapp_otp
 )
 
 import razorpay
-client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
+# Razorpay Client
+client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
 # =========================
 # BASIC PAGES
@@ -212,13 +217,6 @@ def create_razorpay_order(request):
 # =========================
 # RAZORPAY PAYMENT SUCCESS
 # =========================
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import redirect, render, get_object_or_404
-from django.urls import reverse
-from django.conf import settings
-from decimal import Decimal
-import razorpay
-
 @csrf_exempt
 def razorpay_success(request):
 
@@ -230,7 +228,6 @@ def razorpay_success(request):
         return redirect("checkout")
 
     try:
-        # 🔐 VERIFY SIGNATURE
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         client.utility.verify_payment_signature({
             'razorpay_order_id': order_id,
@@ -238,30 +235,16 @@ def razorpay_success(request):
             'razorpay_signature': signature
         })
 
-        data = request.session.get("checkout_data")
+        # 🔥 FETCH ORDER CREATED BEFORE PAYMENT
+        order = Order.objects.get(temp_order_id=order_id)
 
-        if not data:
-            return redirect("checkout")
-
-        order = Order.objects.create(
-            user=request.user if request.user.is_authenticated else None,
-            name=data.get("name"),
-            email=data.get("email"),
-            mobile=data.get("mobile"),
-            address=data.get("address"),
-            items=data.get("items"),
-            subtotal=Decimal(data.get("subtotal")),
-            total_amount=Decimal(data.get("total")),
-            payment_method="ONLINE",
-            status="Placed",
-            razorpay_order_id=order_id,
-            razorpay_payment_id=payment_id,
-            razorpay_signature=signature,
-            is_paid=True
-        )
+        order.razorpay_payment_id = payment_id
+        order.razorpay_signature = signature
+        order.is_paid = True
+        order.status = "Placed"
+        order.save()
 
         send_invoice_mail(order)
-        request.session.pop("checkout_data", None)
 
         return redirect(reverse("thankyou") + f"?order_id={order.id}")
 
