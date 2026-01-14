@@ -7,4 +7,5 @@ requests
 python-dotenv
 pillow
 qrcode
-reportlab==3.6.13
+reportlab
+xhtml2pdf

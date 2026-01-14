@@ -5,7 +5,10 @@ nixPkgs = ["python311"]
 cmds = ["pip install -r requirements.txt"]
 
 [phases.build]
-cmds = ["python manage.py collectstatic --noinput"]
+cmds = [
+  "python manage.py migrate",
+  "python manage.py collectstatic --noinput"
+]
 
 [phases.start]
-cmd = "gunicorn myproject.wsgi"
+cmd = "gunicorn myproject.wsgi:application --bind 0.0.0.0:$PORT"
