@@ -1,5 +1,11 @@
 [phases.setup]
-nixPkgs = ["python311"]
+nixPkgs = [
+  "python310",
+  "libjpeg",
+  "freetype",
+  "zlib",
+  "libpng"
+]
 
 [phases.install]
 cmds = ["pip install -r requirements.txt"]
