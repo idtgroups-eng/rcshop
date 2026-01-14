@@ -3,27 +3,42 @@ import requests
 from io import BytesIO
 from django.conf import settings
 from django.template.loader import render_to_string
-
-try:
-    from xhtml2pdf import pisa
-except:
-    pisa = None
+from fpdf import FPDF
 
 
 BREVO_API_KEY = settings.BREVO_API_KEY
 BREVO_FROM_EMAIL = getattr(settings, "DEFAULT_FROM_EMAIL", "support@rcshop.co.in")
 
 
-def render_to_pdf_bytes(template_name, context=None):
-    if not pisa:
-        return None
+# ===============================
+# PDF INVOICE GENERATOR (Railway Safe)
+# ===============================
+def generate_invoice_pdf(order):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.set_font("Arial", size=12)
 
-    html = render_to_string(template_name, context or {})
-    result = BytesIO()
-    pisa.CreatePDF(html, dest=result)
-    return result.getvalue()
+    pdf.cell(0, 10, "RCShop Invoice", ln=True, align="C")
+    pdf.ln(5)
+    pdf.cell(0, 8, f"Order ID: {order.id}", ln=True)
+    pdf.cell(0, 8, f"Name: {order.name}", ln=True)
+    pdf.cell(0, 8, f"Phone: {order.mobile}", ln=True)
+    pdf.cell(0, 8, f"Email: {order.email}", ln=True)
+    pdf.cell(0, 8, f"Total Amount: ₹{order.total_amount}", ln=True)
+    pdf.ln(8)
+
+    pdf.multi_cell(0, 8, "Thank you for shopping with RCShop.\nYour order has been successfully placed.")
+
+    buffer = BytesIO()
+    pdf.output(buffer)
+    buffer.seek(0)
+    return buffer.read()
 
 
+# ===============================
+# BREVO EMAIL SENDER
+# ===============================
 def send_brevo_email(subject, html_content, to_emails, attachments=None):
 
     if not BREVO_API_KEY:
@@ -49,20 +64,22 @@ def send_brevo_email(subject, html_content, to_emails, attachments=None):
     requests.post(url, json=payload, headers=headers, timeout=10)
 
 
+# ===============================
+# ORDER INVOICE MAIL
+# ===============================
 def send_invoice_mail(order):
 
-    pdf = render_to_pdf_bytes("emails/invoice_pdf.html", {"order": order})
-    attachments = []
+    pdf_bytes = generate_invoice_pdf(order)
 
-    if pdf:
-        attachments.append({
-            "content": base64.b64encode(pdf).decode(),
-            "name": f"Invoice_RC{order.id}.pdf",
-            "type": "application/pdf",
-        })
+    attachments = [{
+        "content": base64.b64encode(pdf_bytes).decode(),
+        "name": f"Invoice_RC{order.id}.pdf",
+        "type": "application/pdf",
+    }]
 
-    # Customer
+    # CUSTOMER MAIL
     customer_html = render_to_string("emails/order_success.html", {"order": order})
+
     send_brevo_email(
         subject=f"Order Confirmed - #{order.id}",
         html_content=customer_html,
@@ -70,7 +87,7 @@ def send_invoice_mail(order):
         attachments=attachments
     )
 
-    # Admin Copy
+    # ADMIN COPY
     admin_html = f"""
         <h3>New Paid Order</h3>
         <p>Order ID: {order.id}</p>
@@ -87,6 +104,9 @@ def send_invoice_mail(order):
     )
 
 
+# ===============================
+# SUPPORT TICKET MAIL
+# ===============================
 def send_support_ticket_email(ticket):
 
     attachments = []
