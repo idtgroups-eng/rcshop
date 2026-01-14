@@ -185,11 +185,13 @@ def payment(request):
 # =========================
 # RAZORPAY ORDER CREATE (FINAL)
 # =========================
-@require_POST
+import uuid
+@csrf_exempt
 def create_razorpay_order(request):
+
     data = request.session.get("checkout_data")
     if not data:
-        return JsonResponse({"error": "No checkout session"})
+        return JsonResponse({"error": "No checkout session"}, status=400)
 
     amount = int(Decimal(str(data["total"])) * 100)
 
@@ -200,7 +202,7 @@ def create_razorpay_order(request):
         "payment_capture": 1
     })
 
-    # 🔥 SAVE ORDER BEFORE PAYMENT (VERY IMPORTANT)
+    # ✅ SAVE ORDER BEFORE PAYMENT
     order = Order.objects.create(
         user=request.user if request.user.is_authenticated else None,
         name=data.get("name"),
@@ -213,17 +215,22 @@ def create_razorpay_order(request):
         payment_method="ONLINE",
         status="Pending",
         is_paid=False,
-        temp_order_id=rp_order["id"]   # 👈 MAIN LINK
+        razorpay_order_id=rp_order["id"]   # 🔥 SAME FIELD USED IN SUCCESS VIEW
     )
 
     return JsonResponse({
+        "key": settings.RAZORPAY_KEY_ID,   # 👈 VERY IMPORTANT FOR JS
         "order_id": rp_order["id"],
         "amount": amount,
-        "currency": "INR"
+        "currency": "INR",
+        "email": data.get("email"),
+        "contact": data.get("mobile"),
     })
+
 
 # RAZORPAY PAYMENT SUCCESS
 # =========================
+from django.shortcuts import redirect
 @csrf_exempt
 def razorpay_success(request):
 
@@ -231,25 +238,28 @@ def razorpay_success(request):
     order_id = request.GET.get("razorpay_order_id")
     signature = request.GET.get("razorpay_signature")
 
-    if not payment_id:
+    if not payment_id or not order_id or not signature:
         return redirect("checkout")
 
     try:
+        # 🔐 Razorpay Signature Verify
         client.utility.verify_payment_signature({
             'razorpay_order_id': order_id,
             'razorpay_payment_id': payment_id,
             'razorpay_signature': signature
         })
 
-        order = Order.objects.get(temp_order_id=order_id)
+        # ✅ Correct Order Fetch
+        order = Order.objects.get(razorpay_order_id=order_id)
 
-        order.razorpay_order_id = order_id
+        # 📝 Save payment details
         order.razorpay_payment_id = payment_id
         order.razorpay_signature = signature
         order.is_paid = True
         order.status = "Placed"
         order.save()
 
+        # 📧 Send Invoice Email
         send_invoice_mail(order)
 
         return redirect(reverse("thankyou") + f"?order_id={order.id}")

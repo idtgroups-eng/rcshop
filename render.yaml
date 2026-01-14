@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: rcshop-1
-    env: python
-    buildCommand: |
-      pip install -r requirements.txt
-      python manage.py migrate
-      python manage.py collectstatic --noinput
-    startCommand: gunicorn myproject.wsgi:application
