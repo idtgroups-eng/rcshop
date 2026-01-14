@@ -19,9 +19,6 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-
 from .models import (
     Product, Order, OrderItem, SupportTicket,
     UserProfile, PaymentProof
@@ -276,39 +273,6 @@ def thankyou(request):
     order = get_object_or_404(Order, id=order_id)
     return render(request, "thankyou.html", {"order": order})
 
-# =========================
-# GENERATE INVOICE PDF
-# =========================
-def generate_invoice_pdf(order):
-    buffer = BytesIO()
-    p = canvas.Canvas(buffer, pagesize=A4)
-    width, height = A4
-
-    font = "Helvetica"
-
-    p.setFillColorRGB(0.1, 0.2, 0.35)
-    p.rect(0, height - 80, width, 80, fill=1)
-    p.setFillColorRGB(1, 1, 1)
-    p.setFont(font, 20)
-    p.drawString(40, height - 50, "RCShop")
-
-    p.setFillColorRGB(0, 0, 0)
-    p.setFont(font, 10)
-    p.drawString(40, height - 110, f"Invoice No: RC-{order.id}")
-    p.drawString(40, height - 130, f"Customer: {order.name}")
-    p.drawString(40, height - 150, f"Mobile: {order.mobile}")
-
-    y = height - 200
-    for item in order.items:
-        p.drawString(40, y, f"{item['name']}  x{item['quantity']}  Rs.{item['price']}")
-        y -= 18
-
-    p.drawString(40, y - 10, f"Total Amount: Rs.{order.total_amount}")
-
-    p.showPage()
-    p.save()
-    buffer.seek(0)
-    return buffer
 
 
 # =========================
