@@ -10,4 +10,4 @@ python-dotenv
 pillow
 qrcode
 
-xhtml2pdf
+
