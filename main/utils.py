@@ -137,3 +137,6 @@ def send_support_ticket_email(ticket):
 def send_order_emails(*args, **kwargs):
     # Dummy safe function to avoid crash
     return True
+def send_sms(*args, **kwargs):
+    # Dummy safe function for Railway
+    return True
