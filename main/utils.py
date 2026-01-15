@@ -140,3 +140,11 @@ def send_order_emails(*args, **kwargs):
 def send_sms(*args, **kwargs):
     # Dummy safe function for Railway
     return True
+def send_order_emails(*args, **kwargs):
+    return True
+
+def send_sms(*args, **kwargs):
+    return True
+
+def send_whatsapp(*args, **kwargs):
+    return True
