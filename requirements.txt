@@ -5,6 +5,8 @@ dj-database-url
 razorpay
 requests
 python-dotenv
-pillow
+Pillow
 qrcode
 fpdf2
+reportlab
+psycopg2-binary
