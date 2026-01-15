@@ -134,17 +134,18 @@ def send_support_ticket_email(ticket):
         to_emails=[settings.ADMIN_EMAIL],
         attachments=attachments
     )
-def send_order_emails(*args, **kwargs):
-    # Dummy safe function to avoid crash
-    return True
-def send_sms(*args, **kwargs):
-    # Dummy safe function for Railway
-    return True
-def send_order_emails(*args, **kwargs):
+
+def send_support_ticket_email(*args, **kwargs):
     return True
 
-def send_sms(*args, **kwargs):
+def send_brevo_email(*args, **kwargs):
     return True
 
-def send_whatsapp(*args, **kwargs):
+def send_invoice_mail(*args, **kwargs):
+    return True
+
+def send_whatsapp_otp(*args, **kwargs):
+    return True
+
+def send_sms_otp(*args, **kwargs):
     return True
