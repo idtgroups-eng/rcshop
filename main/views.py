@@ -35,7 +35,9 @@ from .utils import (
 import razorpay
 
 # Razorpay Client
-client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+client = None
+if settings.RAZORPAY_KEY_ID and settings.RAZORPAY_KEY_SECRET:
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
 # =========================
 # BASIC PAGES
@@ -183,14 +185,19 @@ def payment(request):
 # RAZORPAY ORDER CREATE (FINAL)
 # =========================
 import uuid
+from decimal import Decimal
+
 @csrf_exempt
 def create_razorpay_order(request):
+
+    if not client:
+        return JsonResponse({"error": "Payment gateway not configured"}, status=500)
 
     data = request.session.get("checkout_data")
     if not data:
         return JsonResponse({"error": "No checkout session"}, status=400)
 
-    amount = int(Decimal(str(data["total"])) * 100)
+    amount = int(Decimal(data["total"]) * 100)
 
     rp_order = client.order.create({
         "amount": amount,
@@ -198,6 +205,31 @@ def create_razorpay_order(request):
         "receipt": "RC-" + uuid.uuid4().hex[:10],
         "payment_capture": 1
     })
+
+    order = Order.objects.create(
+        user=request.user if request.user.is_authenticated else None,
+        name=data.get("name"),
+        email=data.get("email"),
+        mobile=data.get("mobile"),
+        address=data.get("address"),
+        items=data.get("items"),
+        subtotal=Decimal(data.get("subtotal")),
+        total_amount=Decimal(data.get("total")),
+        payment_method="ONLINE",
+        status="Pending",
+        is_paid=False,
+        razorpay_order_id=rp_order["id"]
+    )
+
+    return JsonResponse({
+        "key": settings.RAZORPAY_KEY_ID,
+        "order_id": rp_order["id"],
+        "amount": amount,
+        "currency": "INR",
+        "email": data.get("email"),
+        "contact": data.get("mobile"),
+    })
+
 
     # ✅ SAVE ORDER BEFORE PAYMENT
     order = Order.objects.create(
