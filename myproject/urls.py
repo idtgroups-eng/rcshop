@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.auth import views as auth_views
@@ -40,6 +40,7 @@ urlpatterns = [
     path("return-policy/", views.return_policy, name="return_policy"),
     path("return-request/", views.return_request, name="return_request"),
     path("website-policy/", views.website_policy, name="website_policy"),
+    path("railway-ping/", views.railway_ping),
 
     # ================= LIVE ADMIN CREATOR =================
     path("create-live-admin/", create_live_admin),
@@ -80,6 +81,7 @@ urlpatterns = [
     # ================= ADMIN DASHBOARD =================
     path("dashboard/orders/", views.admin_orders, name="admin_orders"),
     path("dashboard/order/<int:order_id>/status/", views.update_order_status, name="update_order_status"),
+
     # ================= GOOGLE VERIFY =================
     path("googlea56d4978a897b47.html", TemplateView.as_view(template_name="googlea56d4978a897b47.html")),
 ]
@@ -90,11 +92,6 @@ urlpatterns += [
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
 ]
 
-# ================= STATIC & MEDIA =================
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 # ================= PASSWORD RESET =================
 urlpatterns += [
     path("password-reset/", auth_views.PasswordResetView.as_view(template_name="password_reset.html"), name="password_reset"),
@@ -102,3 +99,8 @@ urlpatterns += [
     path("reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_confirm.html"), name="password_reset_confirm"),
     path("reset/done/", auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_complete.html"), name="password_reset_complete"),
 ]
+
+# ================= STATIC & MEDIA =================
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

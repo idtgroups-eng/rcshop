@@ -1,3 +1,8 @@
+from django.http import HttpResponse
+
+def railway_ping(request):
+    return HttpResponse("RCShop Railway OK")
+
 # =========================
 # IMPORTS
 # =========================
