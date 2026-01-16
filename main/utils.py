@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from fpdf import FPDF
 
 
-BREVO_API_KEY = settings.BREVO_API_KEY
+BREVO_API_KEY = getattr(settings, "BREVO_API_KEY", None)
 BREVO_FROM_EMAIL = getattr(settings, "DEFAULT_FROM_EMAIL", "support@rcshop.co.in")
 
 
@@ -21,18 +21,25 @@ def generate_invoice_pdf(order):
 
     pdf.cell(0, 10, "RCShop Invoice", ln=True, align="C")
     pdf.ln(5)
+
     pdf.cell(0, 8, f"Order ID: {order.id}", ln=True)
     pdf.cell(0, 8, f"Name: {order.name}", ln=True)
     pdf.cell(0, 8, f"Phone: {order.mobile}", ln=True)
     pdf.cell(0, 8, f"Email: {order.email}", ln=True)
     pdf.cell(0, 8, f"Total Amount: ₹{order.total_amount}", ln=True)
+
     pdf.ln(8)
 
-    pdf.multi_cell(0, 8, "Thank you for shopping with RCShop.\nYour order has been successfully placed.")
+    pdf.multi_cell(
+        0,
+        8,
+        "Thank you for shopping with RCShop.\nYour order has been successfully placed."
+    )
 
     buffer = BytesIO()
     pdf.output(buffer)
     buffer.seek(0)
+
     return buffer.read()
 
 
@@ -42,6 +49,7 @@ def generate_invoice_pdf(order):
 def send_brevo_email(subject, html_content, to_emails, attachments=None):
 
     if not BREVO_API_KEY:
+        print("BREVO_API_KEY not configured")
         return
 
     url = "https://api.brevo.com/v3/smtp/email"
@@ -61,7 +69,10 @@ def send_brevo_email(subject, html_content, to_emails, attachments=None):
         "content-type": "application/json"
     }
 
-    requests.post(url, json=payload, headers=headers, timeout=10)
+    try:
+        requests.post(url, json=payload, headers=headers, timeout=10)
+    except Exception as e:
+        print("Brevo Email Error:", e)
 
 
 # ===============================
@@ -78,7 +89,10 @@ def send_invoice_mail(order):
     }]
 
     # CUSTOMER MAIL
-    customer_html = render_to_string("emails/order_success.html", {"order": order})
+    customer_html = render_to_string(
+        "emails/order_success.html",
+        {"order": order}
+    )
 
     send_brevo_email(
         subject=f"Order Confirmed - #{order.id}",
@@ -96,10 +110,12 @@ def send_invoice_mail(order):
         <p>Total: ₹{order.total_amount}</p>
     """
 
+    admin_email = getattr(settings, "ADMIN_EMAIL", "support@rcshop.co.in")
+
     send_brevo_email(
         subject=f"New Paid Order - #{order.id}",
         html_content=admin_html,
-        to_emails=[settings.ADMIN_EMAIL],
+        to_emails=[admin_email],
         attachments=attachments
     )
 
@@ -128,24 +144,50 @@ def send_support_ticket_email(ticket):
         <p>Message: {ticket.message}</p>
     """
 
+    admin_email = getattr(settings, "ADMIN_EMAIL", "support@rcshop.co.in")
+
     send_brevo_email(
         subject=f"Support Ticket - {ticket.ticket_id}",
         html_content=html,
-        to_emails=[settings.ADMIN_EMAIL],
+        to_emails=[admin_email],
         attachments=attachments
     )
 
-def send_support_ticket_email(*args, **kwargs):
+
+# ===============================
+# SIGNALS COMPATIBILITY FUNCTIONS
+# ===============================
+
+def send_order_emails(order, admin_email=None):
+    """
+    Used by signals.py
+    """
+    send_invoice_mail(order)
+
+
+def send_sms(mobile, message):
+    """
+    Placeholder SMS function
+    """
+    print(f"SMS to {mobile}: {message}")
     return True
 
-def send_brevo_email(*args, **kwargs):
+
+def send_whatsapp(mobile, message):
+    """
+    Placeholder WhatsApp function
+    """
+    print(f"WhatsApp to {mobile}: {message}")
+    return True
+# ===============================
+# OTP PLACEHOLDER FUNCTIONS
+# ===============================
+
+def send_sms_otp(mobile, otp):
+    print(f"Sending SMS OTP {otp} to {mobile}")
     return True
 
-def send_invoice_mail(*args, **kwargs):
-    return True
 
-def send_whatsapp_otp(*args, **kwargs):
-    return True
-
-def send_sms_otp(*args, **kwargs):
+def send_whatsapp_otp(mobile, otp):
+    print(f"Sending WhatsApp OTP {otp} to {mobile}")
     return True

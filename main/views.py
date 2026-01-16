@@ -33,8 +33,6 @@ from .utils import (
     send_support_ticket_email,
     send_brevo_email,
     send_invoice_mail,
-    send_sms_otp,
-    send_whatsapp_otp
 )
 
 import razorpay

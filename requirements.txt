@@ -7,6 +7,6 @@ requests
 python-dotenv
 Pillow
 qrcode
-fpdf2
+fpdf
 reportlab
 psycopg2-binary
