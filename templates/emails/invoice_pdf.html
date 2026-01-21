@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+</head>
+<body style="font-family: Helvetica; font-size: 12px;">
+
+    <h2>RCShop - Tax Invoice</h2>
+
+    <p>
+        <b>Order ID:</b> {{ order.id }}<br>
+        <b>Customer:</b> {{ order.name }}<br>
+        <b>Mobile:</b> {{ order.mobile }}<br>
+        <b>Email:</b> {{ order.email }}<br>
+        <b>Address:</b> {{ order.address }}
+    </p>
+
+    <hr>
+
+    <h3>Products</h3>
+
+    <table width="100%" border="1" cellspacing="0" cellpadding="5">
+        <tr>
+            <th align="left">Product</th>
+            <th align="center">Qty</th>
+            <th align="right">Price</th>
+        </tr>
+
+        {% for item in order.items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td align="center">{{ item.quantity|default:1 }}</td>
+            <td align="right">₹{{ item.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+
+    <p>
+        <b>Subtotal:</b> ₹{{ order.subtotal }}<br>
+        <b>GST:</b> ₹{{ order.gst }}<br>
+        <b>Flat Discount:</b> -₹{{ order.flat_discount }}<br>
+        <b>Extra Discount:</b> -₹{{ order.extra_discount }}<br>
+        <hr>
+        <b>Total Amount:</b> ₹{{ order.total_amount }}
+    </p>
+
+    <br><br>
+
+    <p>
+        This is a computer generated invoice.<br>
+        Thank you for shopping with RCShop 🙏
+    </p>
+
+</body>
+</html>

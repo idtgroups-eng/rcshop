@@ -1,0 +1,33 @@
+body{margin:0;background:#dfe9ff;font-family:Segoe UI;}
+.page{width:210mm;min-height:297mm;background:#fff;margin:auto;padding:22px;box-sizing:border-box;}
+
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.header img{width:95px}
+.header .right{text-align:right;font-size:13px;color:#333;}
+
+h2{text-align:center;margin:4px;color:#008cff}
+h3{margin-top:18px;border-bottom:2px solid #00a6ff;padding-bottom:3px;font-size:18px;font-weight:bold;}
+
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:15px}
+th{background:#008cff;color:white;padding:8px;font-size:14px}
+td{padding:7px;border-bottom:1px solid #ddd}
+
+.total{font-size:21px;font-weight:bold;color:#078300;margin-top:10px}
+
+.qr{text-align:center;margin-top:18px}
+.qr img{width:170px;border-radius:6px}
+.qr p{margin:4px;font-size:14px}
+
+.footer{text-align:center;margin-top:18px;border-top:1px solid #ccc;padding-top:8px;font-size:14px;color:#444}
+
+.btns{text-align:center;margin:22px;}
+button{padding:10px 22px;border:none;border-radius:6px;font-size:15px;color:#fff;cursor:pointer;margin:6px}
+.print{background:#00c1d4}
+.pdf{background:#003bff}
+.home{background:#ff9800}
+
+@media print{
+    body{background:#fff}
+    .btns{display:none}
+    .page{margin:0;padding:10px}
+}

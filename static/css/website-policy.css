@@ -1,0 +1,56 @@
+/* ===============================
+   WEBSITE POLICY – PREMIUM STYLE
+================================ */
+
+body{
+    background:#f4f9ff;
+    font-family:'Poppins',sans-serif;
+}
+
+/* HERO */
+.policy-hero{
+    background:radial-gradient(circle at top,#00e5ff,#00274f 70%);
+    color:#fff;
+    padding:110px 20px;
+    text-align:center;
+}
+
+.policy-hero h1{
+    font-size:50px;
+    font-weight:900;
+    margin-bottom:10px;
+    text-shadow:0 0 30px rgba(0,255,255,.5);
+}
+
+.policy-hero p{
+    opacity:.9;
+    font-size:18px;
+}
+
+/* POLICY BOX */
+.policy-box{
+    max-width:1000px;
+    margin:60px auto;
+    background:#fff;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 20px 50px rgba(0,0,0,.15);
+}
+
+.policy-box h3{
+    color:#0066ff;
+    margin-top:25px;
+    font-weight:800;
+}
+
+.policy-box p{
+    color:#444;
+    line-height:1.8;
+    margin-top:8px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .policy-hero h1{font-size:34px}
+    .policy-box{padding:25px;margin:30px 15px}
+}

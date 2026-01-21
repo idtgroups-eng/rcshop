@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/return_request.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="box">
+    <h1>Return Request</h1>
+
+    <label for="orderId">Order ID:</label>
+    <input type="text" id="orderId" placeholder="Enter your Order ID">
+
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" placeholder="Your full name">
+
+    <label for="reason">Return Reason:</label>
+    <textarea id="reason" rows="5" placeholder="Write your issue..."></textarea>
+
+    <button id="submitBtn">Submit Return Request</button>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/return_request.js' %}"></script>
+{% endblock %}

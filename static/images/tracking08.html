@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Order Tracking - RCShop</title>
+
+<style>
+body{
+    background:#01111e;
+    font-family:Poppins;
+    color:white;
+    text-align:center;
+}
+
+.box{
+    width:480px;
+    margin:auto;
+    margin-top:70px;
+    background:#022738;
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 0 30px #00eaff;
+}
+
+/* TITLE */
+h2{
+    font-size:28px;
+    color:#00eaff;
+    text-shadow:0 0 12px #00eaff;
+    margin-bottom:10px;
+}
+
+/* ORDER INFO */
+p{
+    font-size:17px;
+}
+
+.step{
+    padding:15px;
+    margin:10px 0;
+    border-radius:8px;
+    background:#1c2931;
+    cursor:pointer;
+    font-size:18px;
+    transition:.2s;
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+.step:hover{
+    transform:scale(1.04);
+    box-shadow:0 0 12px cyan;
+}
+
+/* COMPLETED STATUS */
+.done{
+    background:#00ffbf;
+    color:#002e23;
+    font-weight:bold;
+    box-shadow:0 0 18px #00ffbf;
+}
+
+/* PENDING GREY */
+.pending{
+    opacity:.5;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>📦 Track Your Order</h2>
+    <p>Order ID: <span id="oid"></span></p>
+    <p>Status: <b id="currentStatus" style="color:#00ffbf;"></b></p>
+
+    <div id="s1" class="step">Order Placed</div>
+    <div id="s2" class="step">Packed</div>
+    <div id="s3" class="step">Shipped</div>
+    <div id="s4" class="step">Out For Delivery</div>
+    <div id="s5" class="step">Delivered</div>
+</div>
+
+
+<script>
+let order = JSON.parse(localStorage.getItem("orderData"));
+document.getElementById("oid").innerText = order?.orderId ?? "Unknown";
+
+// Stored status
+let status = localStorage.getItem("track_"+order.orderId) || 1;
+
+// Status Name List
+let name = ["","Order Placed","Packed","Shipped","Out For Delivery","Delivered"];
+document.getElementById("currentStatus").innerText = name[status];
+
+// Function to refresh UI
+function updateUI(){
+    for(let i=1;i<=5;i++){
+        let el=document.getElementById("s"+i);
+        if(i<=status){
+            el.classList.add("done");
+            el.classList.remove("pending");
+        }else{
+            el.classList.add("pending");
+            el.classList.remove("done");
+        }
+    }
+}
+updateUI();
+
+// CLICK EVENT TO CHANGE STATUS
+for(let i=1;i<=5;i++){
+    document.getElementById("s"+i).onclick=()=>{
+        status=i;
+        localStorage.setItem("track_"+order.orderId, status);
+        updateUI();
+        document.getElementById("currentStatus").innerText=name[status];
+    };
+}
+</script>
+
+</body>
+</html>

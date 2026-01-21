@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Successful - RCShop</title>
+
+<link rel="stylesheet" href="{% static 'css/thankyou.css' %}">
+</head>
+<body>
+
+<div class="box">
+    <h1>🎉 Order Placed Successfully!</h1>
+
+    <p>
+        Thank you <b>{{ order.name }}</b> for shopping with <b>RCStore</b> 😊
+    </p>
+
+    <p>
+        Your Order ID:
+        <b>{{ order.id }}</b>
+    </p>
+
+    <p>
+        Total Amount Paid:
+        <b>₹{{ order.total_amount }}</b>
+    </p>
+
+    <p>
+        Payment Method:
+        <b>{{ order.payment_method }}</b>
+    </p>
+
+    <p>
+        Order Date:
+        <b>{{ order.created_at|date:"d M Y, h:i A" }}</b>
+    </p>
+
+    <button class="btn" onclick="window.location.href='/'">
+        🏠 Back to Home
+    </button>
+
+    <button class="btn whatsapp"
+        onclick="window.open(
+        'https://wa.me/?text=Order%20ID:%20{{ order.id }}%0ATotal:%20₹{{ order.total_amount }}%0APayment:%20{{ order.payment_method }}',
+        '_blank')">
+        📩 Share WhatsApp Invoice
+    </button>
+
+    <!-- ✅ FIXED INVOICE BUTTON -->
+    <button
+        onclick="window.open('/invoice/?order_id={{ order.id }}', '_blank')"
+        class="invoice-btn">
+        📄 View Invoice
+    </button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+    confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+</script>
+<script>
+    // ✅ Clear cart after successful order
+    localStorage.removeItem("cartItems");
+
+    // Safety: agar future me aur key use ho
+    localStorage.removeItem("cart");
+
+    // Update header cart count instantly
+    if (document.getElementById("cartCount")) {
+        document.getElementById("cartCount").innerText = "0";
+    }
+</script>
+
+</body>
+</html>

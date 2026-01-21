@@ -1,0 +1,33 @@
+body{
+    background:#f1f5ff;
+    font-family:Arial;
+}
+
+.otp-box{
+    max-width:350px;
+    background:#fff;
+    margin:120px auto;
+    padding:30px;
+    text-align:center;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+input{
+    width:100%;
+    padding:12px;
+    font-size:18px;
+    text-align:center;
+    letter-spacing:4px;
+    margin:15px 0;
+}
+
+button{
+    background:#22c55e;
+    color:#fff;
+    border:none;
+    padding:12px 25px;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}

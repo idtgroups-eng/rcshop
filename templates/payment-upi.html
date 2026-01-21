@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Payment - RCShop</title>
+<link rel="stylesheet" href="{% static 'css/payment-upi.css' %}">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<style>
+.proof-upload-box{
+  margin-top:25px;
+  padding:18px;
+  background:rgba(255,255,255,.1);
+  border-radius:16px;
+  text-align:center;
+}
+.proof-upload-box h3{color:#fff;margin-bottom:8px}
+.proof-upload-box input{color:#fff;margin:10px 0}
+.upload-btn{
+  background:linear-gradient(135deg,#00f0ff,#007bff);
+  border:none;
+  color:#fff;
+  padding:12px 32px;
+  border-radius:30px;
+  font-weight:700;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2 class="title">Complete Your Payment</h2>
+
+<div class="main-box">
+
+  <div class="qr-wrapper">
+    <img src="{% static 'images/razorpay.png' %}" class="qr-img" width="220">
+
+    <div class="amount-box">
+      ₹{{ amount }}
+      <small>Secure Razorpay Gateway</small>
+    </div>
+
+    <button id="payBtn" class="upi-btn">
+      Pay via UPI / Card / NetBanking
+    </button>
+  </div>
+
+  <div class="instructions">
+    <p>✔ Instant automatic payment</p>
+    <p>✔ Auto success confirmation</p>
+    <p>✔ No screenshot upload needed</p>
+  </div>
+
+</div>
+
+<script>
+document.getElementById("payBtn").onclick = function(){
+
+fetch("/create-order/",{
+method:"POST",
+headers:{ "X-CSRFToken":"{{ csrf_token }}" },
+body:new URLSearchParams({amount:"{{ amount }}"})
+})
+.then(res=>res.json())
+.then(data=>{
+
+var options = {
+  "key":"{{ RAZORPAY_KEY_ID }}",
+  "amount":data.amount,
+  "currency":"INR",
+  "name":"RCShop",
+  "description":"Order Payment",
+  "order_id":data.id,
+  "handler": function (response){
+     window.location.href="/payment-success/?payment_id="+response.razorpay_payment_id;
+  },
+  "theme":{"color":"#00f0ff"}
+};
+
+var rzp = new Razorpay(options);
+rzp.open();
+});
+}
+</script>
+
+</body>
+</html>

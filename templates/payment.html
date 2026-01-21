@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select Payment Method</title>
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="header">
+    <div class="breadcrumb">🛒 Cart › Address › <span class="active-step">Payment</span></div>
+    <div class="center-brand">
+      <div class="header-title">RCStore</div>
+      <div class="tagline">The Trusted Tech Store</div>
+    </div>
+    <div class="secure-right">Secure 🔒</div>
+  </div>
+
+<h2>Select Payment Method</h2>
+
+<div class="options">
+
+<div class="card" id="payBtn">
+  <div class="icon">📱</div>
+  <h3>UPI / Card / NetBanking</h3>
+  <p>PhonePe, GPay, Paytm, Cards & Banks</p>
+</div>
+
+<div class="card" onclick="window.location.href='{% url 'cod_details' %}'">
+  <div class="icon">🚚</div>
+  <h3>Cash on Delivery</h3>
+  <p>Pay when delivered</p>
+</div>
+
+</div>
+
+<div class="back-btn" onclick="history.back()">← Back</div>
+</div>
+
+<script>
+document.getElementById("payBtn").onclick = function(){
+
+  fetch("{% url 'create_razorpay_order' %}")   // 🔥 GET request
+  .then(r => r.json())
+  .then(data => {
+
+    if(!data.order_id){
+      alert("Unable to start payment. Try again.");
+      return;
+    }
+
+    var options = {
+      "key": data.key,
+      "amount": data.amount,
+      "currency": "INR",
+      "name": "RCStore",
+      "description": "Secure Order Payment",
+      "order_id": data.order_id,
+      "handler": function (response){
+        window.location.href =
+          "{% url 'razorpay_success' %}?razorpay_payment_id=" + response.razorpay_payment_id +
+          "&razorpay_order_id=" + response.razorpay_order_id +
+          "&razorpay_signature=" + response.razorpay_signature;
+      },
+      "prefill": {
+        "name": "{{ request.user.first_name }}",
+        "email": "{{ request.user.email }}"
+      },
+      "theme": {"color":"#00f0ff"}
+    };
+
+    new Razorpay(options).open();
+  });
+}
+</script>
+
+</body>
+</html>

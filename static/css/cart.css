@@ -1,0 +1,494 @@
+/* v2.5 mobile-cart-fix */
+html,body{
+  width:100%;
+  overflow-x:hidden;
+}
+*{
+  box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Poppins,Segoe UI;
+    background:#eef6ff;
+}
+
+.rc-header-glass{
+  background:linear-gradient(90deg,#04132a,#00172f);
+  color:#fff;
+  position:sticky;
+  top:0;
+  z-index:1200;
+  box-shadow:0 10px 40px rgba(0,0,0,.6);
+}
+
+/* ROW */
+.rc-header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 22px;
+}
+
+/* LEFT */
+.rc-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.rc-logo{height:42px}
+.rc-brand{
+  font-weight:700;
+  font-size:18px;
+  letter-spacing:1px;
+}
+
+/* NAV */
+.rc-nav a{
+  color:#fff;
+  text-decoration:none;
+  margin:0 16px;
+  font-weight:600;
+  position:relative;
+}
+.rc-nav a::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:-5px;
+  width:0;height:2px;
+  background:#00f0ff;
+  transition:.3s;
+}
+.rc-nav a:hover::after{width:100%}
+
+/* RIGHT */
+.rc-right{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* SEARCH */
+.desktop-search{
+  background:#02162b;
+  color:#fff;
+  border:none;
+  padding:8px 16px;
+  border-radius:20px;
+  min-width:190px;
+}
+
+/* CART */
+.rc-cart{
+  background:linear-gradient(45deg,#00f0ff,#00a2ff);
+  padding:7px 16px;
+  border-radius:30px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  box-shadow:0 5px 20px rgba(0,255,255,.4);
+}
+.rc-cart span{
+  background:#000;
+  color:#0ff;
+  border-radius:50%;
+  padding:3px 7px;
+  font-size:12px;
+  line-height:1;
+}
+
+/* HAMBURGER */
+.hamburger{
+  display:none;
+  background:none;
+  border:none;
+}
+.hamburger span{
+  display:block;
+  width:26px;
+  height:3px;
+  background:#0ff;
+  margin:5px 0;
+  border-radius:2px;
+}
+
+/* MOBILE DRAWER */
+.mobile-drawer{
+  position:fixed;
+  right:-270px;
+  top:0;
+  width:200px;
+  height:100vh;
+  background:linear-gradient(180deg,#021024,#000);
+  padding:100px 24px;
+  transition:.4s;
+  z-index:1100;
+}
+.mobile-drawer a{
+  display:block;
+  color:#fff;
+  text-decoration:none;
+  padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+
+.mobile-drawer.open{right:0}
+
+/* MOBILE VIEW */
+@media(max-width:768px){
+  .desktop-nav,.desktop-search{display:none}
+  .hamburger{display:block}
+  .rc-header-row{padding:12px 16px}
+  .rc-logo{height:38px}
+  .rc-cart{padding:6px 14px}
+}
+
+
+/* ==================== CART TABLE ==================== */
+.cart-container{
+    width:90%;
+    margin:40px auto;
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 0 18px rgba(0,0,0,.1);
+}
+
+.cart-container h2{
+    margin:0 0 18px;
+    font-size:28px;
+    color:#0043cc;
+    font-weight:700;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#00eaff30;
+    padding:12px;
+    text-align:left;
+    font-size:18px;
+}
+td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+}
+
+/* Qty Buttons */
+.qty-btn{
+    padding:4px 10px;
+    background:#00aaff;
+    border:none;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+}
+
+.remove-btn{
+    padding:8px 14px;
+    background:red;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* Checkout Box */
+.total-box{
+    text-align:right;
+    margin-top:20px;
+    font-size:20px;
+    font-weight:700;
+}
+
+.checkout-btn{
+    background:#0066ff;
+    padding:14px 28px;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:20px;
+    font-weight:700;
+    margin-top:15px;
+    cursor:pointer;
+}
+
+/* Empty Cart */
+.empty{
+    text-align:center;
+    padding:40px;
+    font-size:25px;
+    font-weight:700;
+    color:#007adf;
+}
+
+/* Footer */
+footer{
+    background:#020b18;
+    color:#fff;
+    padding:20px;
+    text-align:center;
+    margin-top:40px;
+}
+@media (max-width:768px){
+
+/* Outer box full width */
+.cart-container{
+    width:100% !important;
+    margin:15px 0 !important;
+    padding:12px !important;
+    border-radius:16px;
+}
+
+/* Hide table header */
+.cart-container thead{
+    display:none !important;
+}
+
+/* Convert rows to cards */
+.cart-container table,
+.cart-container tbody,
+.cart-container tr{
+    display:block !important;
+    width:100%;
+}
+
+.cart-container tr{
+    background:#fff;
+    border-radius:14px;
+    margin-bottom:14px;
+    padding:12px;
+    box-shadow:0 6px 16px rgba(0,0,0,.15);
+}
+
+/* Each cell becomes label/value row */
+.cart-container td{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border:none !important;
+    padding:6px 4px;
+    font-size:14px;
+}
+
+/* Add left labels */
+.cart-container td:before{
+    content: attr(data-label);
+    font-weight:600;
+    color:#555;
+}
+
+/* Buttons full width */
+.proceed-btn{
+    width:100%;
+}
+
+/* Footer stack */
+.cart-footer{
+    flex-direction:column;
+    gap:10px;
+}
+}
+.mobile-floating{
+  position:fixed;
+  right:15px;
+  bottom:20px;
+  display:none;
+  flex-direction:column;
+  gap:14px;
+  z-index:3000;
+}
+
+/* Buttons */
+.float-btn{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.cart-float{background:linear-gradient(45deg,#00f0ff,#00a2ff);position:relative;}
+.cart-float span{
+  position:absolute;
+  top:-6px;
+  right:-6px;
+  background:red;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  font-size:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.wa-float{
+  background:#25d366;
+  font-size:26px;
+}
+
+/* ONLY MOBILE */
+@media(max-width:768px){
+  .mobile-floating{display:flex}
+}
+/* =======================
+   MOBILE CART FIX
+======================= */
+@media (max-width:768px){
+
+.cart-container{
+    width:100% !important;
+    margin:12px 0 !important;
+    padding:14px !important;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.12);
+}
+
+/* Product Row Full Width */
+.cart-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 10px;
+}
+
+/* Product Image */
+.cart-item img{
+    width:80px;
+    height:80px;
+    object-fit:contain;
+    border-radius:10px;
+    background:#f5f7fb;
+}
+
+/* Product Details */
+.cart-item-details{
+    flex:1;
+}
+
+/* Price Bold */
+.cart-price{
+    font-size:15px;
+    font-weight:700;
+    color:#0b5ed7;
+}
+
+/* Qty Controls */
+.qty-box{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:8px;
+}
+
+/* Delete Button */
+.delete-btn{
+    background:#ff3d3d;
+    color:#fff;
+    border:none;
+    padding:7px 14px;
+    border-radius:10px;
+    font-size:13px;
+    margin-top:10px;
+}
+
+/* Total Section */
+.cart-total{
+    margin-top:18px;
+    padding-top:14px;
+    border-top:1px dashed #ddd;
+    font-size:16px;
+    text-align:right;
+}
+
+/* Checkout Button */
+.checkout-btn{
+    width:100%;
+    margin-top:14px;
+    padding:14px;
+    border-radius:14px;
+    font-size:16px;
+    background:linear-gradient(90deg,#0d6efd,#00c6ff);
+    box-shadow:0 8px 18px rgba(0,102,255,.35);
+}
+
+}
+/* ===========================
+   CART MOBILE FIX (ONLY MOBILE)
+=========================== */
+@media(max-width:768px){
+
+#cartBox{
+    width:100% !important;
+    margin:0 !important;
+    padding:14px !important;
+    border-radius:0 !important;
+}
+
+/* Table ko card layout bana do */
+#cartTable thead{
+    display:none;
+}
+
+#cartTable, 
+#cartTable tbody, 
+#cartTable tr{
+    display:block;
+    width:100%;
+}
+
+#cartTable tr{
+    background:#fff;
+    margin-bottom:14px;
+    padding:12px;
+    border-radius:14px;
+    box-shadow:0 8px 18px rgba(0,0,0,.12);
+}
+
+#cartTable td{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:6px 0;
+    font-size:14px;
+}
+
+/* Labels auto show */
+#cartTable td:nth-child(1)::before{content:"Product";}
+#cartTable td:nth-child(2)::before{content:"Name";}
+#cartTable td:nth-child(3)::before{content:"Price";}
+#cartTable td:nth-child(4)::before{content:"Qty";}
+#cartTable td:nth-child(5)::before{content:"Total";}
+#cartTable td:nth-child(6)::before{content:"Remove";}
+
+#cartTable td::before{
+    font-weight:600;
+    color:#555;
+}
+
+/* Total + Button */
+#grandBox{
+    text-align:right;
+    font-size:16px;
+    margin-top:16px;
+}
+
+.checkout-btn{
+    width:100%;
+    height:48px;
+    font-size:16px;
+    border-radius:14px;
+}
+}

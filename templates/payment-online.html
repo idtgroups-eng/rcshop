@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Payment — RCStore (Dark Premium)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/payment_online.css' %}">
+</head>
+<body>
+
+<!-- topbar -->
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">RC</div>
+    <div>
+      <h1 style="margin:0">RCStore</h1>
+      <div class="muted">Secure Checkout</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:12px;align-items:center">
+    <div class="secure">🔒 Secure payments • PCI compliant</div>
+    <div id="themeToggle" class="toggle">Light</div>
+  </div>
+</div>
+
+<!-- main content -->
+<div class="wrap">
+
+  <!-- LEFT SIDE -->
+  <div class="left panel">
+    <h2>Choose payment method</h2>
+
+    <div class="method active" data-method="card">
+      <div class="payment-icon">💳</div>
+      <div class="meta">
+        <strong>Credit / Debit Card</strong>
+        <div class="muted">Fast & secure</div>
+      </div>
+    </div>
+
+    <div class="method" data-method="netbank">
+      <div class="payment-icon">🏦</div>
+      <div class="meta"><strong>NetBanking</strong><div class="muted">Instant bank transfers</div></div>
+    </div>
+
+    <div class="method" data-method="emi">
+      <div class="payment-icon">📩</div>
+      <div class="meta"><strong>EMI Options</strong><div class="muted">Pay monthly</div></div>
+    </div>
+
+    <div style="margin-top:16px">
+      <div style="margin-bottom:8px" class="muted">Saved Cards</div>
+      <div class="saved-cards" id="savedCards"></div>
+      <button class="btn-ghost" id="useNew">Use a new card</button>
+    </div>
+
+    <div style="margin-top:18px">
+      <div class="muted">Offers & Coupons</div>
+      <div class="offer">
+        <div><strong>FLIP50</strong><div class="muted" style="font-size:12px">Flat ₹50 off on orders above ₹1000</div></div>
+        <div><button class="btn-ghost" id="applyOffer">Apply</button></div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px" class="summary">
+      <div class="muted">Order Summary</div>
+      <div class="summary-row"><div class="muted">Items Total</div><div id="itemsTotal">₹0</div></div>
+      <div class="summary-row"><div class="muted">Delivery</div><div class="muted">₹0</div></div>
+      <hr>
+      <div class="summary-row total"><div>Total Payable</div><div id="totalPay">₹0</div></div>
+    </div>
+  </div>
+
+  <!-- RIGHT PREMIUM BOX -->
+  <div class="right panel premium-box">
+
+    <!-- CARD PREVIEW -->
+    <div class="card-preview" id="previewCard">
+      <div class="card-front">
+        <div class="chip"></div>
+        <div class="brand-logo" id="brandLogo"></div>
+
+        <div class="card-number" id="pCardNumber">#### #### #### ####</div>
+        <div class="card-name" id="pCardName">CARD HOLDER</div>
+        <div class="card-exp" id="pCardExp">MM/YY</div>
+      </div>
+
+      <div class="card-back">
+        <div class="cvv-box" id="pCVV">•••</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2>Enter payment details</h2>
+      <p class="subtext">We securely process your payment. Card details are never stored unless you choose to save them.</p>
+    </div>
+
+    <div id="cardBrand" class="brand-box"></div>
+
+    <!-- GLOBAL ERROR -->
+    <div id="errorBox" class="global-error"></div>
+
+    <div id="formArea" class="form form-premium">
+
+      <div class="form-group">
+        <label>Card holder name</label>
+        <input id="name" type="text" placeholder="Full name">
+        <div id="errName" class="error-text">Enter full valid name</div>
+      </div>
+
+      <div class="form-group">
+        <label>Card number</label>
+        <input id="card" type="text" placeholder="1234 5678 9012 3456" maxlength="23">
+        <div id="errCard" class="error-text">Enter a valid 16-digit card number</div>
+      </div>
+
+      <div class="row row-premium">
+        <div class="half">
+          <label>Expiry (MM/YY)</label>
+          <input id="exp" type="text" maxlength="5" placeholder="MM/YY">
+          <div id="errExp" class="error-text">Enter valid expiry</div>
+        </div>
+
+        <div class="half">
+          <label>CVV</label>
+          <input id="cvv" type="password" maxlength="3" placeholder="123">
+          <div id="errCVV" class="error-text">Enter valid 3-digit CVV</div>
+        </div>
+      </div>
+
+      <div class="save-card-row">
+        <input id="saveCard" type="checkbox">
+        <label for="saveCard">Save this card for future payments</label>
+      </div>
+
+      <div class="pay-actions">
+        <button id="payNow" class="pay-btn-premium" disabled>Pay Securely</button>
+        <button id="moreOpt" class="secondary-premium">Need help?</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- OTP MODAL -->
+<div class="modal" id="otpModal">
+  <div class="otp-card">
+    <div class="otp-title">🔐 Secure Verification</div>
+    <p class="otp-sub">Enter the 4-digit OTP sent to your registered mobile</p>
+
+    <div class="otp-input-row">
+      <input class="otp-box" maxlength="1">
+      <input class="otp-box" maxlength="1">
+      <input class="otp-box" maxlength="1">
+      <input class="otp-box" maxlength="1">
+    </div>
+
+    <div class="otp-actions">
+      <button id="verifyOtp" class="otp-btn verify">Verify</button>
+      <button id="resendOtp" class="otp-btn resend">Resend</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS SCREEN -->
+<div class="success-screen" id="successScreen">
+  <div class="success-card">
+    <div style="font-size:46px;color:var(--success)">✓</div>
+    <h2>Payment Successful</h2>
+    <div class="muted" style="margin-top:8px">Redirecting to invoice…</div>
+  </div>
+</div>
+
+<script src="{% static 'js/payment-online.js' %}"></script>
+
+</body>
+</html>

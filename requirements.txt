@@ -1,0 +1,12 @@
+Django==4.2.10
+gunicorn
+whitenoise
+dj-database-url
+razorpay
+requests
+python-dotenv
+Pillow
+qrcode
+fpdf
+reportlab
+psycopg2-binary

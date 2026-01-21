@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Account | RCStore</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:radial-gradient(circle at top,#0aa9ff,#020b1b);
+  min-height:100vh;
+  color:#fff;
+}
+
+/* HERO */
+.account-hero{
+  padding:70px 20px;
+  text-align:center;
+}
+.glass{
+  max-width:1000px;
+  margin:auto;
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(25px);
+  border-radius:30px;
+  padding:45px;
+  box-shadow:0 25px 70px rgba(0,0,0,.5);
+}
+.glass h1{margin:0;font-size:34px;}
+.glass p{opacity:.8}
+
+/* GRID */
+.account-grid{
+  max-width:1100px;
+  margin:60px auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:35px;
+  padding:0 20px;
+}
+
+/* CARD */
+.card{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:26px;
+  padding:28px;
+  backdrop-filter:blur(16px);
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
+  transition:.4s;
+}
+.card:hover{transform:translateY(-10px);box-shadow:0 30px 90px rgba(0,234,255,.4);}
+.card h3{margin-top:0;font-size:20px}
+.muted{opacity:.7}
+
+/* BUTTONS */
+.btn{
+  display:inline-block;
+  margin-top:14px;
+  padding:12px 20px;
+  border-radius:14px;
+  text-decoration:none;
+  color:#fff;
+  font-weight:600;
+  background:linear-gradient(135deg,#00eaff,#0051ff);
+  box-shadow:0 0 15px rgba(0,234,255,.7);
+}
+.btn.logout{
+  background:linear-gradient(135deg,#ff5252,#b30000);
+  box-shadow:0 0 15px rgba(255,82,82,.7);
+}
+</style>
+</head>
+
+<body>
+
+<section class="account-hero">
+  <div class="glass">
+    <h1>Welcome, {{ request.user.first_name|default:request.user.username }}</h1>
+    <p>{{ request.user.email }}</p>
+  </div>
+</section>
+
+<section class="account-grid">
+
+<div class="card">
+  <h3>👤 My Profile</h3>
+  <p class="muted">View your account details</p>
+  <p><b>Name:</b> {{ request.user.first_name }}</p>
+  <p><b>Email:</b> {{ request.user.email }}</p>
+</div>
+
+<div class="card">
+  <h3>🧾 My Orders</h3>
+  <p class="muted">View your order history</p>
+  <a href="{% url 'my_orders' %}" class="btn">View Orders</a>
+</div>
+
+<div class="card">
+  <h3>⚙ Account Actions</h3>
+  <a href="/" class="btn">🏠 Back to Home</a><br><br>
+  <a href="{% url 'logout' %}" class="btn logout">🚪 Logout</a>
+</div>
+
+</section>
+
+</body>
+</html>

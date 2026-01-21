@@ -1,0 +1,1967 @@
+/* ---------------- BASIC --------------- */
+@media (max-width: 768px) {
+  html, body {
+      width: 100%;
+      overflow-x: hidden !important;
+      overscroll-behavior-x: none;
+      touch-action: pan-y;
+  }
+}
+
+body {
+  background: radial-gradient(circle at top, #163b66 0, #050915 55%, #02030a 100%);
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #f5f7ff;
+}
+/* NAV MENU HOVER EFFECT */
+.navbar-nav .nav-link {
+  position: relative;
+  font-weight: 500;
+  color: #333 !important;
+  padding-bottom: 5px;
+  transition: color 0.3s ease;
+}
+
+/* Underline Animation */
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background-color: #007bff;
+  transition: width 0.3s ease;
+}
+
+/* Hover Style */
+.navbar-nav .nav-link:hover {
+  color: #007bff !important;
+}
+
+.navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+/* Active Page Underline */
+.navbar-nav .nav-link.active::after {
+  width: 100%;
+}
+
+/* ---------------- NAVBAR --------------- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: rgba(3, 16, 38, 0.96);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Cart Icon */
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #ff4757;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+/* ---------------- SEARCH BOX --------------- */
+.search-wrapper {
+  position: relative;
+}
+.search-wrapper .search-icon {
+  position: absolute;
+  left: 15px;
+  top: 9px;
+  color:white;
+}
+#searchBox {
+  padding-left: 40px;
+  width: 280px;
+  border-radius: 40px;
+  border: 1px solid #ccc;
+}
+
+/* ---------------- HERO --------------- */
+
+.hero-slider {
+  position: relative;
+  height: 80vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-slider .slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.hero-slider .slide.active {
+  opacity: 1;
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 22%;
+  left: 10%;
+  color: white;
+  text-shadow: 0px 3px 10px black;
+}
+
+.hero-content h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+.hero-btn {
+  margin-top: 20px;
+  display: inline-block;
+  padding: 12px 28px;
+  background: #00eaff;
+  color: black;
+  font-weight: 600;
+  border-radius: 40px;
+  text-decoration: none;
+  box-shadow: 0 0 20px #00eaff;
+}
+
+/* Arrows */
+.arrow {
+  position: absolute;
+  top: 50%;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  transform: translateY(-50%);
+  opacity: 0.7;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
+.arrow:hover { opacity: 1; }
+
+/* Slider Dots */
+.dots {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.dots span {
+  height: 12px;
+  width: 12px;
+  display: inline-block;
+  margin: 0 5px;
+  background: #ffffff80;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dots .active-dot {
+  background: #00eaff;
+}
+
+
+/* ---------------- PRODUCT CARDS --------------- */
+.product-card {
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+}
+.product-card img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Fix layout */
+.featured-products .col-6,
+.featured-products .col-md-3 {
+  display: block !important;
+}
+/* SHOP NOW BUTTON GLOW + BLUR */
+.btn-shopnow {
+  background: rgba(0, 123, 255, 0.85);
+  color: white;
+  padding: 10px 28px;
+  border-radius: 40px;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.4);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px rgba(0,123,255,0.5);
+}
+
+.btn-shopnow:hover {
+  background: #007bff;
+  transform: scale(1.08);
+  box-shadow: 0 0 18px rgba(0,123,255,0.9);
+}
+.big-btn {
+    padding: 14px 32px;      /* Button bada hoga */
+    font-size: 20px;         /* Text bada hoga */
+    border-radius: 12px;     /* Shape premium hogi */
+}
+
+/* RCShop Logo Blue Color */
+.brand-white {
+  color: whitesmoke !important;  /* Premium Blue */
+  text-shadow: 0 0 10px rgba(0, 179, 255, 0.4);
+}
+
+/* ⭐ RCShop Intro Section Design + Animation */
+.rc-intro {
+  animation: fadeInUp 1s ease forwards;
+  opacity: 0;
+}
+
+.rc-intro .intro-title {
+  font-size: 1.8rem;
+  color: #007bff;
+  text-shadow: 0px 2px 8px rgba(0,123,255,0.4);
+}
+
+.rc-intro .intro-text {
+  font-size: 1rem;
+  color:white;
+  max-width: 700px;
+  margin: 10px auto 0;
+  line-height: 1.6;
+}
+
+/* ⭐ Smooth Fade + Slide Animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+/* Gradient Glow Primary Button */
+.glow-btn {
+  background: linear-gradient(45deg, #007bff, #00e0ff);
+  border: none;
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(0, 200, 255, 0.6);
+  transition: 0.3s ease;
+}
+
+.glow-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(0, 200, 255, 0.9);
+}
+
+/* White Button Glow */
+.glow-btn-light {
+  border: 2px solid white;
+  color: white !important;
+  font-weight: 600;
+  transition: 0.3s ease;
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
+}
+
+.glow-btn-light:hover {
+  transform: scale(1.05);
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 15px rgba(255,255,255,0.8);
+}
+/* PREMIUM GLASS NAVBAR */
+.premium-nav {
+  background: rgba(0, 0, 0, 0.35) !important;
+  backdrop-filter: blur(12px);
+  padding: 12px 0;
+  animation: navFade 1.2s ease;
+}
+
+@keyframes navFade {
+  from { opacity: 0; transform: translateY(-15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* Force Navbar Links to Pure White */
+.nav-link {
+  color: #ffffff !important;
+}
+
+/* Hover color also white (underline already neon hoga) */
+.nav-link:hover {
+  color: #ffffff !important;
+}
+
+/* Active link color white */
+.nav-link.active {
+  color: #ffffff !important;
+}
+
+
+/* NAV LINK UNDERLINE ANIMATION */
+.nav-ani {
+  position: relative;
+  color: white !important;
+  margin-right: 15px;
+  font-weight: 500;
+}
+
+.nav-ani::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #00eaff;
+  transition: 0.3s;
+}
+
+.nav-ani:hover::after {
+  width: 100%;
+}
+
+/* GLASS NAVBAR */
+.premium-nav {
+  background: rgba(0, 0, 0, 0.35) !important;
+  backdrop-filter: blur(12px);
+  padding: 12px 0;
+}
+.navbar-nav {
+    flex-direction: row !important;
+}
+
+.nav-line-glow {
+    align-self: center;
+}
+
+/* NEON DIVIDER LINE */
+.nav-line-glow {
+    list-style: none;
+    display: block;
+    width: 2px;
+    height: 32px;
+    background: #00eaff;
+    box-shadow: 0 0 10px #00eaff;
+    margin: 0 15px;
+    border-radius: 10px;
+}
+
+/* RCShop Logo Blue */
+.brand-blue {
+  color: #00b3ff !important;
+  text-shadow: 0 0 10px rgba(0, 179, 255, 0.4);
+}
+
+/* ALL NAV LINKS WHITE */
+.navbar .nav-link,
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .nav-link.active {
+  color: #ffffff !important;
+}
+
+/* Neon Underline Hover */
+.nav-ani {
+  position: relative;
+  font-weight: 500;
+  margin-right: 20px;
+}
+.nav-ani::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #00eaff;
+  transition: 0.3s;
+}
+.nav-ani:hover::after {
+  width: 100%;
+}
+
+/* SEARCH GLASS BOX */
+.search-glass {
+  width: 260px;
+  border-radius: 20px;
+  padding: 8px 15px;
+  background: rgba(255, 255, 255, 0.20);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.4);
+  backdrop-filter: blur(6px);
+}
+.search-glass::placeholder { color: #e1e1e1; }
+
+/* ICON SUBTEXT (logo + search) */
+.nav-subtext {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  background: linear-gradient(90deg, #00eaff, #6affff);
+ -webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+  color: transparent;
+  opacity: 0.95;
+  text-shadow: 0 0 8px rgba(0, 238, 255, 0.4);
+}
+.nav-subtext i {
+  font-size: 13px;
+  color: #00eaff;
+  text-shadow: 0 0 8px #00eaff;
+}
+
+/* CART ICON */
+.cart-premium {
+  font-size: 24px;
+  position: relative;
+  cursor: pointer;
+  color: #00eaff;
+  text-shadow: 0 0 10px #00eaff;
+  transition: 0.3s;
+}
+.cart-premium:hover {
+  transform: scale(1.1);
+}
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+.service-box {
+    background: #ffffff;
+    border-left: 4px solid #0d6efd;
+    transition: 0.3s ease;
+}
+/* ⭐ Text fix for service section */
+.service-box h5 {
+  color:black !important;
+}
+.service-box p {
+  color: black!important;
+}
+
+.service-box:hover {
+    transform: translateY(-6px);
+    background: #e9f2ff;
+    border-left: 4px solid #004fc5;
+}
+
+/* Footer Gradient Background */
+.footer-section {
+  background: linear-gradient(135deg, #0d6efd, #0047b3);
+}
+/* CENTER SEARCH GROUP */
+.center-search {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.search-glass {
+    border-radius: 30px;
+    padding: 8px 20px;
+}
+
+/* Subtext styling */
+.nav-subtext {
+    font-size: 14px;
+    color: #0d6efd;
+    font-weight: 500;
+}
+
+.bi-truck {
+    color: #0d6efd;
+}
+.add-btn {
+  position: relative;
+  background: transparent;
+  border: 2px solid #00eaff;
+  color: #00eaff;
+  padding: 10px 28px;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+
+/* Hover background glow */
+.add-btn:hover {
+  background: #00eaff;
+  color: #000;
+  box-shadow: 0 0 12px #00eaff;
+  transform: translateY(-2px);
+}
+
+/* Animated arrow */
+.add-btn::after {
+  content: "→";
+  position: absolute;
+  right: -25px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  opacity: 0;
+  transition: 0.35s ease;
+}
+
+/* Move arrow inside on hover */
+.add-btn:hover::after {
+  right: 12px;
+  opacity: 1;
+}
+
+/* Text shift slightly left on hover */
+.add-btn:hover {
+  padding-right: 45px;
+}
+
+
+/* WhatsApp Floating Button */
+.whatsapp-float {
+  position: fixed;
+  width: 55px;
+  height: 55px;
+  background: #25d366;
+  bottom: 25px;
+  right: 25px;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 999;
+  transition: 0.3s;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+/* 🔥 ULTRA PREMIUM ANIMATED VIEW BUTTON */
+.view-btn {
+  position: relative;
+  background: transparent;
+  border: 2px solid #00eaff;
+  color: #00eaff;
+  padding: 8px 26px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+  overflow: hidden;
+}
+
+/* background + glow on hover */
+.view-btn:hover {
+  background: #00eaff;
+  color: #000;
+  box-shadow: 0 0 12px #00eaff;
+  transform: translateY(-2px);
+}
+
+/* Right arrow animation */
+.view-btn::after {
+  content: "→";
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: 0.3s;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* Arrow slide in on hover */
+.view-btn:hover::after {
+  right: 10px;
+  opacity: 1;
+}
+
+/* Text shift for arrow space */
+.view-btn:hover {
+  padding-right: 42px;
+}
+
+
+/* ================= HP/DELL ECOMMERCE THEME EXTRAS =============== */
+.section-title {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  color: #7fb9ff;
+}
+
+.section-heading {
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: #ffffff;
+}
+
+.section-desc {
+  color: #c4d4ff;
+  max-width: 680px;
+  margin: 0 auto 1.5rem;
+}
+
+/* Category pills (horizontal scroll) */
+.category-strip {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+}
+
+.category-pill {
+  min-width: 150px;
+  padding: 0.85rem 1rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(0,123,255,0.16), rgba(0,232,255,0.06));
+  border: 1px solid rgba(0,198,255,0.45);
+  color: #e6f3ff;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 0 20px rgba(0, 131, 255, 0.32);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.category-pill i {
+  font-size: 1.2rem;
+}
+
+.category-pill span {
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.category-pill:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, rgba(0,123,255,0.3), rgba(0,232,255,0.12));
+  box-shadow: 0 0 30px rgba(0, 176, 255, 0.6);
+}
+
+/* Deals / cards */
+.deal-card, .arrival-card {
+  background: radial-gradient(circle at top left, rgba(19,114,255,0.3) 0, rgba(3,12,33,0.96) 52%, rgba(1,5,18,1) 100%);
+  border-radius: 18px;
+  border: 1px solid rgba(91, 180, 255, 0.5);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.75);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.deal-card:hover, .arrival-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(112, 210, 255, 0.9);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.9);
+}
+
+.deal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(255, 81, 112, 0.15);
+  color: #ff98b0;
+  border: 1px solid rgba(255, 147, 178, 0.5);
+}
+
+.deal-timer {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(139, 199, 255, 0.4);
+  color: #d6e8ff;
+}
+
+.price-main {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffe57a;
+}
+
+.price-old {
+  text-decoration: line-through;
+  font-size: 0.9rem;
+  color: #9eacc9;
+}
+
+/* Brand strip */
+.brand-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.brand-pill {
+  padding: 0.65rem 1.5rem;
+  border-radius: 999px;
+  background: rgba(5, 23, 56, 0.9);
+  border: 1px solid rgba(122, 179, 255, 0.55);
+  color: #e4ecff;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  box-shadow: 0 0 18px rgba(0, 115, 255, 0.55);
+}
+
+.brand-pill i {
+  margin-right: 0.45rem;
+}
+
+/* Section wrappers */
+.rc-section-dark {
+  background: radial-gradient(circle at top left, rgba(23, 110, 255,0.45), rgba(1,7,20,1) 60%);
+  border-top: 1px solid rgba(130, 197, 255, 0.4);
+  border-bottom: 1px solid rgba(55, 120, 210, 0.55);
+}
+
+.rc-section-soft {
+  background: linear-gradient(135deg, rgba(6,21,48,1), rgba(4,11,33,1));
+  border-top: 1px solid rgba(41, 103, 190, 0.9);
+}
+
+.rc-tagline-soft {
+  color: #b9caf5;
+  font-size: 0.98rem;
+}
+
+/* Hero glass tweaks */
+.hero .glass-hero {
+  max-width: 720px;
+  background: radial-gradient(circle at top, rgba(58,140,255,0.45) 0, rgba(10,19,46,0.96) 50%, rgba(2,6,20,0.98) 100%);
+  border: 1px solid rgba(122, 199, 255, 0.7);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+}
+
+.hero .display-3 {
+  text-shadow: 0 0 24px rgba(0, 200, 255, 0.7);
+}
+
+.hero .lead {
+  color: #d0e2ff;
+}
+.text-primary {
+  color: #ffe57a !important;   /* Light Yellow */
+}
+.slide {
+  background-size: 55% !important;   /* <<< yahi size control karta hai */
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-color: #000; /* optional: dark backdrop for hero */
+}
+.service-box i,
+.service-box svg {
+  color: #00bfff !important;
+  fill: #00bfff !important;
+  stroke: #00bfff !important;
+}
+/* =====================================================
+   ✅ MOBILE HERO – CLEAR, SMALL & COMPACT (UPDATED)
+===================================================== */
+@media (max-width: 768px) {
+
+  /* Hero slider height reduced */
+  .hero-slider {
+    height: 60vh;              /* ⬇ height kam */
+    min-height: 360px;
+    background: #000;
+    overflow: hidden;
+  }
+
+  /* Each slide – CLEAR IMAGE */
+  .hero-slider .slide {
+    height: 100%;
+    background-size: contain !important;   /* ✅ image clear & small */
+    background-position: center center !important;
+    background-repeat: no-repeat;
+  }
+
+  /* Overlay LIGHT (no blur look) */
+  .hero-slider .slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.15),
+      rgba(0,0,0,0.55)
+    );
+    z-index: 1;
+  }
+
+  /* Hero content */
+  .hero-content {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    bottom: 10%;               /* ⬇ content thoda niche */
+    text-align: center;
+    z-index: 2;
+  }
+
+  .hero-content h1 {
+    font-size: 1.45rem;
+    line-height: 1.25;
+  }
+
+  .hero-content p {
+    font-size: 0.9rem;
+    opacity: 0.95;
+  }
+
+  .hero-btn {
+    margin-top: 8px;
+    padding: 9px 20px;
+    font-size: 13px;
+  }
+
+  /* Slider arrows */
+  .hero-slider .arrow {
+    font-size: 20px;
+    padding: 5px 8px;
+    z-index: 3;
+  }
+
+  /* Slider dots */
+  .hero-slider .dots {
+    bottom: 6px;
+  }
+}
+
+/* =====================================================
+   ✅ MOBILE RIGHT SLIDE NAV MENU (SIMPLE HAMBURGER)
+===================================================== */
+@media (max-width: 768px) {
+
+  /* Hamburger – simple 3 white lines */
+  .hamburger {
+    display: flex;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    z-index: 1102;
+
+    background: transparent;
+    border: none;
+    padding: 6px;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .hamburger span {
+    width: 26px;
+    height: 3px;
+    background: #ffffff;   /* PURE WHITE */
+    border-radius: 2px;
+  }
+
+  /* NAV DRAWER */
+  .navbar-nav {
+    position: fixed;
+    top: 0;
+    right: -260px;
+    width: 260px;
+    height: 100vh;
+    background: linear-gradient(180deg,#03162a,#001429);
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 90px 25px 25px;
+    gap: 18px;
+    transition: right 0.35s ease;
+    z-index: 1100;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.7);
+  }
+
+  /* Show drawer */
+  .navbar-nav.show {
+    right: 0;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 16px;
+    width: 100%;
+  }
+
+  /* Cart icon position */
+  .cart-premium {
+    position: absolute;
+    right: 16px;
+    top: 56px;
+    z-index: 1101;
+    font-size: 22px;
+  }
+}
+
+
+/* =====================================================
+   ✅ MOBILE CART POSITION FIX
+===================================================== */
+@media (max-width: 768px) {
+
+  .cart-premium {
+    position: absolute;
+    right: 16px;
+    top: 56px;   /* hamburger ke niche */
+    font-size: 22px;
+    transform: none; /* hover effect mobile me disable */
+  }
+}
+/* =====================================================
+   ✅ CATEGORY STRIP – MOBILE & DESKTOP FIX
+===================================================== */
+
+/* Hide scrollbar but keep scroll */
+.category-strip {
+  overflow-x: auto;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE / Edge */
+}
+
+.category-strip::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari */
+}
+
+/* Desktop: center pills, no scroll */
+@media (min-width: 769px) {
+  .category-strip {
+    justify-content: center;
+    overflow-x: hidden;
+  }
+}
+
+/* Mobile: smooth swipe */
+@media (max-width: 768px) {
+  .category-strip {
+    justify-content: flex-start;
+    padding-bottom: 8px;
+  }
+
+  .category-pill {
+    min-width: 180px;
+    flex-shrink: 0;
+  }
+}
+/* =====================================================
+   ✅ MOBILE FOOTER UPGRADE (PREMIUM)
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .rc-footer {
+    padding: 40px 15px 25px;
+    text-align: left;
+  }
+
+  .rc-footer .row > div {
+    background: rgba(255,255,255,0.04);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.35);
+  }
+
+  .rc-footer h3,
+  .rc-footer h5 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .rc-footer p,
+  .rc-footer a {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Quick links spacing */
+  .footer-link {
+    padding: 6px 0;
+  }
+
+  /* Social icons */
+  .rc-footer .bi {
+    font-size: 34px !important;
+    filter: drop-shadow(0 0 6px rgba(255,255,255,0.35));
+  }
+
+  /* Footer bottom text */
+  .rc-footer .text-center {
+    font-size: 13px;
+    margin-top: 20px;
+    opacity: 0.85;
+  }
+}
+@media (max-width: 768px) {
+  .rc-footer hr {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    opacity: 0.3;
+  }
+}
+/* =========================
+   MOBILE: HIDE NAV DIVIDERS
+========================= */
+@media (max-width: 768px) {
+  .nav-divider,
+  .nav-lines,
+  .divider,
+  .header-divider,
+  .premium-nav-divider {
+    display: none !important;
+  }
+}
+
+/* =========================
+   ACCOUNT (PREMIUM / COMPACT)
+========================= */
+
+.account-box {
+  position: relative;
+  margin-left: auto;          /* 🔥 right corner */
+  display: flex;
+  align-items: center;
+}
+
+.account-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #eafaff;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.account-main i {
+  font-size: 22px;
+  color: #00f2ff;
+}
+
+/* Text stack */
+.account-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.account-text .hello {
+  font-size: 11px;
+  opacity: 0.75;
+  font-weight: 400;
+}
+
+.account-text .account-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Dropdown */
+.account-dropdown {
+  position: absolute;
+  top: 130%;
+  right: 0;
+  background: #0b1e2d;
+  border-radius: 10px;
+  padding: 10px;
+  min-width: 180px;
+  display: none;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+.account-dropdown a {
+  display: block;
+  padding: 8px 12px;
+  color: #ffffff;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.account-dropdown a:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.account-dropdown .divider {
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+  margin: 6px 0;
+}
+
+.account-dropdown .logout {
+  color: #ff6b6b;
+}
+
+/* Hover trigger */
+.account-box:hover .account-dropdown {
+  display: block;
+}
+/* =========================
+   MOBILE HEADER REFINEMENT
+========================= */
+@media (max-width: 768px) {
+
+  /* 🔹 Account icon only (text hide) */
+  .account-text {
+    display: none;
+  }
+
+  /* 🔹 Account main alignment */
+  .account-main {
+    gap: 0;
+    padding: 6px;
+  }
+
+  .account-main i {
+    font-size: 22px;          /* 👤 clean & premium */
+    color: #00f2ff;
+  }
+
+  /* 🔹 Right side icons container (hamburger + account) */
+  .nav-right,
+  .header-right,
+  .nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 14px;                /* ✅ MAIN FIX: distance */
+  }
+ }
+
+  /* 🔹 Account dropdown */
+  .account-dropdown {
+    right: 0;
+    top: 135%;
+    min-width: 170px;
+    border-radius: 10px;
+  }
+
+/* =========================
+   MOBILE: HIDE NAV DIVIDERS
+========================= */
+@media (max-width: 768px) {
+
+  /* Hide glowing / vertical dividers */
+  .nav-line-glow,
+  .nav-divider,
+  .divider {
+    display: none !important;
+  }
+
+}
+/* =========================
+   MOBILE HEADER FINAL FIX
+========================= */
+@media (max-width: 768px) {
+
+  .rc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    position: relative;
+    z-index: 1200;
+  }
+
+  .mobile-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .account-box {
+    order: 1;
+    font-size: 22px;
+  }
+
+  .hamburger {
+    order: 2;
+    position: relative;
+    margin: 0;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .hamburger {
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+  }
+
+}
+.hero-slider .hamburger,
+.slide .hamburger {
+  position: static !important;
+}
+/* ==== LOCK DRAWER (STOP AUTO SWIPE OPEN) ==== */
+@media(max-width:768px){
+/* NAV DRAWER */
+.navbar-nav{
+  position: fixed;
+  top: 0;
+  right: -260px;
+  width: 180px;     /* OLD was 280 / 300 */
+  height: 100vh;
+  background: linear-gradient(180deg,#03162a,#001429);
+  flex-direction: column !important;
+  padding: 85px 22px;
+  gap: 16px;
+  transition: 0.35s ease;
+  z-index: 1200;
+  box-shadow: -12px 0 35px rgba(0,0,0,0.7);
+}
+.navbar-nav.show{
+  right: 0;
+}
+
+
+/* ===== DESKTOP RESTORE ===== */
+@media(min-width:769px){
+
+  .navbar-nav{
+    position:static !important;
+    height:auto !important;
+    width:auto !important;
+    max-width:none !important;
+    background:none !important;
+    box-shadow:none !important;
+    padding:0 !important;
+    overflow:visible !important;
+    touch-action:auto !important;
+  }
+
+}
+
+/* ===== ACCOUNT DROPDOWN ===== */
+.account-dropdown{ position:relative; }
+
+.account-menu{
+  position:absolute;
+  right:0;
+  top:115%;
+  background:#041b33;
+  border-radius:10px;
+  width:170px;
+  display:none;
+ box-shadow:0 15px 35px rgba(0,0,0,.5);
+  overflow:hidden;
+}
+
+.account-menu a{
+  display:block;
+  padding:12px 14px;
+  color:#fff;
+  text-decoration:none;
+}
+
+.account-menu a:hover{
+  background:#0aa9ff;
+}
+
+.logout-link{
+  margin-left:10px;
+  color:#ff5252;
+  font-weight:600;
+  text-decoration:none;
+}
+.logout-link:hover{
+  color:#fff;
+  text-shadow:0 0 10px #ff5252;
+}
+
+.logout-btn{ color:#ff5a5a; }
+}
+.service-area{
+  background:#f4faff;
+}
+
+.service-link{
+  text-decoration:none;
+}
+
+.service-grid .col-md-4{
+  display:flex;
+}
+
+/* MAIN CARD */
+.service-card{
+  width:100%;
+  background:#fff;
+  border-radius:14px;
+  padding:22px 20px;
+  text-align:center;
+  transition:.35s ease;
+  box-shadow:0 8px 22px rgba(0,0,0,.08);
+  border:2px solid transparent;
+  min-height:235px;
+}
+
+/* ICON */
+.service-card i{
+  font-size:42px;
+  color:#0d6efd;
+  margin-bottom:10px;
+}
+
+/* TITLE */
+.service-card h5{
+  font-weight:800;
+  font-size:19px;
+  margin:10px 0 6px;
+  color:#0d1b3f;
+}
+
+/* DESCRIPTION */
+.service-card p{
+  color:#333;
+  font-size:15px;
+  line-height:1.6;
+  font-weight:500;
+}
+
+/* LINK TEXT / COMING SOON */
+.service-card span{
+  display:inline-block;
+  margin-top:10px;
+  font-weight:700;
+  color:#0d6efd;
+  font-size:15px;
+}
+
+/* HOVER EFFECT */
+.service-card:hover{
+  transform:translateY(-6px);
+  border-color:#0d6efd;
+  box-shadow:0 18px 35px rgba(13,110,253,.22);
+}
+
+/* DISABLED STATE */
+.service-card.disabled{
+  opacity:.6;
+  pointer-events:none;
+}
+
+/* MOBILE COMPACT */
+@media(max-width:768px){
+  .service-card{
+    min-height:210px;
+    padding:18px 16px;
+  }
+
+  .service-card h5{
+    font-size:18px;
+  }
+
+  .service-card p{
+    font-size:14px;
+  }
+}
+.services-title{
+  color:#062f5b;              /* Dark premium blue */
+  letter-spacing:1px;
+}
+.why-premium{
+  background:linear-gradient(120deg,#021b38,#043b6a);
+  padding:90px 20px;
+  text-align:center;
+  color:#fff;
+}
+
+.why-premium h2{
+  font-size:40px;
+  margin-bottom:50px;
+  text-shadow:0 0 25px #00e5ff;
+}
+
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.why-card{
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  border-radius:20px;
+  padding:30px 22px;
+  transition:.4s ease;
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.why-card:hover{
+  transform:translateY(-12px) scale(1.05);
+  box-shadow:0 30px 60px rgba(0,0,0,.6);
+}
+
+.why-card i{
+  font-size:44px;
+  color:#00f2ff;
+  margin-bottom:12px;
+}
+
+.why-card h4{
+  font-weight:700;
+  margin:10px 0;
+}
+
+.why-card p{
+  font-size:14px;
+  color:#e0f7ff;
+}
+.service-link{text-decoration:none}
+
+.service-card.premium{
+  background:#fff;
+  border-radius:18px;
+  padding:35px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,.15);
+  border-top:5px solid #00e5ff;
+  transition:.35s;
+}
+.service-card.premium:hover{
+  transform:translateY(-8px);
+  box-shadow:0 25px 60px rgba(0,0,0,.25);
+}
+.service-card.premium i{
+  font-size:40px;color:#00e5ff;
+}
+.go-btn{
+  display:inline-block;margin-top:15px;
+  background:linear-gradient(135deg,#00e5ff,white);
+  color:#fff;padding:10px 26px;
+  border-radius:50px;font-weight:700;
+}
+/* ===== WHY CHOOSE – TRUST BUILDER ===== */
+
+.cctv-why{
+  background:linear-gradient(180deg,#f8fbff,#eef7ff);
+  padding:90px 10%;
+  text-align:center;
+}
+
+.cctv-why h2{
+  font-size:42px;
+  font-weight:900;
+  color:#002c57;
+}
+.cctv-why h2 span{color:#00bfff;}
+
+.why-grid{
+  margin-top:60px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+}
+
+.why-card{
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(16px);
+  padding:35px 30px;
+  border-radius:24px;
+  border:1px solid rgba(0,200,255,.25);
+  transition:.45s cubic-bezier(.4,0,.2,1);
+  position:relative;
+}
+
+.why-card:hover{
+  transform:translateY(-10px) scale(1.04);
+  box-shadow:0 30px 70px rgba(0,200,255,.35);
+}
+
+.why-card i{
+  font-size:40px;
+  color:#00bfff;
+  margin-bottom:15px;
+  display:block;
+  text-shadow:0 0 20px rgba(0,191,255,.4);
+}
+
+.why-card h4{
+  font-weight:800;
+  margin:10px 0;
+  color:#002c57;
+}
+.why-card p{
+  font-size:14px;
+  color:#345;
+}
+/* ===== COLORFUL CYBER TRUST CARDS ===== */
+
+.why-card{
+  background:linear-gradient(135deg,#ffffff,#e6f9ff);
+  border:2px solid rgba(0,200,255,.45);
+  box-shadow:0 0 0 rgba(0,0,0,0);
+}
+
+/* Color strip */
+.why-card:before{
+  content:"";
+  position:absolute;
+  top:0;left:0;
+  width:100%;
+  height:6px;
+  background:linear-gradient(90deg,#00f7ff,#0066ff,#00f7ff);
+  border-radius:24px 24px 0 0;
+}
+
+/* Icon neon colors */
+.why-card:nth-child(1) i{color:#00f7ff;}
+.why-card:nth-child(2) i{color:#00ff9c;}
+.why-card:nth-child(3) i{color:#00b7ff;}
+.why-card:nth-child(4) i{color:#ff6bff;}
+.why-card:nth-child(5) i{color:#ffd500;}
+
+/* Hover glow */
+.why-card:hover{
+  box-shadow:
+    0 25px 70px rgba(0,200,255,.45),
+    0 0 25px rgba(0,200,255,.6);
+}
+
+/* Text color sharpen */
+.why-card p{color:#003b5f;font-weight:500}
+/* ===== COLORFUL THEMED SERVICE BOXES ===== */
+
+.cctv-card{
+  background:linear-gradient(135deg,#ffffff,#e6faff);
+  border:2px solid rgba(0,220,255,.55);
+  box-shadow:0 15px 40px rgba(0,200,255,.15);
+}
+
+/* Color glow strip */
+.cctv-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:22px;
+  padding:2px;
+  background:linear-gradient(135deg,#00f7ff,#0066ff,#00f7ff);
+  -webkit-mask:
+     linear-gradient(#fff 0 0) content-box,
+     linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+
+/* Individual accent colors */
+.cctv-card:nth-child(1){--glow:#00ffc3;}
+.cctv-card:nth-child(2){--glow:#00b3ff;}
+.cctv-card:nth-child(3){--glow:#5bff8a;}
+.cctv-card:nth-child(4){--glow:#ffd93b;}
+.cctv-card:nth-child(5){--glow:#8affff;}
+.cctv-card:nth-child(6){--glow:#ff6bff;}
+
+/* Hover glow burst */
+.cctv-card:hover{
+  box-shadow:
+    0 30px 80px var(--glow),
+    0 0 30px var(--glow);
+}
+.service-link{
+  text-decoration:none;
+}
+
+/* ===== HP AUTHORISED RETAILER PREMIUM CARD ===== */
+
+.hp-card{
+  position:relative;
+  height:100%;                     /* ⭐ equal height fix */
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:38px 32px;
+  border-radius:24px;
+  background:linear-gradient(145deg,#ffffff,#f1fbff);
+  border:2px solid rgba(0,170,255,.45);
+  box-shadow:0 20px 55px rgba(0,140,255,.18);
+  transition:.55s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;
+}
+
+/* Neon glass border */
+.hp-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:24px;
+  padding:2px;
+  background:linear-gradient(135deg,#00f7ff,#0066ff,#00f7ff);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+          mask-composite:exclude;
+}
+
+/* Shine sweep */
+.hp-card:after{
+  content:"";
+  position:absolute;
+  top:-110%;
+  left:-60%;
+  width:220%;
+  height:220%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.35),transparent);
+  transition:.7s;
+}
+.hp-card:hover:after{
+  top:110%;
+  left:110%;
+}
+
+/* Hover lift */
+.hp-card:hover{
+  transform:translateY(-16px) scale(1.06);
+  box-shadow:
+    0 35px 95px rgba(0,180,255,.55),
+    0 0 35px rgba(0,200,255,.6);
+  border-color:#00f7ff;
+}
+
+/* Text spacing equalization */
+.hp-card p{
+  min-height:60px;
+  font-weight:600;
+  color:#003c66;
+}
+
+/* Button always bottom */
+.hp-card a,
+.hp-card .btn{
+  margin-top:auto;
+}
+
+/* Live badge */
+.live-badge{
+  display:inline-block;
+  margin:12px auto 0;
+  padding:7px 22px;
+  border-radius:50px;
+  background:linear-gradient(135deg,#00f7ff,white);
+  color:#fff;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.5px;
+  box-shadow:0 0 28px rgba(0,230,255,.8);
+}
+/* ===== ULTRA PREMIUM SALES CARD ===== */
+
+.sales-card{
+  position:relative;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:38px 34px;
+  border-radius:24px;
+  background:linear-gradient(145deg,#ffffff,#f1fbff);
+  border:2px solid rgba(0,170,255,.45);
+  box-shadow:0 20px 55px rgba(0,140,255,.18);
+  transition:.55s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;
+}
+
+/* Neon border */
+.sales-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:24px;
+  padding:2px;
+  background:linear-gradient(135deg,#00f7ff,#0066ff,#00f7ff);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+          mask-composite:exclude;
+}
+
+/* Shine sweep */
+.sales-card:after{
+  content:"";
+  position:absolute;
+  top:-120%;
+  left:-60%;
+  width:220%;
+  height:220%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.35),transparent);
+  transition:.7s;
+}
+.sales-card:hover:after{
+  top:120%;
+  left:120%;
+}
+
+/* Hover lift */
+.sales-card:hover{
+  transform:translateY(-16px) scale(1.06);
+  box-shadow:
+    0 35px 95px rgba(0,180,255,.55),
+    0 0 35px rgba(0,200,255,.6);
+  border-color:#00f7ff;
+}
+
+/* Icon glow */
+.sales-card i{
+  font-size:38px;
+  color:#0077ff;
+  transition:.4s;
+}
+.sales-card:hover i{
+  color:#00e5ff;
+  text-shadow:0 0 18px #00e5ff;
+}
+
+/* Text equal height */
+.sales-card p{
+  min-height:80px;
+  font-weight:600;
+  color:#003c66;
+}
+
+/* Premium button */
+.go-btn{
+  display:inline-block;
+  margin-top:22px;
+  background:linear-gradient(135deg,#00f7ff,white);
+  color:#fff;
+  padding:12px 30px;
+  border-radius:50px;
+  font-weight:800;
+  letter-spacing:.4px;
+  box-shadow:0 0 25px rgba(0,230,255,.6);
+  transition:.4s;
+}
+.sales-card:hover .go-btn{
+  transform:scale(1.12);
+  box-shadow:0 0 40px rgba(0,230,255,.9);
+}
+/* ===== ULTRA PREMIUM REPAIR CARD ===== */
+
+.repair-card{
+  position:relative;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:38px 34px;
+  border-radius:24px;
+  background:linear-gradient(145deg,#ffffff,#f1fbff);
+  border:2px solid rgba(0,170,255,.45);
+  box-shadow:0 20px 55px rgba(0,140,255,.18);
+  transition:.55s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;
+}
+
+/* Neon border */
+.repair-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:24px;
+  padding:2px;
+  background:linear-gradient(135deg,#00f7ff,#0066ff,#00f7ff);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+          mask-composite:exclude;
+}
+
+/* Shine sweep */
+.repair-card:after{
+  content:"";
+  position:absolute;
+  top:-120%;
+  left:-60%;
+  width:220%;
+  height:220%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.35),transparent);
+  transition:.7s;
+}
+.repair-card:hover:after{
+  top:120%;
+  left:120%;
+}
+
+/* Hover lift */
+.repair-card:hover{
+  transform:translateY(-16px) scale(1.06);
+  box-shadow:
+    0 35px 95px rgba(0,180,255,.55),
+    0 0 35px rgba(0,200,255,.6);
+  border-color:#00f7ff;
+}
+
+/* Icon glow */
+.repair-card i{
+  font-size:38px;
+  color:#0077ff;
+  transition:.4s;
+}
+.repair-card:hover i{
+  color:#00e5ff;
+  text-shadow:0 0 18px #00e5ff;
+}
+
+/* Equal text height */
+.repair-card p{
+  min-height:80px;
+  font-weight:600;
+  color:#003c66;
+}
+
+/* Button glow */
+.repair-card .go-btn{
+  display:inline-block;
+  margin-top:22px;
+  background:linear-gradient(135deg,#00f7ff,#0066ff);
+  color:#fff;
+  padding:12px 30px;
+  border-radius:50px;
+  font-weight:800;
+  letter-spacing:.4px;
+  box-shadow:0 0 25px rgba(0,230,255,.6);
+  transition:.4s;
+}
+.repair-card:hover .go-btn{
+  transform:scale(1.12);
+  box-shadow:0 0 40px rgba(0,230,255,.9);
+}
+.rc-menu a[href*="support"]{
+  color:#fff !important;
+  text-decoration:none !important;
+}
+.rc-menu a[href*="support"]:hover{
+  color:#00e5ff !important;
+}
+/* ===============================
+   TONER REFILL PREMIUM HIGHLIGHT
+================================ */
+.toner-highlight{
+    transform: scale(1.12);
+    border:2px solid #00e5ff;
+    box-shadow: 0 20px 60px rgba(0,229,255,0.45);
+    background: linear-gradient(180deg,#ffffff,#f3fbff);
+    z-index: 5;
+}
+
+.toner-highlight h5{font-size:22px;}
+.toner-highlight p{font-size:15px;}
+.toner-highlight span{font-weight:700;color:#007bff;}
+
+@media(max-width:768px){
+    .toner-highlight{transform:scale(1);}
+}
+/* ===============================
+   HP AUTHORISED RETAILER – SOLID
+================================ */
+
+.hp-solid{
+    opacity: 1 !important;
+    background: #ffffff;
+    border: 2px solid #2d6cff;
+    box-shadow: 0 20px 50px rgba(45,108,255,0.35);
+    transform: scale(1.03);
+}
+
+/* Icon strong */
+.hp-solid i{
+    color:#2d6cff;
+    filter: drop-shadow(0 0 6px rgba(45,108,255,.6));
+}
+
+/* Text darker */
+.hp-solid h5{
+    color:#0b1b3f;
+    font-size:21px;
+    font-weight:800;
+}
+
+.hp-solid p{
+    color:#444;
+}
+
+/* Button glow */
+.hp-solid span,
+.hp-solid .btn,
+.hp-solid a{
+    color:#2d6cff;
+    font-weight:700;
+}
+/* ===============================
+   SERVICES EQUAL HEIGHT FIX
+================================ */
+
+.service-card{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Disable scaling so all boxes same */
+.toner-highlight,
+.hp-solid{
+    transform: none !important;
+}
+
+/* Highlight glow without size change */
+.toner-highlight{
+    border: 2px solid #00e5ff;
+    box-shadow: 0 20px 45px rgba(0,229,255,0.35);
+}
+
+.hp-solid{
+    border: 2px solid #2d6cff;
+    box-shadow: 0 20px 45px rgba(45,108,255,0.35);
+}
