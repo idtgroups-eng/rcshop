@@ -40,12 +40,10 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # =======================
-# APPS (admin & sessions disabled)
+# APPS (NO admin, NO auth, NO sessions)
 # =======================
 INSTALLED_APPS = [
-    'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
 
     'django.contrib.sites',
@@ -55,11 +53,9 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+
 # =======================
-# MIDDLEWARE (sessions disabled)
-# =======================
-# =======================
-# MIDDLEWARE (NO sessions, NO auth)
+# MIDDLEWARE (NO auth, NO sessions)
 # =======================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,10 +63,6 @@ MIDDLEWARE = [
 
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-
-    # ❌ REMOVE (requires sessions)
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'django.contrib.messages.middleware.MessageMiddleware',
 
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
