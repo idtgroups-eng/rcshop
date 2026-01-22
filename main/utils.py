@@ -10,48 +10,123 @@ BREVO_API_KEY = getattr(settings, "BREVO_API_KEY", None)
 BREVO_FROM_EMAIL = getattr(settings, "DEFAULT_FROM_EMAIL", "support@rcshop.co.in")
 
 
+from fpdf import FPDF
+from io import BytesIO
+from datetime import datetime
+
 # ===============================
-# PDF INVOICE GENERATOR (Render Compatible & Unicode Safe)
+# PDF INVOICE GENERATOR (PREMIUM – FPDF)
 # ===============================
 def generate_invoice_pdf(order):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
-    pdf.set_font("Arial", size=12)
 
-    pdf.cell(0, 10, "RCShop Invoice", ln=True, align="C")
+    # ---------------- LOGO ----------------
+    try:
+        pdf.image("static/images/logo.png", x=10, y=8, w=30)  # path adjust if needed
+    except:
+        pass
+
+    # ---------------- HEADER ----------------
+    pdf.set_font("Arial", "B", 16)
+    pdf.cell(0, 10, "RCShop", ln=True, align="C")
+
+    pdf.set_font("Arial", size=11)
+    pdf.cell(0, 8, "TAX INVOICE", ln=True, align="C")
     pdf.ln(5)
 
-    pdf.cell(0, 8, f"Order ID: {order.id}", ln=True)
-    pdf.cell(0, 8, f"Name: {order.name}", ln=True)
-    pdf.cell(0, 8, f"Phone: {order.mobile}", ln=True)
-    pdf.cell(0, 8, f"Email: {order.email}", ln=True)
-
-    # Rupee symbol hata kar INR use kiya – encoding safe
-    pdf.cell(0, 8, f"Total Amount: INR {order.total_amount}", ln=True)
-
+    pdf.line(10, pdf.get_y(), 200, pdf.get_y())
     pdf.ln(8)
 
+    # ---------------- INVOICE META ----------------
+    invoice_no = f"RCS-{datetime.now().year}-{order.id:05d}"
+
+    pdf.set_font("Arial", "B", 11)
+    pdf.cell(0, 7, f"Invoice No: {invoice_no}", ln=True)
+
+    pdf.set_font("Arial", size=10)
+    pdf.cell(0, 7, f"Order ID: {order.id}", ln=True)
+    pdf.cell(0, 7, f"Invoice Date: {datetime.now().strftime('%d-%m-%Y')}", ln=True)
+
+    payment_mode = "PAID" if getattr(order, "is_paid", True) else "COD"
+    pdf.ln(3)
+
+    # ---------------- PAYMENT BADGE ----------------
+    pdf.set_font("Arial", "B", 11)
+    if payment_mode == "PAID":
+        pdf.set_text_color(0, 128, 0)
+    else:
+        pdf.set_text_color(200, 0, 0)
+
+    pdf.cell(0, 8, f"Payment Status: {payment_mode}", ln=True)
+    pdf.set_text_color(0, 0, 0)
+
+    pdf.ln(5)
+
+    # ---------------- CUSTOMER DETAILS ----------------
+    pdf.set_font("Arial", "B", 11)
+    pdf.cell(0, 8, "Customer Details", ln=True)
+
+    pdf.set_font("Arial", size=10)
+    pdf.cell(0, 7, f"Name: {order.name}", ln=True)
+    pdf.cell(0, 7, f"Phone: {order.mobile}", ln=True)
+    pdf.cell(0, 7, f"Email: {order.email}", ln=True)
+    if hasattr(order, "address") and order.address:
+        pdf.multi_cell(0, 6, f"Address: {order.address}")
+
+    pdf.ln(5)
+
+    # ---------------- PRODUCT TABLE ----------------
+    pdf.set_font("Arial", "B", 11)
+    pdf.cell(0, 8, "Order Items", ln=True)
+
+    pdf.set_font("Arial", "B", 10)
+    pdf.cell(80, 8, "Product", 1)
+    pdf.cell(30, 8, "Qty", 1, align="C")
+    pdf.cell(40, 8, "Price", 1, align="C")
+    pdf.cell(40, 8, "Total", 1, align="C")
+    pdf.ln()
+
+    pdf.set_font("Arial", size=10)
+
+    # Adjust this according to your order-item relation
+    for item in order.items.all():
+        pdf.cell(80, 8, item.product_name[:35], 1)
+        pdf.cell(30, 8, str(item.quantity), 1, align="C")
+        pdf.cell(40, 8, f"INR {item.price}", 1, align="C")
+        pdf.cell(40, 8, f"INR {item.price * item.quantity}", 1, align="C")
+        pdf.ln()
+
+    pdf.ln(4)
+
+    # ---------------- TOTAL SUMMARY ----------------
+    pdf.set_font("Arial", "B", 11)
+    pdf.cell(150, 8, "Grand Total", 1)
+    pdf.cell(40, 8, f"INR {order.total_amount}", 1, align="C")
+    pdf.ln(10)
+
+    # ---------------- FOOTER ----------------
+    pdf.set_font("Arial", size=9)
     pdf.multi_cell(
         0,
-        8,
-        "Thank you for shopping with RCShop.\nYour order has been successfully placed."
+        6,
+        "RCShop\n"
+        "Gurukul Building Near OldBustand Rajgarh Sirmour H.P. – 173101\n"
+        "GSTIN: 07ABCDE1234F1Z5\n\n"
+        "This is a computer generated invoice. No signature required."
     )
 
+    # ---------------- OUTPUT ----------------
     buffer = BytesIO()
-
     try:
-        pdf_output = pdf.output(dest='S').encode('latin-1', errors='ignore')
+        pdf_output = pdf.output(dest="S").encode("latin-1", errors="ignore")
         buffer.write(pdf_output)
         buffer.seek(0)
         return buffer.read()
     except Exception as e:
         print("PDF Write Error:", e)
         return None
-
-
-import requests
-from django.conf import settings
 
 # ===============================
 # BREVO EMAIL SENDER (Production Safe)
