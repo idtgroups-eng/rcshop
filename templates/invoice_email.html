@@ -1,6 +1,94 @@
-<h2>Thank you for your order!</h2>
-<p>Hello {{order.name}},</p>
-<p>Your payment is successful.</p>
-<p><b>Order ID:</b> {{order.id}}</p>
-<p><b>Total:</b> ₹{{order.total_amount}}</p>
-<p>We will dispatch your order soon.</p>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Order Confirmation</title>
+</head>
+
+<body style="margin:0;padding:0;background:#f4f6f8;font-family:Segoe UI,Arial,sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:20px;">
+<tr>
+<td align="center">
+
+<!-- MAIN CARD -->
+<table width="600" cellpadding="0" cellspacing="0"
+       style="background:#ffffff;border-radius:14px;overflow:hidden;
+              box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+
+    <!-- HEADER -->
+    <tr>
+        <td style="background:#0d6efd;color:#ffffff;padding:25px;text-align:center;">
+            <h1 style="margin:0;font-size:24px;">RCShop</h1>
+            <p style="margin:6px 0 0;font-size:14px;">Premium Tech Store</p>
+        </td>
+    </tr>
+
+    <!-- CONTENT -->
+    <tr>
+        <td style="padding:30px;color:#333333;font-size:14px;line-height:1.6;">
+
+            <h2 style="margin-top:0;color:#000;">Thank you for your order 🎉</h2>
+
+            <p>Hello <strong>{{ order.name }}</strong>,</p>
+
+            <p>
+                Your order has been <strong style="color:#198754;">successfully placed</strong>.
+                Please find your invoice attached with this email.
+            </p>
+
+            <!-- ORDER SUMMARY -->
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:#f8f9fb;border-radius:10px;padding:18px;margin:20px 0;">
+                <tr>
+                    <td><strong>Order ID</strong></td>
+                    <td align="right">#{{ order.id }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Payment Status</strong></td>
+                    <td align="right" style="color:#198754;font-weight:bold;">
+                        {{ order.payment_mode|default:"Paid" }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Total Amount</strong></td>
+                    <td align="right"><strong>₹{{ order.total_amount }}</strong></td>
+                </tr>
+            </table>
+
+            <p>
+                🚚 <strong>Shipping Update:</strong><br>
+                We will dispatch your order soon and notify you once it is shipped.
+            </p>
+
+            <!-- NOTE -->
+            <table width="100%" cellpadding="0" cellspacing="0"
+                   style="background:#eef4ff;border-radius:10px;padding:15px;margin-top:20px;">
+                <tr>
+                    <td style="font-size:13px;color:#333;">
+                        📎 <strong>Invoice PDF Attached</strong><br>
+                        Please keep the invoice for warranty and future reference.
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+
+    <!-- FOOTER -->
+    <tr>
+        <td style="background:#f8f9fb;text-align:center;padding:18px;
+                   font-size:12px;color:#666;">
+            Need help? Contact us at <strong>support@rcshop.in</strong><br>
+            © {{ year|default:"2026" }} RCShop. All rights reserved.
+        </td>
+    </tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>
