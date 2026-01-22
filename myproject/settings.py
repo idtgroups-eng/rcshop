@@ -185,12 +185,13 @@ ADMIN_EMAIL = os.getenv(
 BREVO_API_KEY = os.getenv("BREVO_API_KEY")
 
 # =======================
-# AUTH
+# AUTH (FIXED)
 # =======================
 
-LOGIN_URL = "login"
-LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/products/"   # ya koi bhi public page
 LOGOUT_REDIRECT_URL = "/"
+
 
 
 # =======================

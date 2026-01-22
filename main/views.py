@@ -132,9 +132,7 @@ def track_ticket(request):
 # =========================
 # CHECKOUT
 # =========================
-@login_required(login_url="login")
 def checkout(request):
-
     user = request.user
     profile, _ = UserProfile.objects.get_or_create(user=user)
 
@@ -304,9 +302,7 @@ def cod_details(request):
 # =========================
 # VIEW INVOICE PAGE
 # =========================
-@login_required(login_url="login")
 def view_invoice(request):
-
     order_id = request.GET.get("order_id")
 
     if not order_id:
