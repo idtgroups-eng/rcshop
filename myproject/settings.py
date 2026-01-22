@@ -189,9 +189,8 @@ BREVO_API_KEY = os.getenv("BREVO_API_KEY")
 # =======================
 
 LOGIN_URL = "/login/"
-LOGIN_REDIRECT_URL = "/products/"   # ya koi bhi public page
+LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
-
 
 
 # =======================
