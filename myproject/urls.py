@@ -41,12 +41,6 @@ urlpatterns = [
     path("website-policy/", views.website_policy, name="website_policy"),
     path("track-ticket/", views.track_ticket, name="track_ticket"),
 
-    # 🚀 Railway specific route REMOVED
-    # path("railway-ping/", views.railway_ping),
-
-    # ================= LIVE ADMIN CREATOR =================
-    path("create-live-admin/", create_live_admin),
-
     # ================= SERVICES =================
     path("computer-sales/", views.computer_sales, name="computer_sales"),
     path("repair-maintenance/", views.repair_maintenance, name="repair_maintenance"),
