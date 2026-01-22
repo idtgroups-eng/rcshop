@@ -18,26 +18,25 @@ DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 
 ALLOWED_HOSTS = [
-    "*",
     "127.0.0.1",
     "localhost",
     ".onrender.com",
     "rcshop.co.in",
-    "www.rcshop.co.in"
+    "www.rcshop.co.in",
 ]
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
     "https://rcshop.co.in",
     "https://www.rcshop.co.in",
     "https://*.onrender.com"
 ]
 
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = False
+USE_X_FORWARDED_HOST = True
 
 # =======================
 # APPS (REQUIRED CORE APPS)
@@ -161,8 +160,7 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 WHITENOISE_MAX_AGE = 31536000
 
