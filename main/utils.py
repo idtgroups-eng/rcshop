@@ -51,7 +51,6 @@ def generate_invoice_pdf(order):
         pdf.cell(0, 7, f"Order ID: {order.id}", ln=True)
         pdf.cell(0, 7, f"Invoice Date: {datetime.now().strftime('%d-%m-%Y')}", ln=True)
 
-        # IMPORTANT FIX (COD safe)
         payment_mode = "PAID" if getattr(order, "is_paid", False) else "COD"
         pdf.ln(3)
 
@@ -81,7 +80,7 @@ def generate_invoice_pdf(order):
 
         pdf.ln(5)
 
-        # ---------------- PRODUCT TABLE (SAFE) ----------------
+        # ---------------- PRODUCT TABLE (ULTRA SAFE) ----------------
         pdf.set_font("Arial", "B", 11)
         pdf.cell(0, 8, "Order Items", ln=True)
 
@@ -97,19 +96,23 @@ def generate_invoice_pdf(order):
         items = []
         try:
             if hasattr(order, "items"):
-                items = order.items.all()
+                if hasattr(order.items, "all"):
+                    items = order.items.all()
+                elif isinstance(order.items, list):
+                    items = order.items
             elif hasattr(order, "order_items"):
                 items = order.order_items.all()
         except Exception as e:
             print("Order items fetch error:", e)
+            items = []
 
         if items:
             for item in items:
-                name = getattr(item, "product_name", "Item")
-                qty = getattr(item, "quantity", 1)
-                price = getattr(item, "price", 0)
+                name = str(getattr(item, "product_name", "Item"))[:35]
+                qty = int(getattr(item, "quantity", 1))
+                price = float(getattr(item, "price", 0))
 
-                pdf.cell(80, 8, str(name)[:35], 1)
+                pdf.cell(80, 8, name, 1)
                 pdf.cell(30, 8, str(qty), 1, align="C")
                 pdf.cell(40, 8, f"INR {price}", 1, align="C")
                 pdf.cell(40, 8, f"INR {price * qty}", 1, align="C")
@@ -122,16 +125,22 @@ def generate_invoice_pdf(order):
         # ---------------- TOTAL SUMMARY ----------------
         pdf.set_font("Arial", "B", 11)
         pdf.cell(150, 8, "Grand Total", 1)
-        pdf.cell(40, 8, f"INR {getattr(order, 'total_amount', 0)}", 1, align="C")
+        pdf.cell(
+            40,
+            8,
+            f"INR {getattr(order, 'total_amount', 0)}",
+            1,
+            align="C"
+        )
         pdf.ln(10)
 
-        # ---------------- FOOTER ----------------
+        # ---------------- FOOTER (UNICODE SAFE) ----------------
         pdf.set_font("Arial", size=9)
         pdf.multi_cell(
             0,
             6,
             "RCShop\n"
-            "Gurukul Building Near Old Bus Stand, Rajgarh Sirmour H.P. – 173101\n"
+            "Gurukul Building Near Old Bus Stand, Rajgarh Sirmour H.P. - 173101\n"
             "GSTIN: 07ABCDE1234F1Z5\n\n"
             "This is a computer generated invoice. No signature required."
         )
@@ -144,9 +153,10 @@ def generate_invoice_pdf(order):
         return buffer.read()
 
     except Exception as e:
-        # 🚨 MOST IMPORTANT: never break order/email flow
+        # 🚨 NEVER break order / email / redirect flow
         print("INVOICE PDF FAILED (SAFE CONTINUE):", e)
         return None
+
 
 
 # ===============================
