@@ -14,119 +14,140 @@ from fpdf import FPDF
 from io import BytesIO
 from datetime import datetime
 
+
 # ===============================
-# PDF INVOICE GENERATOR (PREMIUM – FPDF)
+# PDF INVOICE GENERATOR (SAFE + PREMIUM – FPDF)
 # ===============================
 def generate_invoice_pdf(order):
-    pdf = FPDF()
-    pdf.add_page()
-    pdf.set_auto_page_break(auto=True, margin=15)
-
-    # ---------------- LOGO ----------------
     try:
-        pdf.image("static/images/logo.png", x=10, y=8, w=30)  # path adjust if needed
-    except:
-        pass
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.set_auto_page_break(auto=True, margin=15)
 
-    # ---------------- HEADER ----------------
-    pdf.set_font("Arial", "B", 16)
-    pdf.cell(0, 10, "RCShop", ln=True, align="C")
+        # ---------------- LOGO ----------------
+        try:
+            pdf.image("static/images/logo.png", x=10, y=8, w=30)
+        except Exception as e:
+            print("Logo load skipped:", e)
 
-    pdf.set_font("Arial", size=11)
-    pdf.cell(0, 8, "TAX INVOICE", ln=True, align="C")
-    pdf.ln(5)
+        # ---------------- HEADER ----------------
+        pdf.set_font("Arial", "B", 16)
+        pdf.cell(0, 10, "RCShop", ln=True, align="C")
 
-    pdf.line(10, pdf.get_y(), 200, pdf.get_y())
-    pdf.ln(8)
+        pdf.set_font("Arial", size=11)
+        pdf.cell(0, 8, "TAX INVOICE", ln=True, align="C")
+        pdf.ln(5)
 
-    # ---------------- INVOICE META ----------------
-    invoice_no = f"RCS-{datetime.now().year}-{order.id:05d}"
+        pdf.line(10, pdf.get_y(), 200, pdf.get_y())
+        pdf.ln(8)
 
-    pdf.set_font("Arial", "B", 11)
-    pdf.cell(0, 7, f"Invoice No: {invoice_no}", ln=True)
+        # ---------------- INVOICE META ----------------
+        invoice_no = f"RCS-{datetime.now().year}-{order.id:05d}"
 
-    pdf.set_font("Arial", size=10)
-    pdf.cell(0, 7, f"Order ID: {order.id}", ln=True)
-    pdf.cell(0, 7, f"Invoice Date: {datetime.now().strftime('%d-%m-%Y')}", ln=True)
+        pdf.set_font("Arial", "B", 11)
+        pdf.cell(0, 7, f"Invoice No: {invoice_no}", ln=True)
 
-    payment_mode = "PAID" if getattr(order, "is_paid", True) else "COD"
-    pdf.ln(3)
+        pdf.set_font("Arial", size=10)
+        pdf.cell(0, 7, f"Order ID: {order.id}", ln=True)
+        pdf.cell(0, 7, f"Invoice Date: {datetime.now().strftime('%d-%m-%Y')}", ln=True)
 
-    # ---------------- PAYMENT BADGE ----------------
-    pdf.set_font("Arial", "B", 11)
-    if payment_mode == "PAID":
-        pdf.set_text_color(0, 128, 0)
-    else:
-        pdf.set_text_color(200, 0, 0)
+        # IMPORTANT FIX (COD safe)
+        payment_mode = "PAID" if getattr(order, "is_paid", False) else "COD"
+        pdf.ln(3)
 
-    pdf.cell(0, 8, f"Payment Status: {payment_mode}", ln=True)
-    pdf.set_text_color(0, 0, 0)
+        # ---------------- PAYMENT STATUS ----------------
+        pdf.set_font("Arial", "B", 11)
+        if payment_mode == "PAID":
+            pdf.set_text_color(0, 128, 0)
+        else:
+            pdf.set_text_color(200, 0, 0)
 
-    pdf.ln(5)
+        pdf.cell(0, 8, f"Payment Status: {payment_mode}", ln=True)
+        pdf.set_text_color(0, 0, 0)
+        pdf.ln(5)
 
-    # ---------------- CUSTOMER DETAILS ----------------
-    pdf.set_font("Arial", "B", 11)
-    pdf.cell(0, 8, "Customer Details", ln=True)
+        # ---------------- CUSTOMER DETAILS ----------------
+        pdf.set_font("Arial", "B", 11)
+        pdf.cell(0, 8, "Customer Details", ln=True)
 
-    pdf.set_font("Arial", size=10)
-    pdf.cell(0, 7, f"Name: {order.name}", ln=True)
-    pdf.cell(0, 7, f"Phone: {order.mobile}", ln=True)
-    pdf.cell(0, 7, f"Email: {order.email}", ln=True)
-    if hasattr(order, "address") and order.address:
-        pdf.multi_cell(0, 6, f"Address: {order.address}")
+        pdf.set_font("Arial", size=10)
+        pdf.cell(0, 7, f"Name: {getattr(order, 'name', '')}", ln=True)
+        pdf.cell(0, 7, f"Phone: {getattr(order, 'mobile', '')}", ln=True)
+        pdf.cell(0, 7, f"Email: {getattr(order, 'email', '')}", ln=True)
 
-    pdf.ln(5)
+        address = getattr(order, "address", "")
+        if address:
+            pdf.multi_cell(0, 6, f"Address: {address}")
 
-    # ---------------- PRODUCT TABLE ----------------
-    pdf.set_font("Arial", "B", 11)
-    pdf.cell(0, 8, "Order Items", ln=True)
+        pdf.ln(5)
 
-    pdf.set_font("Arial", "B", 10)
-    pdf.cell(80, 8, "Product", 1)
-    pdf.cell(30, 8, "Qty", 1, align="C")
-    pdf.cell(40, 8, "Price", 1, align="C")
-    pdf.cell(40, 8, "Total", 1, align="C")
-    pdf.ln()
+        # ---------------- PRODUCT TABLE (SAFE) ----------------
+        pdf.set_font("Arial", "B", 11)
+        pdf.cell(0, 8, "Order Items", ln=True)
 
-    pdf.set_font("Arial", size=10)
-
-    # Adjust this according to your order-item relation
-    for item in order.items.all():
-        pdf.cell(80, 8, item.product_name[:35], 1)
-        pdf.cell(30, 8, str(item.quantity), 1, align="C")
-        pdf.cell(40, 8, f"INR {item.price}", 1, align="C")
-        pdf.cell(40, 8, f"INR {item.price * item.quantity}", 1, align="C")
+        pdf.set_font("Arial", "B", 10)
+        pdf.cell(80, 8, "Product", 1)
+        pdf.cell(30, 8, "Qty", 1, align="C")
+        pdf.cell(40, 8, "Price", 1, align="C")
+        pdf.cell(40, 8, "Total", 1, align="C")
         pdf.ln()
 
-    pdf.ln(4)
+        pdf.set_font("Arial", size=10)
 
-    # ---------------- TOTAL SUMMARY ----------------
-    pdf.set_font("Arial", "B", 11)
-    pdf.cell(150, 8, "Grand Total", 1)
-    pdf.cell(40, 8, f"INR {order.total_amount}", 1, align="C")
-    pdf.ln(10)
+        items = []
+        try:
+            if hasattr(order, "items"):
+                items = order.items.all()
+            elif hasattr(order, "order_items"):
+                items = order.order_items.all()
+        except Exception as e:
+            print("Order items fetch error:", e)
 
-    # ---------------- FOOTER ----------------
-    pdf.set_font("Arial", size=9)
-    pdf.multi_cell(
-        0,
-        6,
-        "RCShop\n"
-        "Gurukul Building Near OldBustand Rajgarh Sirmour H.P. – 173101\n"
-        "GSTIN: 07ABCDE1234F1Z5\n\n"
-        "This is a computer generated invoice. No signature required."
-    )
+        if items:
+            for item in items:
+                name = getattr(item, "product_name", "Item")
+                qty = getattr(item, "quantity", 1)
+                price = getattr(item, "price", 0)
 
-    # ---------------- OUTPUT ----------------
-    buffer = BytesIO()
-    try:
+                pdf.cell(80, 8, str(name)[:35], 1)
+                pdf.cell(30, 8, str(qty), 1, align="C")
+                pdf.cell(40, 8, f"INR {price}", 1, align="C")
+                pdf.cell(40, 8, f"INR {price * qty}", 1, align="C")
+                pdf.ln()
+        else:
+            pdf.cell(190, 8, "Order items details unavailable", 1, ln=True)
+
+        pdf.ln(4)
+
+        # ---------------- TOTAL SUMMARY ----------------
+        pdf.set_font("Arial", "B", 11)
+        pdf.cell(150, 8, "Grand Total", 1)
+        pdf.cell(40, 8, f"INR {getattr(order, 'total_amount', 0)}", 1, align="C")
+        pdf.ln(10)
+
+        # ---------------- FOOTER ----------------
+        pdf.set_font("Arial", size=9)
+        pdf.multi_cell(
+            0,
+            6,
+            "RCShop\n"
+            "Gurukul Building Near Old Bus Stand, Rajgarh Sirmour H.P. – 173101\n"
+            "GSTIN: 07ABCDE1234F1Z5\n\n"
+            "This is a computer generated invoice. No signature required."
+        )
+
+        # ---------------- OUTPUT ----------------
+        buffer = BytesIO()
         pdf_output = pdf.output(dest="S").encode("latin-1", errors="ignore")
         buffer.write(pdf_output)
         buffer.seek(0)
         return buffer.read()
+
     except Exception as e:
-        print("PDF Write Error:", e)
+        # 🚨 MOST IMPORTANT: never break order/email flow
+        print("INVOICE PDF FAILED (SAFE CONTINUE):", e)
         return None
+
 
 # ===============================
 # BREVO EMAIL SENDER (Production Safe)
