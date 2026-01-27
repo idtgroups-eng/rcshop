@@ -65,8 +65,10 @@ function buyNow(name, price, img){
     window.location.href = "/cart/";
 }
 
-function openProductDetails(name, price, images, extra = {}) {
+function openProductDetails(id, name, price, images, extra = {}) {
+
     let product = {
+        id,
         name,
         price,
         images,
@@ -76,8 +78,8 @@ function openProductDetails(name, price, images, extra = {}) {
 
     localStorage.setItem("selectedProduct", JSON.stringify(product));
 
-    // Django redirect
-    window.location.href = "/product_details/";
+    // ✅ Correct Django redirect with ID
+    window.location.href = "/product-details/" + id + "/";
 }
 
 
@@ -213,4 +215,22 @@ document.querySelectorAll(".dropdown").forEach(d=>{
   });
 });
 
+// ✅ View Product Details Function
+function openProductDetails(id, name, price, images, extra = {}) {
+
+    let product = {
+        id: id,
+        name: name,
+        price: price,
+        images: images,
+        highlights: extra.highlights || [],
+        specs: extra.specs || []
+    };
+
+    // Save Selected Product Data
+    localStorage.setItem("selectedProduct", JSON.stringify(product));
+
+    // ✅ Redirect to Django Product Details Page with ID
+    window.location.href = "/product-details/" + id + "/";
+}
 

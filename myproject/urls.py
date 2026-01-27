@@ -27,8 +27,6 @@ def create_live_admin(request):
 
 urlpatterns = [
 
-    # ================= ADMIN =================
-
     # ================= BASIC PAGES =================
     path("", views.index, name="home"),
     path("about/", views.about, name="about"),

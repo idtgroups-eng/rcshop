@@ -47,7 +47,8 @@ except Exception as e:
 # =========================
 def index(request): return render(request, "index.html")
 def about(request): return render(request, "about.html")
-def product_details(request): return render(request, "product_details.html")
+def product_details(request):
+    return render(request, "product_details.html")
 def cart(request): return render(request, "cart.html")
 def contact(request): return render(request, "contact.html")
 
