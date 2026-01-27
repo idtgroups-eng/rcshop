@@ -11,11 +11,9 @@ load_dotenv(BASE_DIR / ".env")
 # =======================
 # SECURITY
 # =======================
-
 SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-local-dev-only")
 
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
-
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -25,12 +23,20 @@ ALLOWED_HOSTS = [
     "www.rcshop.co.in",
 ]
 
-
 CSRF_TRUSTED_ORIGINS = [
     "https://rcshop.co.in",
     "https://www.rcshop.co.in",
-    "https://*.onrender.com"
+    "https://*.onrender.com",
 ]
+
+# ✅ Render Fix
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
+
+# ✅ Prevent Redirect Loop
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 
 
 # =======================
