@@ -149,28 +149,46 @@ TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
-
 # =======================
-# STATIC / MEDIA
+# STATIC / MEDIA (UPDATED ✅)
 # =======================
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
+# ✅ Development Static Files Folder
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / "static"
 ]
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
+# ✅ Render / Production Static Collection Folder
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# ✅ WhiteNoise Config (Best Setup)
+if DEBUG:
+    # ✅ Local Development (No Manifest Error)
+    STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
+else:
+    # ✅ Production Render Deploy (Optimized)
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 WHITENOISE_MAX_AGE = 31536000
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# =======================
+# MEDIA FILES
+# =======================
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# =======================
+# DEFAULT PRIMARY KEY
+# =======================
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 
 
 # =======================
