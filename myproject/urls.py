@@ -24,7 +24,6 @@ def create_live_admin(request):
     )
     return HttpResponse("Live admin created")
 
-
 urlpatterns = [
 
     # ================= BASIC PAGES =================

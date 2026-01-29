@@ -131,28 +131,53 @@ def track_ticket(request):
     return render(request, "track_ticket.html", {"ticket": ticket})
 
 # =========================
-# CHECKOUT
+# CHECKOUT ✅ FINAL UPDATED FIX
 # =========================
-def checkout(request):
-    user = request.user
-    profile, _ = UserProfile.objects.get_or_create(user=user)
 
+import json
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import UserProfile, CartItem
+
+
+@login_required(login_url="login")
+def checkout(request):
+
+    user = request.user
+
+    # ✅ Profile create only for authenticated user
+    profile, created = UserProfile.objects.get_or_create(user=user)
+
+    # ✅ Cart Items Load Correctly (Fix Render Error)
+    cart_items = CartItem.objects.filter(user=user)
+
+    # ✅ If Cart Empty → redirect to cart page
+    if not cart_items.exists():
+        return redirect("cart")
+
+    # =========================
+    # ✅ POST REQUEST (Form Submit)
+    # =========================
     if request.method == "POST":
+
+        # ✅ Items safe load
         try:
             items = json.loads(request.POST.get("items", "[]"))
-        except:
+        except Exception:
             items = []
 
-        mobile = request.POST.get("mobile")
+        mobile = request.POST.get("mobile", "")
 
+        # ✅ Save mobile in profile safely
         if mobile:
             profile.mobile = mobile
             profile.save()
 
+        # ✅ Store checkout data in session safely
         request.session["checkout_data"] = {
             "name": request.POST.get("name", ""),
             "email": request.POST.get("email", ""),
-            "mobile": mobile or "",
+            "mobile": mobile,
             "address": request.POST.get("address", ""),
             "pincode": request.POST.get("pincode", ""),
             "items": items,
@@ -160,10 +185,22 @@ def checkout(request):
             "total": request.POST.get("total", "0").replace(",", ""),
         }
 
+        # ✅ Redirect to payment page
         return redirect("payment")
 
+    # =========================
+    # ✅ GET REQUEST (Page Open)
+    # =========================
     return render(request, "checkout.html", {
-        "user_name": user.first_name,
+        "profile": profile,
+        "cart_items": cart_items,
+    })
+
+    # =========================
+    # ✅ GET REQUEST (Open Checkout Page)
+    # =========================
+    return render(request, "checkout.html", {
+        "user_name": user.first_name or user.username,
         "user_email": user.email,
         "user_mobile": profile.mobile or "",
     })
