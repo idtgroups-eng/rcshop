@@ -1,22 +1,18 @@
 /* ==========================
-  /* ==========================
    LOAD CART FROM LOCALSTORAGE
 ==============================*/
 let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-/* FIX MISSING FIELDS */
+/* ==========================
+   FIX DATA (SAFE CLEAN)
+==============================*/
 cart = cart.map(p => {
 
-    // Fix Qty
-    p.qty = Number(p.qty) || 1;
+    p.qty = Number(p.qty);
+    if (!p.qty || p.qty < 1) p.qty = 1;
 
-    // Fix Price (₹, comma sab remove → number)
     p.price = Number(
-        p.price
-        .toString()
-        .replace(/,/g, "")     // remove comma
-        .replace(/₹/g, "")     // remove rupee sign
-        .trim()
+        p.price?.toString().replace(/,/g, "").replace(/₹/g, "").trim()
     ) || 0;
 
     return p;
@@ -24,21 +20,78 @@ cart = cart.map(p => {
 
 
 /* ==========================
+   ADD TO CART (SYNC SAFE)
+==============================*/
+function addToCart(name, price, img, qty = 1) {
+
+    if (name.toLowerCase().includes("bulk") && qty === 1) {
+        qty = 100;
+    }
+
+    let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    let existing = cart.find(item => item.name === name);
+
+    if (existing) {
+        existing.qty += qty;
+    } else {
+        cart.push({
+            name: name,
+            price: Number(price),
+            img: img,
+            qty: qty
+        });
+    }
+
+    localStorage.setItem("cartItems", JSON.stringify(cart));
+    updateCartCount();
+}
+
+
+/* ==========================
+   BUY NOW
+==============================*/
+function buyNow(name, price, img, qty = 1) {
+
+    if (name.toLowerCase().includes("bulk") && qty === 1) {
+        qty = 100;
+    }
+
+    addToCart(name, price, img, qty);
+    window.location.href = "/cart/";
+}
+
+
+/* ==========================
    LOAD CART TABLE
 ==============================*/
 function loadCart() {
+
+    cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
     let body = document.getElementById("cart-body");
+    if (!body) return;
+
     body.innerHTML = "";
 
     if (cart.length === 0) {
-        document.getElementById("cartBox").innerHTML =
-            `<div class="empty">Your Cart is Empty 🛒</div>`;
+        let box = document.getElementById("cartBox");
+        if (box) {
+            box.innerHTML = `<div class="empty">Your Cart is Empty 🛒</div>`;
+        }
         return;
     }
 
     let grand = 0;
 
     cart.forEach((p, i) => {
+
+        p.price = Number(
+            p.price?.toString().replace(/,/g, "").replace(/₹/g, "").trim()
+        ) || 0;
+
+        p.qty = Number(p.qty) || 1;
+
         let total = p.price * p.qty;
         grand += total;
 
@@ -46,10 +99,11 @@ function loadCart() {
         <tr>
             <td>
                 <img src="${p.img}" width="70" style="border-radius:8px"
-                    onerror="this.src='${window.location.origin}/static/images/no-image.png'">
+                onerror="this.src='${window.location.origin}/static/images/no-image.png'">
             </td>
 
             <td>${p.name}</td>
+
             <td>₹${p.price.toLocaleString()}</td>
 
             <td>
@@ -62,83 +116,106 @@ function loadCart() {
 
             <td>
                 <button class="remove-btn" onclick="removeItem(${i})">
-                    Delete
+                Delete
                 </button>
             </td>
         </tr>
         `;
     });
 
-    document.getElementById("grandBox").innerHTML =
-        `Grand Total: ₹${grand.toLocaleString()}`;
+    let grandBox = document.getElementById("grandBox");
+    if (grandBox) {
+        grandBox.innerHTML = `Grand Total: ₹${grand.toLocaleString()}`;
+    }
 }
+
 
 /* ==========================
    CHANGE QUANTITY
 ==============================*/
 function changeQty(i, val) {
+
     cart[i].qty += val;
+
     if (cart[i].qty <= 0) cart.splice(i, 1);
 
     localStorage.setItem("cartItems", JSON.stringify(cart));
+
     loadCart();
     updateCartCount();
 }
 
-/* REMOVE ITEM */
-function removeItem(i) {
-    cart.splice(i, 1);
-    localStorage.setItem("cartItems", JSON.stringify(cart));
-    loadCart();
-    updateCartCount();
-}
 
 /* ==========================
-   UPDATE CART COUNT
+   REMOVE ITEM
 ==============================*/
+function removeItem(i) {
+
+    cart.splice(i, 1);
+
+    localStorage.setItem("cartItems", JSON.stringify(cart));
+
+    loadCart();
+    updateCartCount();
+}
+
+
 /* ==========================
    UPDATE CART COUNT (FIXED)
 ==============================*/
 function updateCartCount() {
+
     let c = JSON.parse(localStorage.getItem("cartItems")) || [];
+
     let totalQty = 0;
 
     c.forEach(item => {
         totalQty += Number(item.qty) || 1;
     });
 
-    const counter = document.getElementById("cartCount");
+    let counter = document.getElementById("cartCount");
+
     if (counter) counter.innerText = totalQty;
 }
 
+
 /* ==========================
-   GO TO CHECKOUT (FIXED)
+   GO TO CHECKOUT
 ==============================*/
 function goCheckout() {
+
     if (!cart.length) return alert("Your cart is empty!");
 
-    // checkoutURL is injected from cart.html 
-    // <script> const checkoutURL = "/checkout/"; </script>
     window.location.href = checkoutURL;
 }
 
-/* INIT */
+
+/* ==========================
+   INIT
+==============================*/
 loadCart();
 updateCartCount();
 
-document.getElementById("cartMenuBtn").onclick = () => {
-  document.getElementById("cartDrawer").classList.toggle("open");
+
+/* ==========================
+   CART DRAWER (SAFE)
+==============================*/
+let btn = document.getElementById("cartMenuBtn");
+
+if (btn) {
+    btn.onclick = () => {
+        document.getElementById("cartDrawer")?.classList.toggle("open");
+    };
 }
 
-document.addEventListener("click", function(e){
-  let drawer = document.getElementById("cartDrawer");
-  let btn = document.getElementById("cartMenuBtn");
+document.addEventListener("click", function (e) {
 
-  if(drawer && btn && drawer.classList.contains("open")){
-    if(!drawer.contains(e.target) && !btn.contains(e.target)){
-      drawer.classList.remove("open");
+    let drawer = document.getElementById("cartDrawer");
+    let btn = document.getElementById("cartMenuBtn");
+
+    if (drawer && btn && drawer.classList.contains("open")) {
+        if (!drawer.contains(e.target) && !btn.contains(e.target)) {
+            drawer.classList.remove("open");
+        }
     }
-  }
 });
-
-

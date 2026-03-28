@@ -1,56 +1,73 @@
-document.getElementById("searchInput").addEventListener("keyup", function(){
-    let val = this.value.toLowerCase();
-    document.querySelectorAll(".product-card").forEach(card=>{
-        card.style.display = card.innerText.toLowerCase().includes(val) ? "" : "none";
+/* =========================================================
+   🔍 SEARCH (SAFE)
+========================================================= */
+const searchInput = document.getElementById("searchInput");
+
+if (searchInput) {
+    searchInput.addEventListener("keyup", function () {
+        let val = this.value.toLowerCase();
+
+        document.querySelectorAll(".product-card").forEach(card => {
+            card.style.display = card.innerText.toLowerCase().includes(val) ? "" : "none";
+        });
     });
-});
+}
 
 
 /* =========================================================
-   🔥 FILTER BY CATEGORY (Top Buttons Inside PRODUCTS Page)
+   🔥 FILTER BY CATEGORY
 ========================================================= */
-document.querySelectorAll(".filter-btn").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
+document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
 
-        document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
         let cat = btn.dataset.category;
 
-        document.querySelectorAll(".product-card").forEach(card=>{
+        document.querySelectorAll(".product-card").forEach(card => {
             let match = (cat === "all" || card.dataset.category === cat);
             card.style.display = match ? "" : "none";
         });
     });
 });
 
+
 /* =========================================================
-   🛒 ADD TO CART
+   🛒 ADD TO CART (FINAL FIXED)
 ========================================================= */
-function addToCart(name, price, img){
+function addToCart(name, price, img, qty = 1) {
+
     let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    // ⭐ AUTO BULK DETECT
+    if (name.toLowerCase().includes("bulk") && qty === 1) {
+        qty = 100;
+    }
 
     let exist = cart.find(item => item.name === name);
 
     if (exist) {
-        exist.qty += 1;
+        exist.qty += qty;
     } else {
         cart.push({
             name: name,
             price: Number(price),
             img: img,
-            qty: 1
+            qty: qty
         });
     }
 
     localStorage.setItem("cartItems", JSON.stringify(cart));
+
     updateCartCount();
 
-    // Toast notification
+    // 🔔 Toast
     let note = document.createElement("div");
     note.style.cssText =
         "position:fixed;top:18px;right:18px;background:#00eaff;color:#000;padding:10px 14px;font-weight:700;border-radius:6px;z-index:99999;box-shadow:0 0 10px #00eaff;";
-    note.innerText = "✔ Added to Cart";
+
+    note.innerText = `✔ Added ${qty} item(s) to Cart`;
     document.body.appendChild(note);
 
     setTimeout(() => note.remove(), 1500);
@@ -58,13 +75,23 @@ function addToCart(name, price, img){
 
 
 /* =========================================================
-   ⚡ BUY NOW
+   ⚡ BUY NOW (FINAL FIXED)
 ========================================================= */
-function buyNow(name, price, img){
-    addToCart(name, price, img);
+function buyNow(name, price, img, qty = 1) {
+
+    // ⭐ AUTO BULK DETECT
+    if (name.toLowerCase().includes("bulk") && qty === 1) {
+        qty = 100;
+    }
+
+    addToCart(name, price, img, qty);
     window.location.href = "/cart/";
 }
 
+
+/* =========================================================
+   📦 PRODUCT DETAILS
+========================================================= */
 function openProductDetails(id, name, price, images, extra = {}) {
 
     let product = {
@@ -78,29 +105,36 @@ function openProductDetails(id, name, price, images, extra = {}) {
 
     localStorage.setItem("selectedProduct", JSON.stringify(product));
 
-    // ✅ Correct Django redirect with ID
     window.location.href = "/product-details/" + id + "/";
 }
 
 
 /* =========================================================
-   ❤️ WISHLIST 
+   ❤️ WISHLIST (SAFE)
 ========================================================= */
-document.querySelectorAll(".wishlist").forEach(w=>{
-    w.onclick = ()=> w.classList.toggle("active");
+document.querySelectorAll(".wishlist").forEach(w => {
+    w.addEventListener("click", () => w.classList.toggle("active"));
 });
 
 
 /* =========================================================
-   🛒 UPDATE CART COUNTER
+   🛒 UPDATE CART COUNTER (IMPROVED)
 ========================================================= */
-function updateCartCount(){
+function updateCartCount() {
     let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
-    if(document.getElementById("cartCount"))
-        document.getElementById("cartCount").innerText = cart.length;
-}
-updateCartCount();
 
+    let totalQty = 0;
+
+    cart.forEach(item => {
+        totalQty += Number(item.qty) || 1;
+    });
+
+    let counter = document.getElementById("cartCount");
+
+    if (counter) counter.innerText = totalQty;
+}
+
+updateCartCount();
 
 /* =========================================================
    🎤 VOICE SEARCH
@@ -215,22 +249,22 @@ document.querySelectorAll(".dropdown").forEach(d=>{
   });
 });
 
-// ✅ View Product Details Function
-function openProductDetails(id, name, price, images, extra = {}) {
 
-    let product = {
+function openProductDetails(id, name, price, images, extraData) {
+
+    // ✅ Save product data in localStorage
+    localStorage.setItem("productDetails", JSON.stringify({
         id: id,
         name: name,
         price: price,
         images: images,
-        highlights: extra.highlights || [],
-        specs: extra.specs || []
-    };
+        highlights: extraData.highlights,
+        specs: extraData.specs
+    }));
 
-    // Save Selected Product Data
-    localStorage.setItem("selectedProduct", JSON.stringify(product));
-
-    // ✅ Redirect to Django Product Details Page with ID
-    window.location.href = "/product-details/" + id + "/";
+    // ✅ Redirect to correct Django URL
+    window.location.href = "/product_details/";
 }
+
+
 

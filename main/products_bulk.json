@@ -1,0 +1,132 @@
+[
+  {
+    "name": "Toner Cartridge",
+    "highlights": [
+      "Professional quality prints with crisp black text and sharp graphics",
+      "Reliable performance with consistent results from first to last page",
+      "Easy to install and replace with hassle-free design",
+      "Eco-friendly cartridge made with around 28% recycled material",
+      "Anti-fraud technology ensures genuine HP cartridge usage"
+    ],
+    "specs": [
+      "Cartridge Color: Black",
+      "Print Technology: Laser",
+      "Page Yield: ~1,500 pages at 5% coverage (ISO/IEC)",
+      "Dimensions: 375 × 113 × 125 mm",
+      "Weight: Approximately 0.6 kg",
+      "Operating Temperature: 10°C to 32.5°C"
+    ]
+  },
+
+  {
+    "name": "Toner Cartridge (88A)",
+    "highlights": [
+      "Professional quality prints with crisp black text",
+      "Reliable and consistent performance",
+      "Easy to install and replace",
+      "Eco-friendly cartridge with recycled material",
+      "Anti-fraud technology for genuine usage"
+    ],
+    "specs": [
+      "Cartridge Color: Black",
+      "Print Technology: Laser",
+      "Page Yield: ~1,500 pages at 5% coverage",
+      "Dimensions: 375 × 113 × 125 mm",
+      "Weight: Approximately 0.6 kg",
+      "Operating Temperature: 10°C to 32.5°C"
+    ]
+  },
+
+  {
+    "name": "36A & 88A Toner Ink",
+    "highlights": [
+      "Fine high-density black toner powder for smooth operation and strong paper adhesion",
+      "Cost-effective compatible and refillable options available for long-term savings",
+      "Reliable, consistent print performance with deep blacks and clear details",
+      "Designed for everyday monochrome document printing (not for color photos)",
+      "Widely supported by third-party compatible toner powder and OPC drums"
+    ],
+    "specs": [
+      "Model: HP 36A (CB436A) / HP 88A (CC388A)",
+      "Toner Color: Black",
+      "Print Technology: Laser",
+      "Page Yield (36A): ~1,500–2,000 pages at 5% coverage",
+      "Page Yield (88A): ~1,500 pages at 5% coverage",
+      "Compatible Printers (36A): HP LaserJet P1505, P1505n, MFP M1120, MFP M1522n, MFP M1522nf",
+      "Compatible Printers (88A): HP LaserJet P1007, P1008, P1106, P1108, MFP M1136, MFP M1213nf",
+      "Note: Original cartridges are not interchangeable between printer models"
+    ]
+  },
+
+  {
+    "name": "Router",
+    "highlights": [
+      "Wide range of TP-Link routers for home, gaming, large homes, and business use",
+      "Supports modern Wi-Fi standards including Wi-Fi 5, Wi-Fi 6, Wi-Fi 6E, and Wi-Fi 7",
+      "User-friendly management via TP-Link Tether app for easy setup and control",
+      "Advanced technologies like MU-MIMO, OFDMA, Beamforming, and WPA3 security",
+      "EasyMesh compatibility for seamless whole-home mesh Wi-Fi coverage",
+      "Multiple high-speed wired connectivity options for gaming consoles and smart TVs"
+    ],
+    "specs": [
+      "Wi-Fi Standards: Wi-Fi 5 (802.11ac), Wi-Fi 6 (802.11ax), Wi-Fi 7 (802.11be)",
+      "Speed Range: From N300 (300 Mbps) to speeds above 3000 Mbps",
+      "Bands: Single-band, Dual-band (2.4 GHz + 5 GHz), Tri/Quad-band",
+      "Antennas: Multiple external antennas with Beamforming",
+      "Ports: Gigabit, 2.5 Gbps, or 10 Gbps Ethernet ports",
+      "Security: WPA3, SPI Firewall, Parental Controls, Guest Network",
+      "Processor: Dual-core / Quad-core (varies by model)"
+    ]
+  },
+
+  {
+    "name": "Gaming Mouse",
+    "highlights": [
+      "Dual Mode Wireless Connectivity – Bluetooth 5.3 + 2.4GHz USB Receiver",
+      "Ergonomic Gaming Design with Thumb Support for Long Hours Comfort",
+      "Built-in Rechargeable Battery with Fast Type-C Charging",
+      "Adjustable DPI Levels for Precision Gaming & Work Control",
+      "High-Precision Optical Sensor for Smooth & Accurate Tracking",
+      "RGB Lighting Effects for Premium Gaming Look",
+      "Compatible with Laptop, Desktop, Gaming Console, Mac & Windows"
+    ],
+    "specs": [
+      "Connectivity: Bluetooth 5.3 & 2.4GHz Dual Wireless",
+      "DPI Range: Adjustable up to 2400 DPI",
+      "Buttons: 6 Buttons (Left, Right, Scroll, DPI, Forward, Backward)",
+      "Sensor Type: High Precision Optical Sensor",
+      "Design: Ergonomic Body with Thumb Rest Support",
+      "Power Source: Built-in Rechargeable Battery",
+      "Charging Port: Type-C Fast Charging",
+      "Compatibility: Windows, Mac, Laptop, Desktop, Gaming Consoles",
+      "Lighting: RGB Gaming Lights (Selected Models)"
+    ]
+  },
+
+  {
+    "name": "CCTV Junction Box",
+    "highlights": [
+      "Weatherproof IP65/IP66 rated waterproof & dustproof protection",
+      "Concealed wiring prevents cable cutting and tampering",
+      "Provides neat and professional cable management",
+      "Universal compatibility with Hikvision, CP Plus, Dahua and all CCTV cameras",
+      "Strong body supports cameras up to 3 kg weight",
+      "Rust and oxidation resistant connector protection",
+      "Suitable for indoor and outdoor installation",
+      "Pre-drilled holes for quick wall and ceiling mounting"
+    ],
+    "specs": [
+      "Product Type: CCTV Camera Junction Box",
+      "Material: Heavy Duty PVC, ABS Plastic, Aluminum Alloy",
+      "Size Options: 4x4 inch (100mm) or 5x5 inch (125mm)",
+      "IP Rating: IP65 or IP66 Waterproof and Dustproof",
+      "Mounting Type: Wall or Ceiling Mount",
+      "Load Capacity: Up to 3 Kg",
+      "Conduit Entry: Threaded Pipe Inlets",
+      "Cable Management: Internal with Rubber Gasket Seal",
+      "Color: White",
+      "Compatible Brands: Hikvision, CP Plus, Dahua, Uniview, Bosch",
+      "Usage: Indoor and Outdoor CCTV Installations"
+    ]
+  }
+]

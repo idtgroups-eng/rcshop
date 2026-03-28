@@ -55,110 +55,53 @@
 
   <div class="d-flex justify-content-between mt-2">
 
-    <!-- ✅ Add Button -->
     <button class="add-btn"
-      onclick="addToCart('Toner Cartrage', 800, `{% static 'images/toner1.jpeg' %}`)">
+      onclick="addToCart('Toner Cartrage (88A)', 800, '{% static "images/toner1.jpeg" %}')">
       Add
     </button>
 
-    <!-- ✅ Buy Button (Close Fixed) -->
     <button class="buy-btn"
-      onclick="buyNow('Toner Cartrage', 800, '{% static "images/toner1.jpeg" %}')">
+      onclick="buyNow('Toner Cartrage (88A)', 800, '{% static "images/toner1.jpeg" %}')">
       Buy
     </button>
 
-    <!-- ✅ View Button (ID Added Correctly) -->
-    <button class="view-btn"
-      onclick="openProductDetails(
-        1,
-        'Toner Cartrage',
-        800,
-        [
-          '{% static "images/toner1.jpeg" %}',
-          '{% static "images/toner2.jpeg" %}',
-          '{% static "images/toner3.webp" %}',
-          '{% static "images/toner4.jpg" %}'
-        ],
-        {
-          highlights: [
-            'Professional quality prints with crisp black text and sharp graphics',
-            'Reliable performance with consistent results from first to last page',
-            'Easy to install and replace with hassle-free design',
-            'Eco-friendly cartridge made with around 28% recycled material',
-            'Anti-fraud technology ensures genuine HP cartridge usage'
-          ],
-          specs: [
-            'Cartridge Color: Black',
-            'Print Technology: Laser',
-            'Page Yield: ~1,500 pages at 5% coverage (ISO/IEC)',
-            'Dimensions: 375 × 113 × 125 mm',
-            'Weight: Approximately 0.6 kg',
-            'Operating Temperature: 10°C to 32.5°C'
-          ]
-        }
-      )">
-      View
-    </button>
+    <a href="{% url 'product_details' 'toner-cartrage-88a' %}" class="view-btn">
+        View
+    </a>
 
   </div>
 </div>
 
 
-
-<!-- ⭐ Toner Cartridge -->
+<!-- ⭐ Toner Cartridge Bulk -->
 <div class="product-card" data-category="Toner Cartrage">
   <span class="sale-tag">Bulk Offer Qty-5</span>
 
   <img src="{% static 'images/toner.jpg' %}">
-  <h5 class="mt-2">Toner Cartridge (88A)</h5>
-  <p class="price" id="tonerPrice">₹2500</p>
+  <h5 class="mt-2">Toner Cartridge (88A) - Bulk</h5>
+  <p class="price">₹2500</p>
   <div class="rating">⭐⭐⭐⭐</div>
 
   <div class="d-flex justify-content-between mt-2">
 
     <button class="add-btn"
-      onclick="addTonerToCart('Toner Cartridge', 2500, '{% static 'images/toner.jpg' %}')">
+      onclick="addToCart('Toner Cartridge (88A) Bulk', 2500, '{% static "images/toner.jpg" %}')">
       Add
     </button>
 
     <button class="buy-btn"
-      onclick="buyNow('Toner Cartridge', 2500, '{% static 'images/toner.jpg' %}')">
+      onclick="buyNow('Toner Cartridge (88A) Bulk', 2500, '{% static "images/toner.jpg" %}')">
       Buy
     </button>
 
-    <button class="view-btn"
-onclick="openProductDetails(
-    'Toner Cartridge',
-    2500,
-    [
-      '{% static "images/toner1.jpeg" %}',
-        '{% static "images/toner2.jpeg" %}',
-        '{% static "images/toner3.webp" %}',
-        '{% static "images/toner4.jpg" %}'
-    ],
-    {
-        highlights: [
-            'Professional quality prints with crisp black text',
-            'Reliable and consistent performance',
-            'Easy to install and replace',
-            'Eco-friendly cartridge with recycled material',
-            'Anti-fraud technology for genuine usage'
-        ],
-        specs: [
-            'Cartridge Color: Black',
-            'Print Technology: Laser',
-            'Page Yield: ~1,500 pages at 5% coverage',
-            'Dimensions: 375 × 113 × 125 mm',
-            'Weight: Approximately 0.6 kg',
-            'Operating Temperature: 10°C to 32.5°C'
-        ]
-    }
-)">
-    View
-</button>
+    <a href="{% url 'product_details' 'toner-cartridge-bulk' %}" class="view-btn">
+        View
+    </a>
 
   </div>
 </div>
+
+
 <!-- ⭐ 36A & 88A Toner Ink -->
 <div class="product-card" data-category="36A & 88A Ink">
 
@@ -170,51 +113,24 @@ onclick="openProductDetails(
   <div class="d-flex justify-content-between mt-2">
 
     <button class="add-btn"
-      onclick="addToCart('36A & 88A Toner Ink', 100, '{% static 'images/ink.jpg' %}')">
+      onclick="addToCart('36A & 88A Toner Ink', 100, '{% static "images/ink.jpg" %}')">
       Add
     </button>
 
     <button class="buy-btn"
-      onclick="buyNow('36A & 88A Toner Ink', 100, '{% static 'images/ink.jpg' %}')">
+      onclick="buyNow('36A & 88A Toner Ink', 100, '{% static "images/ink.jpg" %}')">
       Buy
     </button>
 
-    <button class="view-btn"
-onclick="openProductDetails(
-    '36A & 88A Toner Ink',
-    1,
-    [
-        '{% static "images/ink1.jpg" %}',
-        '{% static "images/ink3.jpg" %}',
-        '{% static "images/ink4.jpg" %}',
-        '{% static "images/ink5.jpg" %}'
-    ],
-    {
-        highlights: [
-            'Fine high-density black toner powder for smooth operation and strong paper adhesion',
-            'Cost-effective compatible and refillable options available for long-term savings',
-            'Reliable, consistent print performance with deep blacks and clear details',
-            'Designed for everyday monochrome document printing (not for color photos)',
-            'Widely supported by third-party compatible toner powder and OPC drums'
-        ],
-        specs: [
-            'Model: HP 36A (CB436A) / HP 88A (CC388A)',
-            'Toner Color: Black',
-            'Print Technology: Laser',
-            'Page Yield (36A): ~1,500–2,000 pages at 5% coverage',
-            'Page Yield (88A): ~1,500 pages at 5% coverage (higher with high-capacity variants)',
-            'Compatible Printers (36A): HP LaserJet P1505, P1505n, MFP M1120, MFP M1522n, MFP M1522nf, M1550 series',
-            'Compatible Printers (88A): HP LaserJet P1007, P1008, P1106, P1108, MFP M1136, MFP M1213nf, MFP M1216nfh, M126nw, M128fw series',
-            'Note: Original cartridges are not physically interchangeable between printer models'
-        ]
-    }
-)">
-      View
-    </button>
+    <a href="{% url 'product_details' '36a-88a-toner-ink' %}" class="view-btn">
+        View
+    </a>
 
   </div>
 </div>
-<!-- ⭐ ROUTER -->
+
+
+<!-- ⭐ Router -->
 <div class="product-card" data-category="Router">
 
   <img src="{% static 'images/tp1.jpg' %}">
@@ -225,48 +141,18 @@ onclick="openProductDetails(
   <div class="d-flex justify-content-between mt-2">
 
     <button class="add-btn"
-      onclick="addToCart('ROUTER', 1300, '{% static 'images/tp1.jpg' %}')">
+      onclick="addToCart('Router', 1300, '{% static "images/tp1.jpg" %}')">
       Add
     </button>
 
- <button class="buy-btn"
-onclick="buyNow('ROUTER', 1300, '{% static "images/tp1.jpg" %}')">
-Buy
-</button>
-
-
-    <button class="view-btn"
-onclick="openProductDetails(
-    'ROUTER',
-    1300,
-    [
-        '{% static "images/tp1.jpg" %}',
-        '{% static "images/tp2.webp" %}',
-        '{% static "images/tp3.jpg" %}',
-        '{% static "images/tp4.jpg" %}'
-    ],
-    {
-    highlights: [
-        'Wide range of TP-Link routers for home, gaming, large homes, and business use',
-        'Supports modern Wi-Fi standards including Wi-Fi 5, Wi-Fi 6, Wi-Fi 6E, and Wi-Fi 7',
-        'User-friendly management via TP-Link Tether app for easy setup and control',
-        'Advanced technologies like MU-MIMO, OFDMA, Beamforming, and WPA3 security',
-        'EasyMesh compatibility for seamless whole-home mesh Wi-Fi coverage',
-        'Multiple high-speed wired connectivity options for gaming consoles and smart TVs'
-    ],
-    specs: [
-        'Wi-Fi Standards: Wi-Fi 5 (802.11ac), Wi-Fi 6 (802.11ax), Wi-Fi 7 (802.11be)',
-        'Speed Range: From N300 (300 Mbps) to ultra-fast speeds above 3000 Mbps',
-        'Bands: Single-band, Dual-band (2.4 GHz + 5 GHz), Tri/Quad-band (including 6 GHz)',
-        'Antennas: Multiple high-performance external antennas with Beamforming',
-        'Ports: 10/100 Mbps, Gigabit, 2.5 Gbps, or 10 Gbps Ethernet ports; some models include USB ports',
-        'Security: WEP, WPA, WPA2, WPA3, SPI Firewall, Parental Controls, Guest Network, HomeShield (select models)',
-        'Processor: Dual-core, Triple-core, or Quad-core CPU (varies by model)'
-    ]
-}
-)">
-      View
+    <button class="buy-btn"
+      onclick="buyNow('Router', 1300, '{% static "images/tp1.jpg" %}')">
+      Buy
     </button>
+
+    <a href="{% url 'product_details' 'router' %}" class="view-btn">
+        View
+    </a>
 
   </div>
 </div>
@@ -283,119 +169,166 @@ onclick="openProductDetails(
   <div class="d-flex justify-content-between mt-2">
 
     <button class="add-btn"
-      onclick="addToCart('Gaming Mouse', 750, '{% static 'images/gm.webp' %}')">
+      onclick="addToCart('Gaming Mouse', 750, '{% static "images/gm.webp" %}')">
       Add
     </button>
 
- <button class="buy-btn"
-onclick="buyNow('Gaming Mouse', 750, '{% static "images/gm.webp" %}')">
-Buy
-</button>
-
-
-    <button class="view-btn"
-onclick="openProductDetails(
-    'Gaming Mouse',
-    750,
-    [
-        '{% static "images/gm1.webp" %}',
-        '{% static "images/gm2.webp" %}',
-        '{% static "images/gm3.webp" %}',
-        '{% static "images/gm4.jpg" %}'
-    ],
-    {
-    highlights: [
-  'Dual Mode Wireless Connectivity – Bluetooth 5.3 + 2.4GHz USB Receiver',
-  'Ergonomic Gaming Design with Thumb Support for Long Hours Comfort',
-  'Built-in Rechargeable Battery with Fast Type-C Charging',
-  'Adjustable DPI Levels for Precision Gaming & Work Control',
-  'High-Precision Optical Sensor for Smooth & Accurate Tracking',
-  'RGB Lighting Effects (Selected Models) for Premium Gaming Look',
-  'Compatible with Laptop, Desktop, Gaming Console, Mac & Windows'
-],
-
-specs: [
-  'Connectivity: Bluetooth 5.3 & 2.4GHz Dual Wireless',
-  'DPI Range: Adjustable up to 2400 DPI',
-  'Buttons: 6 Buttons (Left, Right, Scroll, DPI, Forward, Backward)',
-  'Sensor Type: High Precision Optical Sensor',
-  'Design: Ergonomic Body with Thumb Rest Support',
-  'Power Source: Built-in Rechargeable Battery',
-  'Charging Port: Type-C Fast Charging',
-  'Compatibility: Windows, Mac, Laptop, Desktop, Gaming Consoles',
-  'Lighting: RGB Gaming Lights (Vader Pro / Toad One Models)'
-]
-
-}
-)">
-      View
+    <button class="buy-btn"
+      onclick="buyNow('Gaming Mouse', 750, '{% static "images/gm.webp" %}')">
+      Buy
     </button>
+
+    <a href="{% url 'product_details' 'gaming-mouse' %}" class="view-btn">
+        View
+    </a>
 
   </div>
 </div>
 
-<!-- ⭐CCTV JUNCTION BOX -->
 
+<!-- ⭐ CCTV Junction Box -->
 <div class="product-card" data-category="CCTV JUNCTION BOX">
  <span class="sale-tag">Bulk Offer Qty-5</span>
+
   <img src="{% static 'images/jb.jpg' %}">
-  <h5 class="mt-2">cctv Junction Box</h5>
+  <h5 class="mt-2">CCTV Junction Box</h5>
   <p class="price">₹250</p>
   <div class="rating">⭐⭐⭐⭐⭐</div>
 
   <div class="d-flex justify-content-between mt-2">
 
-<button class="add-btn"
-        onclick="addToCart('cctv Junction Box', 250, `{% static 'images/jb.jpg' %}`)">
-    Add
-</button>
+    <button class="add-btn"
+      onclick="addToCart('CCTV Junction Box', 250, '{% static "images/jb.jpg" %}')">
+      Add
+    </button>
 
-<button class="buy-btn"
-        onclick="buyNow('cctv Junction Box', 250, '{% static "images/jb.jpg" %}')">
-    Buy
-</button>
-<button class="view-btn"
-onclick="openProductDetails(
-    'CCTV Junction Box',
-    250,
-    [
-        '{% static "images/jb.jpg" %}',
-        '{% static "images/jb1.jpg" %}',
-        '{% static "images/jb2.jpg" %}',
-        '{% static "images/jb3.jpg" %}'
-    ],
-    {
-        highlights: [
-            'Weatherproof IP65/IP66 rated waterproof & dustproof protection',
-            'Concealed wiring prevents cable cutting and tampering',
-            'Provides neat and professional cable management',
-            'Universal compatibility with Hikvision, CP Plus, Dahua and all CCTV cameras',
-            'Strong body supports cameras up to 3 kg weight',
-            'Rust and oxidation resistant connector protection',
-            'Suitable for indoor and outdoor installation',
-            'Pre-drilled holes for quick wall and ceiling mounting'
-        ],
-        specs: [
-            'Product Type: CCTV Camera Junction Box',
-            'Material: Heavy Duty PVC, ABS Plastic, Aluminum Alloy',
-            'Size Options: 4x4 inch (100mm) or 5x5 inch (125mm)',
-            'IP Rating: IP65 or IP66 Waterproof and Dustproof',
-            'Mounting Type: Wall or Ceiling Mount',
-            'Load Capacity: Up to 3 Kg',
-            'Conduit Entry: 1-2 inch or 3-4 inch Threaded Pipe Inlets',
-            'Cable Management: Internal with Rubber Gasket Seal',
-            'Color: White',
-            'Compatible Brands: Hikvision, CP Plus, Dahua, Uniview, Bosch',
-            'Usage: Indoor and Outdoor CCTV Installations'
-        ]
-    }
-)">
-    View
-</button>
+    <button class="buy-btn"
+      onclick="buyNow('CCTV Junction Box', 250, '{% static "images/jb.jpg" %}')">
+      Buy
+    </button>
 
+    <a href="{% url 'product_details' 'cctv-junction-box' %}" class="view-btn">
+        View
+    </a>
 
   </div>
 </div>
+
+<!-- ⭐ Havells LED Bulb 9W -->
+<div class="product-card" data-category="LED Bulb">
+
+  <img src="{% static 'images/bulb.avif' %}">
+  <h5 class="mt-2">Havells LED Bulb 9W</h5>
+  <p class="price">₹100</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex justify-content-between mt-2">
+
+   <button class="add-btn"
+  onclick="addToCart('Havells LED Bulb 9W Bulk (100)', 55, '{% static "images/bulb.avif" %}', 100)">
+  Add
+</button>
+
+<button class="buy-btn"
+  onclick="buyNow('Havells LED Bulb 9W Bulk (100)', 55, '{% static "images/bulb.avif" %}', 100)">
+  Buy
+</button>
+
+    <a href="{% url 'product_details' 'havells-led-bulb-9w' %}" class="view-btn">
+        View
+    </a>
+
+  </div>
+</div>
+
+<!-- ⭐ Havells LED Bulb Bulk -->
+<div class="product-card" data-category="LED Bulb">
+  <span class="sale-tag">Bulk Offer Qty-100</span>
+
+  <img src="{% static 'images/combobulb.webp' %}">
+  <h5 class="mt-2">Havells LED Bulb 9W - Bulk Pack</h5>
+  <p class="price">₹55 / Piece</p>
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex justify-content-between mt-2">
+
+<button class="add-btn"
+  onclick="addToCart('Havells LED Bulb 9W Bulk (100)', 55, '{% static "images/combobulb.webp" %}', 100)">
+  Add
+</button>
+
+<button class="buy-btn"
+  onclick="buyNow('Havells LED Bulb 9W Bulk (100)', 55, '{% static "images/combobulb.webp" %}', 100)">
+  Buy
+</button>
+
+    <a href="{% url 'product_details' 'havells-led-bulb-bulk' %}" class="view-btn">
+        View
+    </a>
+
+  </div>
+</div>
+
+{% load static %}
+
+<!-- ⭐ Havells LED Bulb 12W -->
+<div class="product-card" data-category="LED Bulb">
+
+  <img src="{% static 'images/bulb1.jpg' %}">
+  <h5 class="mt-2">Havells LED Bulb 12W</h5>
+  <p class="price">₹400</p>
+  <div class="rating">⭐⭐⭐⭐⭐</div>
+
+  <div class="d-flex justify-content-between mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Havells LED Bulb 12W', 400, '{% static "images/bulb1.jpg" %}')">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Havells LED Bulb 12W', 400, '{% static "images/bulb1.jpg" %}')">
+      Buy
+    </button>
+
+    <a href="{% url 'product_details' 'havells-led-bulb-12w' %}" class="view-btn">
+        View
+    </a>
+
+  </div>
+</div>
+
+
+<!-- ⭐ Havells LED Bulb 12W Bulk -->
+<div class="product-card" data-category="LED Bulb">
+  <span class="sale-tag">Bulk Offer Qty-100</span>
+
+  <img src="{% static 'images/combobulb1.jpg' %}">
+
+  <h5 class="mt-2">Havells LED Bulb 12W - Bulk Pack</h5>
+  <p class="price">₹250 / Piece</p>
+
+  <div class="rating">⭐⭐⭐⭐</div>
+
+  <div class="d-flex justify-content-between mt-2">
+
+    <button class="add-btn"
+      onclick="addToCart('Havells LED Bulb 12W - Bulk Pack', 250, '{% static "images/combobulb1.jpg" %}', 100)">
+      Add
+    </button>
+
+    <button class="buy-btn"
+      onclick="buyNow('Havells LED Bulb 12W - Bulk Pack', 250, '{% static "images/combobulb1.jpg" %}', 100)">
+      Buy
+    </button>
+
+    <a href="{% url 'product_details' 'havells-led-bulb-12w-bulk' %}" class="view-btn">
+      View
+    </a>
+
+  </div>
+</div>
+
 
 
 <!-- ===================== RC SHOP FOOTER ===================== -->
@@ -448,7 +381,7 @@ onclick="openProductDetails(
   <div class="footer-bottom">© 2025 RCShop • All Rights Reserved</div>
 </footer>
 <!-- ===================== PRODUCT DETAILS JAVASCRIPT ===================== -->
-<script src="{% static 'js/products.js' %}"></script>
+<script src="{% static 'js/products.js' %}?v=5"></script>
 
 
 
@@ -467,7 +400,6 @@ let c = JSON.parse(localStorage.getItem("cartItems")) || [];
 let f = document.getElementById("floatCartCount");
 if(f) f.innerText = c.length;
 </script>
-
 
 {% endblock %}
 </body>

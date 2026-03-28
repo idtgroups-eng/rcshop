@@ -122,3 +122,7 @@ class PaymentProofAdmin(admin.ModelAdmin):
     list_display = ("order_id", "name", "phone", "amount", "verified")
     list_filter = ("verified",)
     search_fields = ("order_id", "name", "phone")
+from django.contrib import admin
+from .models import Product
+
+admin.site.register(Product)

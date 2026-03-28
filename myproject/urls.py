@@ -1,4 +1,5 @@
 
+from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
@@ -26,16 +27,20 @@ def create_live_admin(request):
 
 urlpatterns = [
 
-    # ================= BASIC PAGES =================
+ # ================= BASIC PAGES =================
+    path("admin/", admin.site.urls),   # ✅ Admin route added
+
     path("", views.index, name="home"),
     path("about/", views.about, name="about"),
     path("products/", views.products, name="products"),
-    path("product_details/", views.product_details, name="product_details"),
+    path("product-details/<slug:slug>/", views.product_details, name="product_details"),
     path("contact/", views.contact, name="contact"),
     path("cart/", views.cart, name="cart"),
+
     path("return-policy/", views.return_policy, name="return_policy"),
     path("return-request/", views.return_request, name="return_request"),
     path("website-policy/", views.website_policy, name="website_policy"),
+
     path("track-ticket/", views.track_ticket, name="track_ticket"),
 
     # ================= SERVICES =================
@@ -139,3 +144,4 @@ urlpatterns += [
 # ================= STATIC & MEDIA (DEVELOPMENT ONLY) =================
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])

@@ -51,38 +51,64 @@
 <!---------------------- PRODUCT DETAILS BODY ------------------------>
 <div class="container">
 
-    <!-- LEFT IMAGE GALLERY -->
+    <!-- ✅ LEFT IMAGE GALLERY -->
     <div class="gallery">
-        <img id="mainImage" class="main-img">
+
+        <!-- ✅ Main Product Image -->
+        <img 
+            id="mainProductImage" 
+            class="main-img" 
+            src="/static/images/no-image.png"
+            alt="Product Image"
+        >
+
+        <!-- ✅ Thumbnails Box -->
         <div class="thumbs" id="thumbBox"></div>
+
     </div>
 
-    <!-- RIGHT DETAILS -->
-    <div class="details">
-        <h1 id="pName"></h1>
 
+    <!-- ✅ RIGHT PRODUCT DETAILS -->
+    <div class="details">
+
+        <!-- ✅ Product Name -->
+        <h1 id="pName">Loading...</h1>
+
+        <!-- ✅ Reviews Stars -->
         <div class="stars">
-            ⭐ ⭐ ⭐ ⭐ ⭐ 
-            <span style="color:#444;font-size:14px">| 128 Reviews</span>
+            ⭐ ⭐ ⭐ ⭐ ⭐
+            <span style="color:#444;font-size:14px;">| 128 Reviews</span>
         </div>
 
-        <div class="price" id="pPrice"></div>
+        <!-- ✅ Product Price -->
+        <div class="price" id="pPrice">₹ 0/-</div>
 
-        <button class="buy">Buy Now</button>
-        <button class="cart">Add to Cart</button>
+        <!-- ✅ Action Buttons -->
+        <div class="btn-group">
+            <button class="buy">Buy Now</button>
+            <button class="cart">Add to Cart</button>
+        </div>
 
+        <!-- ✅ Highlights Section -->
         <div class="box">
             <h3>Highlights</h3>
-            <ul id="highlightsList"></ul>
+            <ul id="highlightsList">
+                <!-- JS will fill here -->
+            </ul>
         </div>
 
+        <!-- ✅ Specifications Section -->
         <div class="box" style="margin-top:15px;">
             <h3>Specifications</h3>
-            <ul id="specsList"></ul>
+            <ul id="specsList">
+                <!-- JS will fill here -->
+            </ul>
         </div>
+
     </div>
 
 </div>
+
 <!---------------- Related Products ---------------->
 <h2>Related Products</h2>
 
@@ -284,7 +310,7 @@
 
 <script>
 /* ✅ FIX: Correct localStorage Key */
-let p = JSON.parse(localStorage.getItem("productDetails"));
+let p = JSON.parse(localStorage.getItem("selectedProduct"));
 
 /* ✅ Safety Check */
 if (!p) {
@@ -297,10 +323,17 @@ if (!p) {
 document.getElementById("pName").innerText = p.name;
 document.getElementById("pPrice").innerText = "₹ " + p.price + "/-";
 
-/* ================= MAIN IMAGE ================= */
 
-let main = document.getElementById("mainImage");
-main.src = p.images[0];
+/* ================= MAIN IMAGE ================= */
+/* ✅ FIX: Correct Image ID */
+
+let main = document.getElementById("mainProductImage");
+
+if (!main) {
+    console.error("❌ mainProductImage ID Not Found in HTML!");
+} else {
+    main.src = p.images[0];
+}
 
 
 /* ================= THUMBNAILS ================= */
@@ -310,6 +343,7 @@ thumbBox.innerHTML = "";
 
 /* ✅ Show max 4 thumbnails */
 p.images.slice(0,4).forEach((img,i)=>{
+
     thumbBox.innerHTML += `
         <img src="${img}" 
              width="70" 
@@ -317,6 +351,7 @@ p.images.slice(0,4).forEach((img,i)=>{
              class="thumbImg" 
              data-index="${i}">
     `;
+
 });
 
 /* ✅ Active image switching */
@@ -338,9 +373,12 @@ thumbs.forEach((t,i)=>t.onclick=()=>setActive(i));
 let hBox = document.getElementById("highlightsList");
 hBox.innerHTML = "";
 
-p.highlights.forEach(h => {
-    hBox.innerHTML += `<li>${h}</li>`;
-});
+/* ✅ Safe Check */
+if (p.highlights && p.highlights.length > 0) {
+    p.highlights.forEach(h => {
+        hBox.innerHTML += `<li>${h}</li>`;
+    });
+}
 
 
 /* ================= SPECIFICATIONS ================= */
@@ -348,9 +386,12 @@ p.highlights.forEach(h => {
 let sBox = document.getElementById("specsList");
 sBox.innerHTML = "";
 
-p.specs.forEach(s => {
-    sBox.innerHTML += `<li>${s}</li>`;
-});
+/* ✅ Safe Check */
+if (p.specs && p.specs.length > 0) {
+    p.specs.forEach(s => {
+        sBox.innerHTML += `<li>${s}</li>`;
+    });
+}
 
 
 /* ================= RELATED PRODUCTS ================= */
@@ -415,6 +456,7 @@ document.querySelector(".buy").onclick = () => {
 let c = JSON.parse(localStorage.getItem("cartItems")) || [];
 document.getElementById("cartCount").innerText = c.length;
 </script>
+
 
 </body>
 </html>

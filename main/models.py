@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.utils import timezone
+from django.utils.text import slugify
 
 User = get_user_model()
 
@@ -36,7 +36,7 @@ class Order(models.Model):
     payment_method = models.CharField(max_length=30, default="COD")
     status = models.CharField(max_length=20, choices=ORDER_STATUS, default="Placed")
 
-    # Razorpay Fields (🔥 FINAL FIX)
+    # Razorpay Fields
     temp_order_id = models.CharField(max_length=120, blank=True, null=True)
     razorpay_order_id = models.CharField(max_length=120, blank=True, null=True)
     razorpay_payment_id = models.CharField(max_length=120, blank=True, null=True)
@@ -52,6 +52,7 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.id} - {self.name} ({self.status})"
+
 
 # =========================
 # USER PROFILE
@@ -79,7 +80,7 @@ class UserAddress(models.Model):
 
 
 # =========================
-# PRODUCTS
+# PRODUCTS ✅ FINAL FIXED WITH SLUG
 # =========================
 class Product(models.Model):
     name = models.CharField(max_length=200)
@@ -87,6 +88,14 @@ class Product(models.Model):
     description = models.TextField()
     price = models.IntegerField()
     image = models.ImageField(upload_to="products/")
+
+    # ✅ Slug Field Added
+    slug = models.SlugField(unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -112,15 +121,15 @@ class SupportTicket(models.Model):
         ('Closed', 'Closed'),
     ]
 
-    ticket_id   = models.CharField(max_length=20, unique=True)
-    name        = models.CharField(max_length=100)
-    phone       = models.CharField(max_length=15)
-    email       = models.EmailField()
-    issue_type  = models.CharField(max_length=50, choices=TICKET_TYPE)
-    message     = models.TextField()
-    photo       = models.ImageField(upload_to="support/", blank=True, null=True)
-    status      = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
-    created_at  = models.DateTimeField(auto_now_add=True)
+    ticket_id = models.CharField(max_length=20, unique=True)
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=15)
+    email = models.EmailField()
+    issue_type = models.CharField(max_length=50, choices=TICKET_TYPE)
+    message = models.TextField()
+    photo = models.ImageField(upload_to="support/", blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Pending")
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.ticket_id
@@ -130,13 +139,13 @@ class SupportTicket(models.Model):
 # PAYMENT PROOF
 # =========================
 class PaymentProof(models.Model):
-    order_id   = models.CharField(max_length=50)
-    name       = models.CharField(max_length=100)
-    phone      = models.CharField(max_length=20)
-    email      = models.EmailField()
-    amount     = models.CharField(max_length=20)
+    order_id = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=20)
+    email = models.EmailField()
+    amount = models.CharField(max_length=20)
     screenshot = models.ImageField(upload_to="payment_proofs/")
-    verified   = models.BooleanField(default=False)
+    verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -173,6 +182,7 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.phone
+
 
 # =========================
 # CART ITEMS ✅ REQUIRED

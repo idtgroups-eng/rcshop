@@ -47,8 +47,16 @@ except Exception as e:
 # =========================
 def index(request): return render(request, "index.html")
 def about(request): return render(request, "about.html")
-def product_details(request):
-    return render(request, "product_details.html")
+from django.shortcuts import get_object_or_404
+from .models import Product
+
+def product_details(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+
+    return render(request, "product_details.html", {
+        "product": product
+    })
+
 def cart(request): return render(request, "cart.html")
 def contact(request): return render(request, "contact.html")
 
