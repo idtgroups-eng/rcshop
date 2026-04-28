@@ -184,21 +184,12 @@ function updateCartCount() {
 ==============================*/
 function goCheckout() {
     try {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        if (!Array.isArray(cart) || cart.length === 0) {
-            alert("Your cart is empty!");
-            return;
-        }
-
-        window.location.href = checkoutURL;
-
+        window.location.href = checkoutURL || "/checkout/";
     } catch (e) {
-        console.error("Cart error:", e);
-        alert("Something went wrong!");
+        console.error("Redirect error:", e);
+        alert("Unable to proceed to checkout!");
     }
 }
-
 
 /* ==========================
    INIT
