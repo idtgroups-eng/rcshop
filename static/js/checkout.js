@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     /* ==========================
-       LOAD CART DATA & SHOW SUMMARY
+       LOAD CART DATA & SHOW SUMMARY (DB BASED)
     ========================== */
-    let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+    
+    // ❌ localStorage removed
+    // let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
     let tableBody = document.getElementById("orderBody");
 
     if (!tableBody) {
@@ -12,24 +15,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     let subtotal = 0;
-    tableBody.innerHTML = "";
 
-    cart.forEach(item => {
-        let price = Number(item.price) || 0;
-        let qty = Number(item.qty) || 1;
+    // ✅ अब cart backend (Django) से render हो रहा है
+    let rows = tableBody.querySelectorAll("tr");
+
+    rows.forEach(row => {
+        let priceText = row.children[2]?.innerText.replace("₹", "").replace(/,/g, "") || "0";
+        let qtyText = row.children[3]?.innerText || "1";
+
+        let price = Number(priceText) || 0;
+        let qty = Number(qtyText) || 1;
+
         subtotal += price * qty;
-
-        tableBody.innerHTML += `
-            <tr>
-                <td>
-                    <img src="${item.img}" width="60" style="border-radius:8px"
-                         onerror="this.src='/static/images/no-image.png'">
-                </td>
-                <td>${item.name}</td>
-                <td>₹${price.toLocaleString()}</td>
-                <td>${qty}</td>
-            </tr>
-        `;
     });
 
     /* ==========================
@@ -59,43 +56,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (subtotalInput) subtotalInput.value = subtotal;
     if (totalInput) totalInput.value = finalTotal;
-    if (itemsInput) itemsInput.value = JSON.stringify(cart);
+
+    // ❌ localStorage removed
+    // if (itemsInput) itemsInput.value = JSON.stringify(cart);
+
+    // ✅ optional: backend already has items (DB), but safe fallback:
+    if (itemsInput) itemsInput.value = "DB_ITEMS";
 
     /* ==========================
-   FORM SUBMIT HANDLER (FINAL FIX)
-========================== */
-const form = document.getElementById("checkoutForm");
-if (!form) {
-    console.error("checkoutForm not found!");
-    return;
-}
+       FORM SUBMIT HANDLER (FINAL FIX)
+    ========================== */
 
-form.addEventListener("submit", function (e) {
+    const form = document.getElementById("checkoutForm");
 
-    const name = document.getElementById("custName").value.trim();
-    const email = document.getElementById("custEmail").value.trim();
-    const mobile = document.getElementById("custMobile").value.trim();
-    const address = document.getElementById("custAddress").value.trim();
-    const pin = document.getElementById("custPin").value.trim();
-
-    if (!name || !email || !mobile || !address || !pin) {
-        alert("Please fill all shipping details");
-        e.preventDefault();
+    if (!form) {
+        console.error("checkoutForm not found!");
         return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        alert("Please enter a valid email address");
-        e.preventDefault();
-        return;
-    }
+    form.addEventListener("submit", function (e) {
 
-    // 🔥 IMPORTANT — re-fill hidden inputs before submit
-    itemsInput.value = JSON.stringify(cart);
-    subtotalInput.value = subtotal;
-    totalInput.value = finalTotal;
+        const name = document.getElementById("custName").value.trim();
+        const email = document.getElementById("custEmail").value.trim();
+        const mobile = document.getElementById("custMobile").value.trim();
+        const address = document.getElementById("custAddress").value.trim();
+        const pin = document.getElementById("custPin").value.trim();
 
-    // 🚀 DO NOT preventDefault — allow normal POST to backend
+        if (!name || !email || !mobile || !address || !pin) {
+            alert("Please fill all shipping details");
+            e.preventDefault();
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address");
+            e.preventDefault();
+            return;
+        }
+
+        // 🔥 IMPORTANT — re-fill hidden inputs before submit
+        if (subtotalInput) subtotalInput.value = subtotal;
+        if (totalInput) totalInput.value = finalTotal;
+
+        // 🚀 NO preventDefault → form will submit to backend
+    });
+
 });
-})

@@ -8,8 +8,6 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
-<!-- FontAwesome Icons -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -135,7 +133,7 @@
 <!-- RIGHT: SHIPPING FORM -->
 <div class="card">
     <h2 class="card-title">Shipping Details</h2>
-<form id="checkoutForm" method="POST" action="{% url 'checkout' %}">
+<form id="checkoutForm" method="POST" action="{% url 'payment' %}">
 
     {% csrf_token %}
 
