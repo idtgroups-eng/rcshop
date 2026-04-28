@@ -156,12 +156,19 @@ def checkout(request):
     # ✅ Profile create only for authenticated user
     profile, created = UserProfile.objects.get_or_create(user=user)
 
-    # ✅ Cart Items Load Correctly (Fix Render Error)
+    # ✅ Cart Items from DB
     cart_items = CartItem.objects.filter(user=user)
 
-    # ✅ If Cart Empty → redirect to cart page
-    if not cart_items.exists():
-        return redirect("cart")
+    # 🔥 FIX: Redirect हटाया (localStorage cart use कर रहे हो)
+    # if not cart_items.exists():
+    #     return redirect("cart")
+
+    context = {
+        "profile": profile,
+        "cart_items": cart_items,  # future use (DB sync के लिए)
+    }
+
+    return render(request, "checkout.html", context)
 
     # =========================
     # ✅ POST REQUEST (Form Submit)

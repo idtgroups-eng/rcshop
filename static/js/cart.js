@@ -183,10 +183,20 @@ function updateCartCount() {
    GO TO CHECKOUT
 ==============================*/
 function goCheckout() {
+    try {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    if (!cart.length) return alert("Your cart is empty!");
+        if (!Array.isArray(cart) || cart.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
 
-    window.location.href = checkoutURL;
+        window.location.href = checkoutURL;
+
+    } catch (e) {
+        console.error("Cart error:", e);
+        alert("Something went wrong!");
+    }
 }
 
 
