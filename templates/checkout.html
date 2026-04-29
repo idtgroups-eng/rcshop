@@ -52,88 +52,65 @@
 
 <!-- MAIN SPLIT AREA -->
 <div class="main-container">
+<!-- LEFT: ORDER SUMMARY -->
+<div class="card">
+    <h2 class="card-title">Order Summary</h2>
 
-    <!-- LEFT: ORDER SUMMARY -->
-    <div class="card">
-        <h2 class="card-title">Order Summary</h2>
- <table class="order-list" id="orderTable">
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Qty</th>
-        </tr>
-    </thead>
+    <table class="order-list">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Qty</th>
+            </tr>
+        </thead>
 
-    <!-- ✅ FIXED: tbody now has an ID -->
-    <tbody id="orderBody"></tbody>
+        <!-- ❌ REMOVE Django loop -->
+        <!-- ✅ JS will fill this -->
+        <tbody id="orderBody"></tbody>
 
-    <tfoot>
+        <tfoot>
 
-        <!-- SUBTOTAL -->
-        <tr>
-            <td colspan="4" style="padding:0;">
-                <div style="
-                    margin-top:12px;
-                    background:#eaf9ff;
-                    padding:10px 12px;
-                    border-left:4px solid #00b5ff;
-                    font-size:16px;
-                    display:flex;
-                    justify-content:space-between;">
-                    <span><i class="fa-solid fa-sack-dollar"></i> Subtotal</span>
-                    <span id="sumSubtotal">₹0</span>
-                </div>
-            </td>
-        </tr>
+            <!-- SUBTOTAL -->
+            <tr>
+                <td colspan="4">
+                    <div style="display:flex;justify-content:space-between;">
+                        <span>Subtotal</span>
+                        <span id="sumSubtotal">₹0</span>
+                    </div>
+                </td>
+            </tr>
 
-    
-        <!-- SHIPPING -->
-        <tr>
-            <td colspan="4" style="padding:0;">
-                <div style="
-                    background:#dff9ff;
-                    padding:10px 12px;
-                    border-left:4px solid #00e0ff;
-                    font-size:16px;
-                    display:flex;
-                    justify-content:space-between;">
-                    <span><i class="fa-solid fa-truck-fast"></i> Shipping</span>
-                    <span id="sumShip">₹0</span>
-                </div>
-            </td>
-        </tr>
+            <!-- SHIPPING -->
+            <tr>
+                <td colspan="4">
+                    <div style="display:flex;justify-content:space-between;">
+                        <span>Shipping</span>
+                        <span>FREE</span>
+                    </div>
+                </td>
+            </tr>
 
+            <!-- FINAL TOTAL -->
+            <tr>
+                <td colspan="4">
+                    <div style="display:flex;justify-content:space-between;font-weight:bold;">
+                        <span>Final Payable</span>
+                        <span id="grandTotal">₹0</span>
+                    </div>
+                </td>
+            </tr>
 
-        <!-- FINAL TOTAL -->
-        <tr>
-            <td colspan="4" style="padding:0;">
-                <div style="
-                    background:#daf6ff;
-                    padding:14px 12px;
-                    border-left:5px solid #0099cc;
-                    font-size:22px;
-                    font-weight:700;
-                    display:flex;
-                    justify-content:space-between;
-                    color:#008ecb;
-                    margin-top:5px;">
-                    <span><i class="fa-solid fa-wallet"></i> Final Payable</span>
-                    <span id="grandTotal">₹0</span>
-                </div>
-            </td>
-        </tr>
-
-    </tfoot>
-</table>
-
-    </div>
+        </tfoot>
+    </table>
+</div>
 
 <!-- RIGHT: SHIPPING FORM -->
 <div class="card">
     <h2 class="card-title">Shipping Details</h2>
-<form id="checkoutForm" method="POST" action="{% url 'payment' %}">
+
+<form id="checkoutForm" method="POST" action="{% url 'checkout' %}">
 
     {% csrf_token %}
 
@@ -154,26 +131,38 @@
            placeholder="Email Address">
 
     <label>Mobile Number</label>
-    <input type="text" id="custMobile" name="mobile" required placeholder="Mobile Number">
+    <input type="text"
+           id="custMobile"
+           name="mobile"
+           required
+           placeholder="Mobile Number">
 
     <label>Address</label>
-    <textarea id="custAddress" name="address" required placeholder="Address"></textarea>
+    <textarea id="custAddress"
+              name="address"
+              required
+              placeholder="Address"></textarea>
 
     <label>PIN Code</label>
-    <input type="text" id="custPin" name="pincode" required placeholder="PIN Code">
+    <input type="text"
+           id="custPin"
+           name="pincode"
+           required
+           placeholder="PIN Code">
 
-    <!-- ================= IMPORTANT HIDDEN FIELDS ================= -->
+    <!-- ================= HIDDEN FIELDS (IMPORTANT) ================= -->
     <input type="hidden" name="items" id="itemsInput">
     <input type="hidden" name="subtotal" id="subtotalInput">
     <input type="hidden" name="total" id="totalInput">
     <!-- ============================================================ -->
-<button type="submit" class="pay-btn-premium">
-  <span>Proceed to Secure Payment</span>
-  <small>100% Safe & Encrypted</small>
+
+    <button type="button" class="pay-btn-premium" onclick="handlePayment()">
+    <span>Proceed to Secure Payment</span>
+    <small>100% Safe & Encrypted</small>
 </button>
 
 </form>
-
+</div>
 
 
     </div>
@@ -224,7 +213,126 @@
 
 </footer>
 <script src="{% static 'js/checkout.js' %}"></script>
+<script>
+function loadCheckoutCart() {
 
+    let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+    let body = document.getElementById("orderBody");
 
+    let subtotal = 0;
+
+    if (!cart.length) {
+        body.innerHTML = `
+        <tr>
+            <td colspan="4" style="text-align:center;">Your cart is empty</td>
+        </tr>`;
+        return;
+    }
+
+    body.innerHTML = "";
+
+    cart.forEach(p => {
+
+        let price = Number(p.price);
+        let qty = Number(p.qty);
+
+        let total = price * qty;
+        subtotal += total;
+
+        body.innerHTML += `
+        <tr>
+            <td><img src="${p.img}" width="60" style="border-radius:8px"></td>
+            <td>${p.name}</td>
+            <td>₹${price}</td>
+            <td>${qty}</td>
+        </tr>
+        `;
+    });
+
+    document.getElementById("sumSubtotal").innerText = "₹" + subtotal;
+    document.getElementById("grandTotal").innerText = "₹" + subtotal;
+
+    // ✅ send to backend
+    document.getElementById("subtotalInput").value = subtotal;
+    document.getElementById("totalInput").value = subtotal;
+}
+
+loadCheckoutCart();
+</script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+function handlePayment() {
+
+    let form = document.getElementById("checkoutForm");
+
+    let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    if (!cart.length) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    let subtotal = 0;
+
+    cart.forEach(item => {
+        subtotal += Number(item.price) * Number(item.qty);
+    });
+
+    // ✅ hidden fields fill
+    document.getElementById("itemsInput").value = JSON.stringify(cart);
+    document.getElementById("subtotalInput").value = subtotal;
+    document.getElementById("totalInput").value = subtotal;
+
+    // ✅ pehle form submit (session save)
+    fetch("{% url 'checkout' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value,
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams(new FormData(form))
+    })
+    .then(() => {
+
+        // ✅ phir Razorpay open
+        return fetch("/create-razorpay-order/");
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        var options = {
+            key: data.key,
+            amount: data.amount,
+            currency: "INR",
+            order_id: data.order_id,
+            name: "RCShop",
+            description: "Order Payment",
+
+            handler: function (response) {
+                window.location.href = `/razorpay-success/?razorpay_payment_id=${response.razorpay_payment_id}&razorpay_order_id=${response.razorpay_order_id}&razorpay_signature=${response.razorpay_signature}`;
+            },
+
+            prefill: {
+                name: document.getElementById("custName").value,
+                email: document.getElementById("custEmail").value,
+                contact: document.getElementById("custMobile").value
+            },
+
+            theme: {
+                color: "#00bcd4"
+            }
+        };
+
+        var rzp = new Razorpay(options);
+        rzp.open();
+
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Payment error!");
+    });
+}
+</script>
 </body>
 </html>

@@ -88,7 +88,9 @@
 
     <div class="total-box" id="grandBox">Grand Total: ₹0</div>
 
-    <button class="checkout-btn" onclick="goCheckout()">Proceed to Checkout</button>
+<a href="/checkout/" class="checkout-btn">
+    Proceed to Checkout
+</a>
 
 </div>
 
@@ -97,11 +99,7 @@
 
 
 <!-- ================= JS FIX: Only load cart.js once ================= -->
-<script>
-    const checkoutURL = "/checkout/";
-</script>
-
-<script src="{% static 'js/cart.js' %}?v=2"></script>
+<script src="{% static 'js/cart.js' %}?v=10"></script>
 
 <!-- MOBILE FLOATING ONLY -->
 <div class="mobile-floating">

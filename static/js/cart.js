@@ -183,12 +183,17 @@ function updateCartCount() {
    GO TO CHECKOUT
 ==============================*/
 function goCheckout() {
-    try {
-        window.location.href = checkoutURL || "/checkout/";
-    } catch (e) {
-        console.error("Redirect error:", e);
-        alert("Unable to proceed to checkout!");
+
+    // ✅ Cart check (optional but recommended)
+    let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    if (!cart || cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
     }
+
+    // ✅ Direct redirect (no variable dependency)
+    window.location.href = "/checkout/";
 }
 
 /* ==========================

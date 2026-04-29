@@ -138,34 +138,106 @@ def track_ticket(request):
 
     return render(request, "track_ticket.html", {"ticket": ticket})
 
-# =========================
-# CHECKOUT ✅ FINAL UPDATED FIX
-# =========================
-
 import json
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import UserProfile, CartItem
+from .models import UserProfile
 
 
 @login_required(login_url="login")
 def checkout(request):
 
-    user = request.user
+    # ✅ Profile get/create
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
 
-    # ✅ Profile create only for authenticated user
-    profile, created = UserProfile.objects.get_or_create(user=user)
-
-    # ✅ Cart Items from DB
-    cart_items = CartItem.objects.filter(user=user)
-
-    # 🔥 FIX: Redirect हटाया (localStorage cart use कर रहे हो)
+    # ❌ IMPORTANT: DB cart check hata diya (warna redirect loop hota hai)
+    # cart_items = CartItem.objects.filter(user=request.user)
     # if not cart_items.exists():
     #     return redirect("cart")
 
+    # =========================
+    # POST (Form Submit)
+    # =========================
+    if request.method == "POST":
+
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        mobile = request.POST.get("mobile")
+        address = request.POST.get("address")
+        pincode = request.POST.get("pincode")
+
+        subtotal = request.POST.get("subtotal")
+        total = request.POST.get("total")
+
+        # ✅ Save/update profile
+        profile.full_name = name
+        profile.email = email
+        profile.mobile = mobile
+        profile.address = address
+        profile.pincode = pincode
+        profile.save()
+
+        # ✅ Save checkout data in session
+        request.session["checkout_data"] = {
+            "name": name,
+            "email": email,
+            "mobile": mobile,
+            "address": address,
+            "pincode": pincode,
+            "subtotal": subtotal,
+            "total": total,
+        }
+
+        # 🚀 Go to payment page
+        return redirect("payment")
+
+    # =========================
+    # GET (Open page)
+    # =========================
+    return render(request, "checkout.html", {
+        "profile": profile
+    })
+    # =========================
+    # ✅ NORMAL PAGE LOAD (GET)
+    # =========================
     context = {
         "profile": profile,
-        "cart_items": cart_items,  # future use (DB sync के लिए)
+        "cart_items": cart_items,
+    }
+
+    return render(request, "checkout.html", context)
+
+    # =========================
+    # ✅ HANDLE FORM SUBMIT
+    # =========================
+    if request.method == "POST":
+
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        mobile = request.POST.get("mobile")
+        address = request.POST.get("address")
+        pincode = request.POST.get("pincode")
+
+        subtotal = request.POST.get("subtotal")
+        total = request.POST.get("total")
+
+        # 👉 Optional: profile update
+        profile.full_name = name
+        profile.email = email
+        profile.mobile = mobile
+        profile.address = address
+        profile.pincode = pincode
+        profile.save()
+
+        # 👉 आगे payment page पर भेजो
+        return redirect("payment")
+
+    # =========================
+    # ✅ NORMAL GET REQUEST
+    # =========================
+    context = {
+        "profile": profile,
+        "cart_items": cart_items,
     }
 
     return render(request, "checkout.html", context)
@@ -223,57 +295,90 @@ def checkout(request):
 # =========================
 # PAYMENT SELECTION PAGE
 # =========================
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.urls import reverse
+from decimal import Decimal
+import uuid
+
 def payment(request):
     data = request.session.get("checkout_data")
+
+    # 🔴 अगर session data नहीं है → वापस checkout
     if not data:
         return redirect("checkout")
 
-    return render(request, "payment.html", {"total": data.get("total")})
+    return render(request, "payment.html", {
+        "total": data.get("total"),
+        "user": data
+    })
 
+
+# =========================
+# CREATE RAZORPAY ORDER
+# =========================
 @csrf_exempt
 def create_razorpay_order(request):
 
+    # 🔴 Razorpay client check
     if not client:
         return JsonResponse({"error": "Payment gateway not configured"}, status=500)
 
     data = request.session.get("checkout_data")
+
+    # 🔴 Session missing
     if not data:
         return JsonResponse({"error": "No checkout session"}, status=400)
 
-    amount = int(Decimal(data["total"]) * 100)
+    try:
+        # 💰 amount convert (₹ → paise)
+        amount = int(Decimal(data["total"]) * 100)
 
-    rp_order = client.order.create({
-        "amount": amount,
-        "currency": "INR",
-        "receipt": "RC-" + uuid.uuid4().hex[:10],
-        "payment_capture": 1
-    })
+        # 🔥 Razorpay order create
+        rp_order = client.order.create({
+            "amount": amount,
+            "currency": "INR",
+            "receipt": "RC-" + uuid.uuid4().hex[:10],
+            "payment_capture": 1
+        })
 
-    order = Order.objects.create(
-        user=request.user if request.user.is_authenticated else None,
-        name=data.get("name"),
-        email=data.get("email"),
-        mobile=data.get("mobile"),
-        address=data.get("address"),
-        items=data.get("items"),
-        subtotal=Decimal(data.get("subtotal")),
-        total_amount=Decimal(data.get("total")),
-        payment_method="ONLINE",
-        status="Pending",
-        is_paid=False,
-        razorpay_order_id=rp_order["id"]
-    )
+        # 🧾 Order save in DB
+        order = Order.objects.create(
+            user=request.user if request.user.is_authenticated else None,
+            name=data.get("name"),
+            email=data.get("email"),
+            mobile=data.get("mobile"),
+            address=data.get("address"),
 
-    return JsonResponse({
-        "key": settings.RAZORPAY_KEY_ID,
-        "order_id": rp_order["id"],
-        "amount": amount,
-        "currency": "INR",
-        "email": data.get("email"),
-        "contact": data.get("mobile"),
-    })
+            # 🔥 FIX: items safe handling
+            items=json.dumps(data.get("items", "[]")),
+
+            subtotal=Decimal(data.get("subtotal", 0)),
+            total_amount=Decimal(data.get("total", 0)),
+
+            payment_method="ONLINE",
+            status="Pending",
+            is_paid=False,
+            razorpay_order_id=rp_order["id"]
+        )
+
+        return JsonResponse({
+            "key": settings.RAZORPAY_KEY_ID,
+            "order_id": rp_order["id"],
+            "amount": amount,
+            "currency": "INR",
+            "email": data.get("email"),
+            "contact": data.get("mobile"),
+        })
+
+    except Exception as e:
+        print("RAZORPAY CREATE ERROR:", e)
+        return JsonResponse({"error": "Failed to create order"}, status=500)
 
 
+# =========================
+# PAYMENT SUCCESS HANDLER
+# =========================
 @csrf_exempt
 def razorpay_success(request):
 
@@ -281,32 +386,44 @@ def razorpay_success(request):
     order_id = request.GET.get("razorpay_order_id")
     signature = request.GET.get("razorpay_signature")
 
+    # 🔴 Missing params
     if not payment_id or not order_id or not signature:
         return redirect("checkout")
 
     try:
+        # 🔐 Signature verify
         client.utility.verify_payment_signature({
             'razorpay_order_id': order_id,
             'razorpay_payment_id': payment_id,
             'razorpay_signature': signature
         })
 
+        # 🧾 Order fetch
         order = Order.objects.get(razorpay_order_id=order_id)
 
+        # ✅ Update payment status
         order.razorpay_payment_id = payment_id
         order.razorpay_signature = signature
         order.is_paid = True
         order.status = "Placed"
         order.save()
 
-        send_invoice_mail(order)
+        # 📩 Send invoice
+        try:
+            send_invoice_mail(order)
+        except Exception as mail_error:
+            print("EMAIL ERROR:", mail_error)
+
+        # 🧹 OPTIONAL: session clear (best practice)
+        if "checkout_data" in request.session:
+            del request.session["checkout_data"]
 
         return redirect(reverse("thankyou") + f"?order_id={order.id}")
 
     except Exception as e:
-        print("RAZORPAY ERROR:", e)
+        print("RAZORPAY VERIFY ERROR:", e)
         return redirect("checkout")
-
+    
 # =========================
 # THANK YOU
 # =========================

@@ -41,39 +41,79 @@
 <div class="back-btn" onclick="history.back()">← Back</div>
 </div>
 
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <script>
 document.getElementById("payBtn").onclick = function(){
 
-  fetch("{% url 'create_razorpay_order' %}")   // 🔥 GET request
-  .then(r => r.json())
+  fetch("{% url 'create_razorpay_order' %}")
+  .then(response => response.json())
   .then(data => {
 
-    if(!data.order_id){
-      alert("Unable to start payment. Try again.");
+    // 🔴 Safety check
+    if(!data || !data.order_id){
+      alert("Unable to start payment. Please try again.");
       return;
     }
 
     var options = {
       "key": data.key,
       "amount": data.amount,
-      "currency": "INR",
-      "name": "RCStore",
+      "currency": data.currency || "INR",
+      "name": "RCShop",
       "description": "Secure Order Payment",
       "order_id": data.order_id,
+
+      // ✅ SUCCESS HANDLER (IMPORTANT)
       "handler": function (response){
+
+        if(!response.razorpay_payment_id){
+          alert("Payment failed!");
+          return;
+        }
+
+        // 🔥 REDIRECT WITH DATA
         window.location.href =
-          "{% url 'razorpay_success' %}?razorpay_payment_id=" + response.razorpay_payment_id +
+          "{% url 'razorpay_success' %}" +
+          "?razorpay_payment_id=" + response.razorpay_payment_id +
           "&razorpay_order_id=" + response.razorpay_order_id +
           "&razorpay_signature=" + response.razorpay_signature;
       },
+
+      // 👤 Prefill user data
       "prefill": {
-        "name": "{{ request.user.first_name }}",
-        "email": "{{ request.user.email }}"
+        "name": "{{ user.first_name|default:'Customer' }}",
+        "email": "{{ user.email|default:'test@gmail.com' }}",
+        "contact": "{{ user.profile.mobile|default:'9999999999' }}"
       },
-      "theme": {"color":"#00f0ff"}
+
+      // 🎨 UI theme
+      "theme": {
+        "color": "#00bfff"
+      },
+
+      // ❌ Payment failed case
+      "modal": {
+        "ondismiss": function(){
+          console.log("Payment popup closed");
+        }
+      }
     };
 
-    new Razorpay(options).open();
+    var rzp = new Razorpay(options);
+
+    // 🔴 Payment failure listener
+    rzp.on('payment.failed', function (response){
+        alert("Payment failed. Try again!");
+        console.log(response.error);
+    });
+
+    rzp.open();
+
+  })
+  .catch(error => {
+    console.error("ERROR:", error);
+    alert("Server error. Try again later.");
   });
 }
 </script>
